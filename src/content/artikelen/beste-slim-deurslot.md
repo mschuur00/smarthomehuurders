@@ -153,7 +153,7 @@ In mei 2024 vroeg de Nederlandse slotenmaker **Loqed** faillissement aan. De slo
 <p>Yale is een van de bekendste slotenmerken en de L2 Lite is hun meest betaalbare smart lock (€139,99). Hij werkt via Matter over Thread met Alexa, Google Home, Apple Home en SmartThings, opent automatisch als je thuiskomt en is uit te breiden met een keypad. Controleer bij het kopen welke montageset je nodig hebt.</p>
 <div class="pros-cons">
 <div class="pros"><strong>Pluspunten</strong><ul><li>Scherpe prijs</li><li>Matter</li><li>Gevestigd merk</li></ul></div>
-<div class="cons"><strong>Minpunten</strong><ul><li>Thread-hub nodig</li><li>Eerdere Linus-modellen kregen gemengde reviews</li></ul></div>
+<div class="cons"><strong>Minpunten</strong><ul><li>Thread-hub nodig</li><li>iCulture was in zijn review van de Linus L2 nog niet overtuigd</li></ul></div>
 </div>
 <div class="cta-row"><a class="cta" href="https://www.bol.com/nl/nl/s/?searchtext=yale+linus+l2+lite" rel="sponsored nofollow noopener" target="_blank">Bekijk prijs bij bol</a></div>
 </div>
