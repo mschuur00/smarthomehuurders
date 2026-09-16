@@ -37,7 +37,7 @@ De camerawet maakt een groot verschil tussen een camera **binnen in je woning** 
 
 Plaats je een camera buiten (of een binnencamera die naar buiten filmt), dan doe je aangifte:
 
-1. **Ga naar [aangiftecamera.be](https://www.besafe.be/nl/bewakingscamera/aangiftesysteem)**, het officiële aangiftesysteem van de FOD Binnenlandse Zaken.
+1. **Ga naar aangiftecamera.be**, het officiële aangiftesysteem van de FOD Binnenlandse Zaken (uitleg op [BeSafe](https://www.besafe.be/nl/bewakingscamera/aangiftesysteem)).
 2. **Log in** met je eID, itsme of een andere digitale sleutel.
 3. **Vul de gegevens in:** waar de camera hangt, wat hij filmt en wie verantwoordelijk is. Dat ben jij als je de camera zelf plaatst, niet de installateur.
 4. **Doe dit uiterlijk de dag vóór** je de camera in gebruik neemt.
