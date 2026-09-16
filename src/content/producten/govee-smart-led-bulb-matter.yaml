@@ -1,0 +1,35 @@
+# Bron: artikel slimme-verlichting-huurwoning + claude/product-database.md (16-09-2026)
+naam: Govee Smart LED Bulb (Matter)
+merk: Govee
+categorie: smart-lighting
+label: Voor sfeer
+volgorde: 3
+samenvatting: >-
+  Felle kleuren en veel lichteffecten. Dankzij Matter werkt de lamp direct met
+  Apple Home, Google Home en Alexa, zonder hub.
+prijs:
+  vanaf: 27.50
+  tekst: ca. €27,50 per lamp
+  gecontroleerd: 2026-09-16
+huurderproof:
+  - { tekst: Zonder boren, status: ja }
+  - { tekst: Mee bij verhuizing, status: ja }
+  - { tekst: Geen hub nodig, status: ja }
+kenmerken:
+  hub: geen
+  matter: ja
+  werktMet: [apple-home, google-home, alexa]
+  licht: kleur
+  verbinding: [wifi, bluetooth]
+  fitting: [E27]
+voordelen:
+  - Geen hub nodig
+  - Matter-ondersteuning
+  - Heldere kleuren en effecten
+nadelen:
+  - Duurder per lamp dan WiZ of IKEA
+  - Breed assortiment met wisselende kwaliteit
+winkels:
+  - naam: bol
+    url: https://www.bol.com/nl/nl/s/?searchtext=govee+smart+led+bulb+matter+e27
+artikel: slimme-verlichting-huurwoning

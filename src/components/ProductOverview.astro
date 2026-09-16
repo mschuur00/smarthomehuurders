@@ -1,0 +1,220 @@
+---
+// Productoverzicht met filters en sortering voor een categorie.
+// Zonder JS: alle producten zichtbaar, filters verborgen. Met JS: filteren, sorteren,
+// live aantallen, actieve filter-chips en filters in de URL (?hub=geen&matter=ja).
+import Icon from './Icon.astro';
+import ProductCard from './ProductCard.astro';
+import type { Product } from '../utils/artikel';
+import { filtersPerCategorie, prijsKlassen, prijsKlasse } from '../data/filters';
+
+interface Props {
+  categorie: string;
+  producten: Product[];
+  titel: string;
+}
+const { categorie, producten, titel } = Astro.props;
+const groepen = filtersPerCategorie[categorie] ?? [];
+const lijst = (v: string | string[] | undefined) => (v === undefined ? [] : Array.isArray(v) ? v : [v]);
+
+// Validatie: kenmerken moeten bekend zijn in src/data/filters.ts
+for (const p of producten) {
+  for (const [key, waarde] of Object.entries(p.data.kenmerken)) {
+    const g = groepen.find((x) => x.key === key);
+    if (!g) {
+      throw new Error(`Product "${p.id}": onbekend kenmerk "${key}" voor categorie "${categorie}". Voeg het toe in src/data/filters.ts.`);
+    }
+    for (const v of lijst(waarde)) {
+      if (!(v in g.waarden)) {
+        throw new Error(`Product "${p.id}": kenmerk "${key}" heeft onbekende waarde "${v}". Toegestaan: ${Object.keys(g.waarden).join(', ')}.`);
+      }
+    }
+  }
+}
+
+// Filteropties: alleen tonen als een optie de lijst echt verkleint
+const totaal = producten.length;
+const zichtbareGroepen = [
+  ...groepen.map((g) => {
+    const opties = Object.entries(g.waarden)
+      .filter(([waarde]) => !(g.verborgen ?? []).includes(waarde))
+      .map(([waarde, label]) => ({
+        waarde,
+        label,
+        aantal: producten.filter((p) => lijst(p.data.kenmerken[g.key]).includes(waarde)).length,
+      }))
+      .filter((o) => o.aantal > 0);
+    return { key: g.key, label: g.label, uitleg: g.uitleg, opties };
+  }),
+  {
+    key: 'prijs',
+    label: 'Prijs',
+    uitleg: undefined,
+    opties: prijsKlassen
+      .map((k) => ({ waarde: k.key, label: k.label, aantal: producten.filter((p) => prijsKlasse(p.data.prijs.vanaf) === k.key).length }))
+      .filter((o) => o.aantal > 0),
+  },
+].filter((g) => g.opties.length > 0 && g.opties.some((o) => o.aantal < totaal) && (g.key !== 'prijs' || g.opties.length > 1));
+---
+<section class="po" data-po aria-labelledby="po-titel">
+  <div class="po-head">
+    <div>
+      <h2 id="po-titel">{titel}</h2>
+      <p class="muted">Alle producten voldoen aan onze huurder-check. Filter op wat voor jou belangrijk is.</p>
+    </div>
+  </div>
+
+  <div class="po-toolbar">
+    <button class="btn btn-ghost po-filter-toggle" type="button" aria-expanded="false" aria-controls="po-filters">
+      <Icon name="sliders" /> Filters <span class="po-badge" data-po-active hidden>0</span>
+    </button>
+    <p class="po-count" aria-live="polite"><strong data-po-count>{totaal}</strong> <span data-po-count-label>{totaal === 1 ? 'product' : 'producten'}</span></p>
+    <label class="po-sort">
+      <Icon name="sort" />
+      <span class="sr-only">Sorteren</span>
+      <select data-po-sort>
+        <option value="aanbevolen">Aanbevolen</option>
+        <option value="prijs-op">Laagste prijs</option>
+        <option value="prijs-af">Hoogste prijs</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="po-layout">
+    <aside class="po-filters" id="po-filters" aria-label="Filters">
+      <form data-po-form>
+        {zichtbareGroepen.map((g) => (
+          <fieldset class="po-group" data-key={g.key}>
+            <legend>{g.label}</legend>
+            {g.uitleg && <p class="po-help">{g.uitleg}</p>}
+            {g.opties.map((o) => (
+              <label class="po-option">
+                <input type="checkbox" name={g.key} value={o.waarde} />
+                <span class="po-check" aria-hidden="true"></span>
+                <span class="po-option-label">{o.label}</span>
+                <span class="po-n">{o.aantal}</span>
+              </label>
+            ))}
+          </fieldset>
+        ))}
+        <button type="reset" class="po-reset">Wis alle filters</button>
+      </form>
+    </aside>
+
+    <div class="po-results">
+      <div class="po-chips" data-po-chips hidden></div>
+      <div class="po-grid" data-po-grid>
+        {producten.map((p) => <ProductCard product={p} groepen={groepen} />)}
+      </div>
+      <div class="empty-state po-empty" data-po-empty hidden>
+        <span class="empty-icon"><Icon name="sliders" /></span>
+        <h3>Geen producten met deze combinatie</h3>
+        <p>Probeer een filter minder.</p>
+        <button type="button" class="btn btn-ghost" data-po-clear>Wis alle filters</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (function () {
+    var root = document.querySelector('[data-po]');
+    if (!root) return;
+    root.classList.add('po--js');
+    var form = root.querySelector('[data-po-form]');
+    var grid = root.querySelector('[data-po-grid]');
+    var cards = Array.prototype.slice.call(grid.children);
+    var sortSel = root.querySelector('[data-po-sort]');
+    var countEl = root.querySelector('[data-po-count]');
+    var countLabel = root.querySelector('[data-po-count-label]');
+    var emptyEl = root.querySelector('[data-po-empty]');
+    var chipsEl = root.querySelector('[data-po-chips]');
+    var activeEl = root.querySelector('[data-po-active]');
+    var toggle = root.querySelector('.po-filter-toggle');
+    var groups = Array.prototype.map.call(form.querySelectorAll('fieldset[data-key]'), function (fs) { return fs.getAttribute('data-key'); });
+    var inputs = Array.prototype.slice.call(form.querySelectorAll('input[type=checkbox]'));
+
+    function vals(card, key) { return (card.getAttribute('data-f-' + key.toLowerCase()) || '').split(' '); }
+    function selected() {
+      var s = {};
+      groups.forEach(function (k) { s[k] = inputs.filter(function (i) { return i.name === k && i.checked; }).map(function (i) { return i.value; }); });
+      return s;
+    }
+    function matches(card, s, skip) {
+      return groups.every(function (k) {
+        if (k === skip || !s[k].length) return true;
+        var v = vals(card, k);
+        return s[k].some(function (x) { return v.indexOf(x) > -1; });
+      });
+    }
+    function sortCards() {
+      var mode = sortSel.value;
+      var sorted = cards.slice().sort(function (a, b) {
+        var pa = parseFloat(a.getAttribute('data-prijs')), pb = parseFloat(b.getAttribute('data-prijs'));
+        if (mode === 'prijs-op') return pa - pb;
+        if (mode === 'prijs-af') return pb - pa;
+        return parseFloat(a.getAttribute('data-volgorde')) - parseFloat(b.getAttribute('data-volgorde'));
+      });
+      sorted.forEach(function (c) { grid.appendChild(c); });
+    }
+    function update() {
+      var s = selected();
+      var n = 0;
+      cards.forEach(function (c) { var ok = matches(c, s); c.hidden = !ok; if (ok) n++; });
+      countEl.textContent = n;
+      countLabel.textContent = n === 1 ? 'product' : 'producten';
+      emptyEl.hidden = n > 0;
+      grid.hidden = n === 0;
+
+      inputs.forEach(function (i) {
+        var cnt = cards.filter(function (c) { return matches(c, s, i.name) && vals(c, i.name).indexOf(i.value) > -1; }).length;
+        var label = i.closest('label');
+        label.querySelector('.po-n').textContent = cnt;
+        label.classList.toggle('is-zero', cnt === 0 && !i.checked);
+      });
+
+      var active = inputs.filter(function (i) { return i.checked; });
+      activeEl.textContent = active.length;
+      activeEl.hidden = active.length === 0;
+      chipsEl.innerHTML = '';
+      chipsEl.hidden = active.length === 0;
+      active.forEach(function (i) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'po-chip';
+        b.textContent = i.closest('label').querySelector('.po-option-label').textContent;
+        b.setAttribute('aria-label', 'Filter verwijderen: ' + b.textContent);
+        b.addEventListener('click', function () { i.checked = false; update(); });
+        chipsEl.appendChild(b);
+      });
+      if (active.length > 1) {
+        var clr = document.createElement('button');
+        clr.type = 'button'; clr.className = 'po-chip-clear'; clr.textContent = 'Alles wissen';
+        clr.addEventListener('click', clearAll);
+        chipsEl.appendChild(clr);
+      }
+
+      var params = new URLSearchParams(location.search);
+      groups.forEach(function (k) { if (s[k].length) params.set(k, s[k].join(',')); else params.delete(k); });
+      if (sortSel.value !== 'aanbevolen') params.set('sort', sortSel.value); else params.delete('sort');
+      var qs = params.toString();
+      history.replaceState(null, '', location.pathname + (qs ? '?' + qs : '') + location.hash);
+    }
+    function clearAll() { inputs.forEach(function (i) { i.checked = false; }); update(); }
+
+    // Beginstand uit URL
+    var params = new URLSearchParams(location.search);
+    inputs.forEach(function (i) { var v = params.get(i.name); if (v && v.split(',').indexOf(i.value) > -1) i.checked = true; });
+    if (params.get('sort')) sortSel.value = params.get('sort');
+    sortCards();
+    update();
+
+    form.addEventListener('change', update);
+    form.addEventListener('reset', function () { setTimeout(update, 0); });
+    sortSel.addEventListener('change', function () { sortCards(); update(); });
+    root.querySelector('[data-po-clear]').addEventListener('click', clearAll);
+    toggle.addEventListener('click', function () {
+      var open = root.classList.toggle('po--filters-open');
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+  })();
+</script>

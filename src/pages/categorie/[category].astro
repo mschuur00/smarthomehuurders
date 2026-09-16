@@ -2,9 +2,10 @@
 import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
+import ProductOverview from '../../components/ProductOverview.astro';
 import { categorieen } from '../../data/categorieen';
 import { catStyle } from '../../data/categorie-stijl';
-import { getArtikelen, sorteerOpDatum } from '../../utils/artikel';
+import { getArtikelen, getProducten, sorteerOpDatum } from '../../utils/artikel';
 
 export async function getStaticPaths() {
   return categorieen.map((c) => ({
@@ -16,8 +17,10 @@ export async function getStaticPaths() {
 const { categorie } = Astro.props;
 const alleArtikelen = await getArtikelen();
 const artikelen = sorteerOpDatum(alleArtikelen.filter((a) => a.data.category === categorie.slug));
+const producten = await getProducten(categorie.slug);
 const andere = categorieen.filter((c) => c.slug !== categorie.slug);
 const base = import.meta.env.BASE_URL;
+const labelLower = categorie.label.toLowerCase();
 ---
 <Base title={categorie.label} description={categorie.omschrijving}>
   <div class="page-head page-head--band page-head--cat has-cat" style={catStyle(categorie.slug)}>
@@ -34,40 +37,58 @@ const base = import.meta.env.BASE_URL;
         <div>
           <h1>{categorie.label}</h1>
           <p class="lead">{categorie.omschrijving}</p>
+          {(producten.length > 0 || artikelen.length > 0) && (
+            <ul class="page-head-stats">
+              {producten.length > 0 && <li><Icon name="tag" />{producten.length} {producten.length === 1 ? 'product' : 'producten'} vergeleken</li>}
+              {artikelen.length > 0 && <li><Icon name="article" />{artikelen.length} {artikelen.length === 1 ? 'koopgids' : 'koopgidsen'}</li>}
+            </ul>
+          )}
         </div>
       </div>
     </div>
   </div>
 
-  <div class="container">
-    {artikelen.length === 0 ? (
-      <div class="empty-state has-cat" style={catStyle(categorie.slug)}>
+  <div class="container has-cat" style={catStyle(categorie.slug)}>
+    {producten.length > 0 && (
+      <ProductOverview categorie={categorie.slug} producten={producten} titel={`${categorie.label} vergelijken`} />
+    )}
+
+    {artikelen.length > 0 && (
+      <section class:list={['cat-guides', { 'cat-guides--below': producten.length > 0 }]} aria-labelledby="gidsen-titel">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow eyebrow--rose"><Icon name="article" /> Uitleg &amp; advies</span>
+            <h2 id="gidsen-titel">{producten.length > 0 ? `Koopgidsen over ${labelLower}` : `${artikelen.length} ${artikelen.length === 1 ? 'artikel' : 'artikelen'}`}</h2>
+          </div>
+        </div>
+        <div class="card-grid card-grid--wide">
+          {artikelen.map((a) => <ArticleCard artikel={a} toonCategorie={false} />)}
+        </div>
+      </section>
+    )}
+
+    {producten.length === 0 && artikelen.length === 0 && (
+      <div class="empty-state">
         <span class="empty-icon"><Icon name={categorie.slug} /></span>
         <h2>Binnenkort artikelen in deze categorie</h2>
-        <p>We zijn de beste {categorie.label.toLowerCase()} voor huurders aan het uitzoeken. Kijk intussen in een andere categorie:</p>
+        <p>We zijn de beste {labelLower} voor huurders aan het uitzoeken. Kijk intussen in een andere categorie:</p>
         <ul class="chip-list">
           {andere.map((c) => (
             <li><a class="has-cat" style={catStyle(c.slug)} href={`${base}categorie/${c.slug}/`}><Icon name={c.slug} />{c.label}</a></li>
           ))}
         </ul>
       </div>
-    ) : (
-      <>
-        <div class="section-head">
-          <h2>{artikelen.length} artikel{artikelen.length === 1 ? '' : 'en'}</h2>
-        </div>
-        <div class="card-grid card-grid--wide">
-          {artikelen.map((a) => <ArticleCard artikel={a} toonCategorie={false} />)}
-        </div>
-        <section class="related" aria-labelledby="andere-cat">
-          <h2 id="andere-cat" class="h-small">Andere categorieën</h2>
-          <ul class="chip-list chip-list--left">
-            {andere.map((c) => (
-              <li><a class="has-cat" style={catStyle(c.slug)} href={`${base}categorie/${c.slug}/`}><Icon name={c.slug} />{c.label}</a></li>
-            ))}
-          </ul>
-        </section>
-      </>
+    )}
+
+    {(producten.length > 0 || artikelen.length > 0) && (
+      <section class="related" aria-labelledby="andere-cat">
+        <h2 id="andere-cat" class="h-small">Andere categorieën</h2>
+        <ul class="chip-list chip-list--left">
+          {andere.map((c) => (
+            <li><a class="has-cat" style={catStyle(c.slug)} href={`${base}categorie/${c.slug}/`}><Icon name={c.slug} />{c.label}</a></li>
+          ))}
+        </ul>
+      </section>
     )}
   </div>
 </Base>

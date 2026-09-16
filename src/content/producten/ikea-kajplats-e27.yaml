@@ -1,0 +1,40 @@
+# Bron: artikel slimme-verlichting-huurwoning + claude/product-database.md (16-09-2026)
+naam: IKEA KAJPLATS startset E27
+merk: IKEA
+categorie: smart-lighting
+label: Goedkoopst
+volgorde: 2
+samenvatting: >-
+  IKEA's slimme verlichting (voorheen TRÅDFRI). De startset met lamp en
+  afstandsbediening werkt direct, zonder hub. Voor bediening met je telefoon of
+  spraakassistent heb je een Thread-hub nodig, zoals de IKEA DIRIGERA.
+prijs:
+  vanaf: 9.99
+  tekst: vanaf €9,99 (startset met afstandsbediening)
+  gecontroleerd: 2026-09-16
+huurderproof:
+  - { tekst: Zonder boren, status: ja }
+  - { tekst: Mee bij verhuizing, status: ja }
+  - { tekst: Hub nodig voor app, status: let-op }
+kenmerken:
+  hub: optioneel
+  matter: ja
+  werktMet: [apple-home, google-home, alexa, homey]
+  licht: wit-spectrum
+  verbinding: [thread]
+  fitting: [E27]
+voordelen:
+  - Laagste prijs per lamp
+  - Afstandsbediening werkt zonder hub
+  - "Matter: breed compatibel"
+nadelen:
+  - Hub nodig voor app-bediening
+  - Wisselende ervaringen met koppelen
+winkels:
+  - naam: IKEA NL
+    url: https://www.ikea.com/nl/nl/p/kajplats-startset-smart-wit-spectrum-60611446/
+    affiliate: false
+  - naam: IKEA België
+    url: https://www.ikea.com/be/nl/cat/slimme-led-lampen-36813/f/e27-slimme-ledlampen-f-base--49108/
+    affiliate: false
+artikel: slimme-verlichting-huurwoning

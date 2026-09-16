@@ -7,12 +7,12 @@ import Faq from '../components/Faq.astro';
 import { categorieen } from '../data/categorieen';
 import { catStyle } from '../data/categorie-stijl';
 import { faq } from '../data/faq';
-import { getArtikelen, sorteerOpDatum } from '../utils/artikel';
+import { categorieTelling, getArtikelen, sorteerOpDatum } from '../utils/artikel';
 
 const alleArtikelen = await getArtikelen();
 const artikelen = sorteerOpDatum(alleArtikelen).slice(0, 6);
 const base = import.meta.env.BASE_URL;
-const telPerCategorie = (slug: string) => alleArtikelen.filter((a) => a.data.category === slug).length;
+const telling = await categorieTelling();
 
 const usps = [
   { icon: 'no-drill', kleur: '#0f766e', titel: 'Zonder boren', tekst: 'Inpluggen, indraaien of plakken' },
@@ -72,14 +72,13 @@ const stappen = [
     </div>
     <div class="card-grid card-grid--cats">
       {categorieen.map((c) => {
-        const n = telPerCategorie(c.slug);
         return (
           <article class="card card--cat has-cat" style={catStyle(c.slug)}>
             <div class="icon-bubble"><Icon name={c.slug} /></div>
             <h3><a href={`${base}categorie/${c.slug}/`}>{c.label}</a></h3>
             <p>{c.omschrijving}</p>
             <div class="card-foot">
-              <span class="count-pill">{n === 0 ? 'Binnenkort' : `${n} artikel${n === 1 ? '' : 'en'}`}</span>
+              <span class="count-pill">{telling[c.slug]}</span>
               <span class="card-more" aria-hidden="true">Bekijk →</span>
             </div>
           </article>

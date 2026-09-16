@@ -32,4 +32,45 @@ const artikelen = defineCollection({
   }),
 });
 
-export const collections = { artikelen };
+/**
+ * Producten voor het vergelijk-/filteroverzicht op categoriepagina's.
+ * Eén YAML-bestand per product in src/content/producten/ (bestandsnaam = id).
+ * Toegestane kenmerken + labels per categorie: src/data/filters.ts
+ * (onbekende kenmerk-waarden laten de build falen met een duidelijke melding).
+ */
+const producten = defineCollection({
+  type: 'data',
+  schema: z.object({
+    naam: z.string(),
+    merk: z.string(),
+    categorie: z.string(), // slug uit src/data/categorieen.ts
+    label: z.string().optional(), // bijv. "Beste instap"
+    volgorde: z.number().default(99), // sortering "Aanbevolen" (laag = eerst)
+    samenvatting: z.string(),
+    prijs: z.object({
+      vanaf: z.number(), // voor sorteren/filteren, in euro
+      tekst: z.string(), // zoals getoond, bijv. "ca. €17–€19 (2-pack)"
+      gecontroleerd: z.date(),
+    }),
+    huurderproof: z
+      .array(z.object({ tekst: z.string(), status: z.enum(['ja', 'let-op', 'nee']) }))
+      .default([]),
+    /** Categorie-specifieke kenmerken; sleutels en waarden zie src/data/filters.ts */
+    kenmerken: z.record(z.string(), z.union([z.string(), z.array(z.string())])),
+    voordelen: z.array(z.string()).default([]),
+    nadelen: z.array(z.string()).default([]),
+    winkels: z
+      .array(
+        z.object({
+          naam: z.string(),
+          url: z.string().url(),
+          affiliate: z.boolean().default(true), // false = geen rel="sponsored" (bijv. IKEA)
+        })
+      )
+      .min(1),
+    artikel: z.string().optional(), // slug van de koopgids waarin dit product besproken wordt
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { artikelen, producten };

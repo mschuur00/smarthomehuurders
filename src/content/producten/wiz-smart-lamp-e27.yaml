@@ -1,0 +1,38 @@
+# Bron: artikel slimme-verlichting-huurwoning + claude/product-database.md (16-09-2026)
+naam: WiZ Smart Lamp E27 (2-pack)
+merk: WiZ
+categorie: smart-lighting
+label: Beste instap
+volgorde: 1
+samenvatting: >-
+  De makkelijkste manier om te beginnen: indraaien, app openen, klaar. Wifi en
+  Bluetooth zitten in de lamp, dus je hebt geen hub nodig. Ook verkrijgbaar met
+  kleur, als spotje of als tafellamp.
+prijs:
+  vanaf: 16.99
+  tekst: ca. €17–€19 voor 2 lampen
+  gecontroleerd: 2026-09-16
+huurderproof:
+  - { tekst: Zonder boren, status: ja }
+  - { tekst: Mee bij verhuizing, status: ja }
+  - { tekst: Geen hub nodig, status: ja }
+kenmerken:
+  hub: geen
+  matter: model
+  werktMet: [google-home, alexa, apple-home]
+  licht: wit-spectrum
+  verbinding: [wifi, bluetooth]
+  fitting: [E27]
+voordelen:
+  - Geen hub nodig
+  - Zeer betaalbaar
+  - Werkt met Google, Alexa en Apple Home
+nadelen:
+  - App minder uitgebreid dan Hue
+  - Veel wifi-lampen kunnen je netwerk belasten
+winkels:
+  - naam: Coolblue
+    url: https://www.coolblue.nl/product/912032/wiz-smart-lamp-2-pack-warm-tot-koelwit-licht-e27-mat.html
+  - naam: bol
+    url: https://www.bol.com/nl/nl/s/?searchtext=wiz+smart+lamp+e27
+artikel: slimme-verlichting-huurwoning

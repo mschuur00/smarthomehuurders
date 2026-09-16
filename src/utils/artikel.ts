@@ -26,3 +26,28 @@ export function leestijd(body: string): number {
 export function vindCategorie(slug: string) {
   return categorieen.find((c) => c.slug === slug);
 }
+
+export type Product = CollectionEntry<'producten'>;
+
+/** Gepubliceerde producten van één categorie, in "aanbevolen"-volgorde. */
+export async function getProducten(categorie: string): Promise<Product[]> {
+  const alle = await getCollection('producten', ({ data }) => !data.draft && data.categorie === categorie);
+  return alle.sort((a, b) => a.data.volgorde - b.data.volgorde || a.data.prijs.vanaf - b.data.prijs.vanaf);
+}
+
+export function formatPrijs(bedrag: number): string {
+  return bedrag.toLocaleString('nl-NL', { style: 'currency', currency: 'EUR', minimumFractionDigits: bedrag % 1 === 0 ? 0 : 2 });
+}
+
+/** Korte telling voor categorie-cards: "4 producten", "2 artikelen" of "Binnenkort". */
+export async function categorieTelling(): Promise<Record<string, string>> {
+  const artikelen = await getArtikelen();
+  const producten = await getCollection('producten', ({ data }) => !data.draft);
+  const uit: Record<string, string> = {};
+  for (const c of categorieen) {
+    const np = producten.filter((p) => p.data.categorie === c.slug).length;
+    const na = artikelen.filter((a) => a.data.category === c.slug).length;
+    uit[c.slug] = np > 0 ? `${np} ${np === 1 ? 'product' : 'producten'}` : na > 0 ? `${na} ${na === 1 ? 'artikel' : 'artikelen'}` : 'Binnenkort';
+  }
+  return uit;
+}

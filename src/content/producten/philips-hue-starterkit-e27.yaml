@@ -1,0 +1,38 @@
+# Bron: artikel slimme-verlichting-huurwoning + claude/product-database.md (16-09-2026)
+naam: Philips Hue Starterkit (2x E27 + Bridge)
+merk: Philips Hue
+categorie: smart-lighting
+label: Meest complete systeem
+volgorde: 4
+samenvatting: >-
+  Het grootste aanbod aan lampen, lichtstrips en draadloze plak-schakelaars, en
+  zeer betrouwbaar. De set bevat twee lampen en de Hue Bridge; zonder Bridge
+  bedien je de lampen ook via Bluetooth. Matter werkt via de Bridge.
+prijs:
+  vanaf: 79.99
+  tekst: ca. €80–€130 (2 lampen + Bridge)
+  gecontroleerd: 2026-09-16
+huurderproof:
+  - { tekst: Zonder boren, status: ja }
+  - { tekst: Mee bij verhuizing, status: ja }
+  - { tekst: Bridge zit in de set, status: ja }
+kenmerken:
+  hub: optioneel
+  matter: ja
+  werktMet: [apple-home, google-home, alexa, homey]
+  licht: kleur
+  verbinding: [zigbee, bluetooth]
+  fitting: [E27]
+voordelen:
+  - Grootste ecosysteem
+  - Zeer betrouwbaar, werkt met alles
+  - Veel draadloze schakelaars om te plakken
+nadelen:
+  - Duurste optie
+  - Bridge nodig voor alle functies
+winkels:
+  - naam: bol
+    url: https://www.bol.com/nl/nl/p/philips-hue-starterkit-wit-en-gekleurd-licht-2-x-9w-e27-1100lm-met-bridge/9300000050322358/
+  - naam: Coolblue
+    url: https://www.coolblue.nl/zoeken?query=philips+hue+starterkit+e27
+artikel: slimme-verlichting-huurwoning
