@@ -1,10 +1,10 @@
 /* SmartHomeHuurders — global styles
    Geen framework, geen webfonts: system font stack voor snelheid.
-   Kleuren als tokens; dark mode via prefers-color-scheme.
+   Kleuren als tokens; licht standaard, donker via <html data-theme="dark"> (knop in header).
    Categoriekleuren: element krijgt class="has-cat" + style="--cat: #hex" (zie src/data/categorie-stijl.ts). */
 
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
 
   --c-bg: #faf9f6;
   --c-surface: #ffffff;
@@ -60,37 +60,36 @@
   --i-cart: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='9' cy='20' r='1.4'/%3E%3Ccircle cx='18' cy='20' r='1.4'/%3E%3Cpath d='M2.5 3h2.8l2.2 12.2h11.4l2-8.2H6.2'/%3E%3C/svg%3E");
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --c-bg: #0e1318;
-    --c-surface: #161d24;
-    --c-surface-2: #1d252e;
-    --c-text: #e6e9ed;
-    --c-muted: #9ba5b1;
-    --c-border: #2a333d;
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --c-bg: #0e1318;
+  --c-surface: #161d24;
+  --c-surface-2: #1d252e;
+  --c-text: #e6e9ed;
+  --c-muted: #9ba5b1;
+  --c-border: #2a333d;
 
-    --c-primary: #5eead4;
-    --c-primary-hover: #99f6e4;
-    --c-primary-soft: #12302d;
-    --c-on-primary: #042f2e;
+  --c-primary: #5eead4;
+  --c-primary-hover: #99f6e4;
+  --c-primary-soft: #12302d;
+  --c-on-primary: #042f2e;
 
-    --c-accent: #fb923c;
-    --c-accent-hover: #fdba74;
-    --c-on-accent: #1f0d02;
+  --c-accent: #fb923c;
+  --c-accent-hover: #fdba74;
+  --c-on-accent: #1f0d02;
 
-    --c-good: #4ade80;
-    --c-bad: #f87171;
-    --c-warn: #fbbf24;
+  --c-good: #4ade80;
+  --c-bad: #f87171;
+  --c-warn: #fbbf24;
 
-    --c-notice-bg: #2a1c10;
-    --c-notice-border: #5c3a1c;
+  --c-notice-bg: #2a1c10;
+  --c-notice-border: #5c3a1c;
 
-    --soft-mix: 20%;
-    --ink-mix: 55%;
+  --soft-mix: 20%;
+  --ink-mix: 55%;
 
-    --shadow: 0 1px 2px rgb(0 0 0 / .3), 0 4px 16px rgb(0 0 0 / .25);
-    --shadow-hover: 0 2px 4px rgb(0 0 0 / .35), 0 10px 28px rgb(0 0 0 / .35);
-  }
+  --shadow: 0 1px 2px rgb(0 0 0 / .3), 0 4px 16px rgb(0 0 0 / .25);
+  --shadow-hover: 0 2px 4px rgb(0 0 0 / .35), 0 10px 28px rgb(0 0 0 / .35);
 }
 
 /* ---------- Reset / basis ---------- */
@@ -931,4 +930,19 @@ html[data-land="be"] [data-land]:not([data-land~="be"]) { display: none; }
 @media (max-width: 640px) {
   .letop { grid-auto-flow: column; grid-auto-columns: 82%; grid-template-columns: none; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: var(--space-2); }
   .letop-item { scroll-snap-align: start; }
+}
+
+/* Thema-knop */
+.theme-toggle { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 999px; border: 1px solid var(--c-border); background: var(--c-surface); color: var(--c-text); cursor: pointer; order: 3; }
+.theme-toggle svg { width: 20px; height: 20px; }
+.theme-toggle .icon-sun, [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+@media (max-width: 959px) {
+  .theme-toggle { order: 1; margin-left: auto; }
+  .js .nav-toggle { order: 2; margin-left: 0; }
+  .main-nav { order: 4; }
+}
+@media (max-width: 420px) {
+  .nav-toggle-label { display: none; }
+  .nav-toggle { width: 44px; padding: 0; justify-content: center; }
 }

@@ -56,7 +56,7 @@ const jaar = new Date().getFullYear();
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <script is:inline>(function(h){h.classList.add('js');try{['eco','land'].forEach(function(k){var v=localStorage.getItem('shh-'+k);if(v)h.setAttribute('data-'+k,v)})}catch(e){}})(document.documentElement)</script>
+  <script is:inline>(function(h){h.classList.add('js');try{['eco','land','theme'].forEach(function(k){var v=localStorage.getItem('shh-'+k);if(v)h.setAttribute('data-'+k,v)})}catch(e){}})(document.documentElement)</script>
   <title>{fullTitle}</title>
   <meta name="description" content={description} />
   {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
@@ -102,7 +102,12 @@ const jaar = new Date().getFullYear();
         <span>SmartHome<b>Huurders</b></span>
       </a>
 
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav">
+      <button class="theme-toggle" type="button" aria-label="Wissel licht/donker">
+        <Icon name="moon" class="icon-moon" />
+        <Icon name="sun" class="icon-sun" />
+      </button>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Menu">
         <Icon name="menu" class="icon-open" />
         <Icon name="close" class="icon-close" />
         <span class="nav-toggle-label">Menu</span>
@@ -179,6 +184,11 @@ const jaar = new Date().getFullYear();
     (function () {
       var header = document.getElementById('site-header');
       var btn = header && header.querySelector('.nav-toggle');
+      document.querySelector('.theme-toggle').addEventListener('click', function () {
+        var h = document.documentElement, donker = h.getAttribute('data-theme') !== 'dark';
+        if (donker) h.setAttribute('data-theme', 'dark'); else h.removeAttribute('data-theme');
+        try { localStorage.setItem('shh-theme', donker ? 'dark' : ''); } catch (e) {}
+      });
       if (!btn) return;
       btn.addEventListener('click', function () {
         var open = header.classList.toggle('is-open');
