@@ -16,6 +16,9 @@ const { title, description = "Smart home producten voor huurders in NL/BE" } = A
 <body>
   <header>
     <a href={import.meta.env.BASE_URL}>SmartHomeHuurders</a>
+    <nav>
+      <a href={`${import.meta.env.BASE_URL}categorie/`}>Categorieën</a>
+    </nav>
   </header>
   <main>
     <slot />

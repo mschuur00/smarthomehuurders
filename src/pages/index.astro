@@ -1,14 +1,25 @@
 ---
 import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
+import { categorieen } from '../data/categorieen';
 const artikelen = await getCollection('artikelen');
+const base = import.meta.env.BASE_URL;
 ---
 <Base title="Home">
   <h1>Smart home producten voor huurders</h1>
   <p>Slim wonen zonder boren, zonder gedoe met de verhuurder.</p>
+
+  <h2>Categorieën</h2>
+  <ul>
+    {categorieen.map((c) => (
+      <li><a href={`${base}categorie/${c.slug}/`}>{c.label}</a></li>
+    ))}
+  </ul>
+
+  <h2>Laatste artikelen</h2>
   <ul>
     {artikelen.map((a) => (
-      <li><a href={`${import.meta.env.BASE_URL}artikelen/${a.slug}/`}>{a.data.title}</a></li>
+      <li><a href={`${base}artikelen/${a.slug}/`}>{a.data.title}</a></li>
     ))}
   </ul>
 </Base>

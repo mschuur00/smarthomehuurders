@@ -1,0 +1,31 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { categorieen } from '../../data/categorieen';
+
+export async function getStaticPaths() {
+  return categorieen.map((c) => ({
+    params: { category: c.slug },
+    props: { categorie: c },
+  }));
+}
+
+const { categorie } = Astro.props;
+const alleArtikelen = await getCollection('artikelen');
+const artikelen = alleArtikelen.filter((a) => a.data.category === categorie.slug);
+const base = import.meta.env.BASE_URL;
+---
+<Base title={categorie.label} description={categorie.omschrijving}>
+  <p><a href={`${base}categorie/`}>&larr; alle categorieën</a></p>
+  <h1>{categorie.label}</h1>
+  <p>{categorie.omschrijving}</p>
+  {artikelen.length === 0 ? (
+    <p><em>Binnenkort artikelen in deze categorie.</em></p>
+  ) : (
+    <ul>
+      {artikelen.map((a) => (
+        <li><a href={`${base}artikelen/${a.slug}/`}>{a.data.title}</a></li>
+      ))}
+    </ul>
+  )}
+</Base>
