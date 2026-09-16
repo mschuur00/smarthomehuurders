@@ -1,0 +1,14 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+const artikelen = await getCollection('artikelen');
+---
+<Base title="Home">
+  <h1>Smart home producten voor huurders</h1>
+  <p>Slim wonen zonder boren, zonder gedoe met de verhuurder.</p>
+  <ul>
+    {artikelen.map((a) => (
+      <li><a href={`${import.meta.env.BASE_URL}artikelen/${a.slug}/`}>{a.data.title}</a></li>
+    ))}
+  </ul>
+</Base>

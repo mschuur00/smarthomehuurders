@@ -1,0 +1,27 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = "Smart home producten voor huurders in NL/BE" } = Astro.props;
+---
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title} | SmartHomeHuurders</title>
+  <meta name="description" content={description} />
+</head>
+<body>
+  <header>
+    <a href={import.meta.env.BASE_URL}>SmartHomeHuurders</a>
+  </header>
+  <main>
+    <slot />
+  </main>
+  <footer>
+    <p>Dit is een affiliate website. Bepaalde links kunnen een commissie opleveren, zonder extra kosten voor jou. <a href={`${import.meta.env.BASE_URL}disclosure`}>Lees onze disclosure</a>.</p>
+  </footer>
+</body>
+</html>
