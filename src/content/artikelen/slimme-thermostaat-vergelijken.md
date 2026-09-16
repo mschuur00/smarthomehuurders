@@ -66,9 +66,9 @@ Heb je een (hybride) warmtepomp of vloerverwarming, check dan vooraf de compatib
 |---|---|---|---|---|---|
 | tado° X Multi-Room Starterkit | €245–€350 (incl. 2 radiatorknoppen) | Ja | Optioneel AI Assist €3,99/mnd | Ja | Matter: Apple, Google, Alexa |
 | Netatmo Slimme Thermostaat (modulerend) | ca. €145 | Ja | Nee | Met Netatmo-knoppen | Apple Home, Google, Alexa |
-| Honeywell Home T6 | ca. €160–€195 | Ja | Nee | Nee (wel met evohome) | Google, Alexa, Apple (via Matter-hub niet standaard) |
-| Remeha eTwist | ca. €165 (zonder gateway) | Ja + R-bus | Nee | Nee | Remeha Home-app, Google |
-| Bosch EasyControl | ca. €225–€280 | Ja + EMS | Nee | Met Bosch-knoppen | Bosch-app, Google, Alexa |
+| Honeywell Home T6 | ca. €160–€195 | Ja | Nee | Nee (wel met evohome) | Resideo/Honeywell-app, Google, Alexa |
+| Remeha eTwist | ca. €165 (zonder gateway) | Ja + R-bus | Nee | Nee | Remeha Home-app |
+| Bosch EasyControl | ca. €225–€280 | Ja + EMS | Nee | Met Bosch-knoppen | Bosch EasyControl-app |
 
 *Prijzen gecontroleerd op 16 september 2026 bij webshops en fabrikanten; ze lopen tussen winkels flink uiteen. Check de actuele prijs via de knoppen.*
 
@@ -93,7 +93,7 @@ Heb je een (hybride) warmtepomp of vloerverwarming, check dan vooraf de compatib
 <p>Het design van Philippe Starck valt op, maar de echte kracht is dat alle functies gratis zijn. De modulerende versie werkt met OpenTherm, en de thermostaat is uit te breiden met Netatmo-radiatorknoppen. Werkt met Apple Home, Google en Alexa.</p>
 <div class="pros-cons">
 <div class="pros"><strong>Pluspunten</strong><ul><li>Geen betaalmuur</li><li>OpenTherm</li><li>Goede Apple Home-integratie</li></ul></div>
-<div class="cons"><strong>Minpunten</strong><ul><li>App minder uitgebreid dan tado</li><li>Geen Matter</li></ul></div>
+<div class="cons"><strong>Minpunten</strong><ul><li>App minder uitgebreid dan tado</li><li>Per kamer regelen maakt het duurder</li></ul></div>
 </div>
 <div class="cta-row"><a class="cta" href="https://www.bol.com/nl/nl/p/netatmo-slimme-thermostaat-modulerend-opentherm-cv-ketel/9300000112536995/" rel="sponsored nofollow noopener" target="_blank">Bekijk prijs bij bol</a><a class="cta cta--secondary" href="https://www.coolblue.nl/zoeken?query=netatmo+slimme+thermostaat" rel="sponsored nofollow noopener" target="_blank">Coolblue</a></div>
 </div>
