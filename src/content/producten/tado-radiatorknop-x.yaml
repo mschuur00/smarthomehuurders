@@ -7,11 +7,11 @@ volgorde: 1
 samenvatting: >-
   Marktleider in NL en BE met de meest uitgebreide app: schema's per kamer, open-raamdetectie
   en verbruiksinzicht. Startpakket met Bridge X, één knop en zes adapters. Geofencing zit
-  achter het optionele Auto-Assist-abonnement.
+  achter het optionele AI Assist-abonnement.
 prijs: { vanaf: 145, tekst: "startpakket (Bridge X + 1 knop) ca. €145; extra knop ca. €90", gecontroleerd: 2026-09-16 }
 huurder: { terugzetten: onderdeel }
 kosten:
-  abonnement: { naam: Auto-Assist, perMaand: 4, nodig: false, voor: automatisch verwarmen op locatie }
+  abonnement: { naam: AI Assist, perMaand: 3.99, nodig: false, voor: automatisch verwarmen op locatie }
 huurderproof:
   - { tekst: Bridge X in startpakket, status: ja }
 kenmerken:
