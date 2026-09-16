@@ -94,7 +94,7 @@ Bij de nieuwste Nuki's zit de accu vast ingebouwd; je vervangt hem niet, je laad
 
 ## Huurder? Denk aan je verhuizing
 
-Verlaat je je huurwoning, verwijder dan de batterijen uit het slot voordat je het opbergt, zodat ze niet gaan lekken. Heb je batterijen in een slot van je woningcorporatie? Die zijn meestal voor rekening van de huurder; vraag het na bij je corporatie. Lees meer in [slim slot in je huurwoning](../slim-slot-huurwoning/).
+Verlaat je je huurwoning, verwijder dan de batterijen uit het slot voordat je het opbergt, zodat ze niet gaan lekken. Heeft je woningcorporatie het slimme slot geplaatst? Vraag dan na wie verantwoordelijk is voor het vervangen van de batterijen. Lees meer in [slim slot in je huurwoning](../slim-slot-huurwoning/).
 
 ## Veelgestelde vragen
 
