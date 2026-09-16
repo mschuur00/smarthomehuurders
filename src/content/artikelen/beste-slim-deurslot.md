@@ -47,11 +47,11 @@ De vergelijking is gebaseerd op fabrikantspecificaties, retailerinformatie en re
 | Model | Prijs (indicatie) | Montage | Op afstand | Matter | Voeding |
 |---|---|---|---|---|---|
 | Nuki Smart Lock Ultra | €349 | Nieuwe SKG***-cilinder (inbegrepen) | Wifi ingebouwd | Ja (Thread) | Oplaadbare accu |
-| Nuki Smart Lock Pro (5e gen.) | €269 | Over bestaande sleutel | Wifi ingebouwd | Ja (Thread) | Oplaadbare Power Pack |
+| Nuki Smart Lock Pro (5e gen.) | €269 | Over bestaande sleutel | Wifi ingebouwd | Ja (Thread) | Oplaadbare accu (ingebouwd) |
 | Nuki Smart Lock Go | €149 | Over bestaande sleutel | Tegen meerprijs | Ja | 4x AA |
 | Tedee GO | ca. €129–€149 | Over bestaande sleutel | Tedee Bridge | Nee | 3x CR123 |
 | SwitchBot Lock Ultra | ca. €160 | Over bestaande sleutel/slot | SwitchBot Hub | Via hub | Accu + back-upbatterij |
-| Aqara Smart Lock U200 Kit | ca. €180 | Over bestaande cilinder, adapters | Thread-hub | Ja (Thread) | Accu |
+| Aqara Smart Lock U200 Kit | ca. €180 | Over bestaande cilinder, adapters | Thread-hub | Ja (Thread) | Zie productpagina |
 | Yale Linus L2 Lite | €139,99 | Zie productpagina (ook als cilinderset) | Thread-hub | Ja (Thread) | Batterijen |
 
 *Prijzen gecontroleerd op 16 september 2026 (adviesprijzen en webshopprijzen). Prijzen en voorraad wisselen snel; check de actuele prijs via de knoppen.*
@@ -78,7 +78,7 @@ In mei 2024 vroeg de Nederlandse slotenmaker **Loqed** faillissement aan. De slo
 <span class="badge">Beste allrounder</span>
 <h3>Nuki Smart Lock Pro (5e generatie)</h3>
 <ul class="huurderproof"><li class="ja">Over bestaande sleutel</li><li class="ja">Wifi + Matter ingebouwd</li><li class="let-op">Noodfunctie-cilinder nodig</li></ul>
-<p>De beste balans tussen gebruiksgemak en prijs. Je monteert de Pro over je sleutel, zonder cilinder te wisselen, en hij heeft wifi, Thread en Bluetooth ingebouwd, dus geen bridge nodig. De oplaadbare Power Pack gaat maanden mee. Auto-unlock, deurstandsensor en een stille motor maken hem compleet.</p>
+<p>De beste balans tussen gebruiksgemak en prijs. Je monteert de Pro over je sleutel, zonder cilinder te wisselen, en hij heeft wifi, Thread en Bluetooth ingebouwd, dus geen bridge nodig. De ingebouwde, oplaadbare accu gaat maanden mee. Auto-unlock, deurstandsensor en een stille motor maken hem compleet.</p>
 <div class="pros-cons">
 <div class="pros"><strong>Pluspunten</strong><ul><li>Geen cilinderwissel</li><li>Geen bridge nodig</li><li>Uitgebreide, volwassen app</li></ul></div>
 <div class="cons"><strong>Minpunten</strong><ul><li>Groter dan de Ultra</li><li>Prijzig</li></ul></div>
