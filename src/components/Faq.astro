@@ -5,8 +5,11 @@ import type { FaqItem } from '../data/faq';
 interface Props {
   items: FaqItem[];
   titel?: string;
+  intro?: string;
+  id?: string;
+  losseSectie?: boolean; // false = geen eigen container (binnen bestaande container)
 }
-const { items, titel = 'Veelgestelde vragen' } = Astro.props;
+const { items, titel = 'Veelgestelde vragen', intro = 'Korte antwoorden op wat huurders ons het vaakst vragen. Geen juridisch advies: kijk bij twijfel altijd in je huurcontract.', id = 'faq-titel', losseSectie = true } = Astro.props;
 
 const strip = (html: string) => html.replace(/<[^>]+>/g, '');
 const jsonLd = {
@@ -19,12 +22,12 @@ const jsonLd = {
   })),
 };
 ---
-<section class="section container faq-section" aria-labelledby="faq-titel">
+<section class:list={['faq-section', losseSectie ? 'section container' : 'related']} aria-labelledby={id}>
   <div class="faq-grid">
     <div class="faq-intro">
       <span class="eyebrow eyebrow--violet"><Icon name="question" /> Vragen</span>
-      <h2 id="faq-titel">{titel}</h2>
-      <p class="muted">Korte antwoorden op wat huurders ons het vaakst vragen. Geen juridisch advies: kijk bij twijfel altijd in je huurcontract.</p>
+      <h2 id={id}>{titel}</h2>
+      <p class="muted">{intro}</p>
     </div>
     <div class="faq-list">
       {items.map((item) => (

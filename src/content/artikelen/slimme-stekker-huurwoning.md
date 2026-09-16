@@ -53,60 +53,17 @@ Een compacte stekker blokkeert het stopcontact ernaast niet, handig bij een dubb
 
 ## Vergelijking: vier slimme stekkers voor huurders
 
-| Model | Prijs (indicatie) | Hub nodig? | Energiemeting | Werkt met |
-|---|---|---|---|---|
-| TP-Link Tapo P110 | ca. €18 | Nee (wifi) | Ja | Google, Alexa |
-| IKEA GRILLPLATS | €8,99 | Ja, voor app (Thread) | Ja | Matter: Google, Alexa, Apple, Homey |
-| Shelly Plug S Gen3 | ca. €22–€30 | Nee (wifi) | Ja | Matter, Home Assistant |
-| Meross Smart Wi-Fi Plug (Matter) | ca. €15–€20 | Nee (wifi) | Ja (bij model met meter) | Matter: Apple, Google, Alexa |
-
-*Prijzen gecontroleerd op 16 september 2026. Prijzen en voorraad wisselen snel; check de actuele prijs via de knoppen.*
+<div data-vergelijking="tapo-p110,ikea-grillplats,shelly-plug-s-gen3,meross-smart-plug-matter"></div>
 
 ## Onze aanraders
 
-<div class="product-box">
-<span class="badge">Beste keuze</span>
-<h3>TP-Link Tapo P110</h3>
-<p>De slimme stekker die we de meeste huurders aanraden: goedkoop, compact, direct via wifi te koppelen en met een ingebouwde verbruiksmeter. Stekker erin, app installeren, klaar. Voordelig per stuk als je een 4-pack koopt.</p>
-<div class="pros-cons">
-<div class="pros"><strong>Pluspunten</strong><ul><li>Geen hub nodig</li><li>Energiemeting in de app</li><li>Tot 3.680 W belastbaar</li><li>Scherpe prijs, ook in 4-pack</li></ul></div>
-<div class="cons"><strong>Minpunten</strong><ul><li>TP-Link-account nodig</li><li>Geen officiële Apple Home-ondersteuning bij dit model</li></ul></div>
-</div>
-<div class="cta-row"><a class="cta" href="https://www.bol.com/nl/nl/p/tp-link-tapo-p110-slimme-stekker-smart-plug-wifi-stopcontact-energiebewaking/9300000050248500/" rel="sponsored nofollow noopener" target="_blank">Bekijk prijs bij bol</a><a class="cta cta--secondary" href="https://www.coolblue.nl/zoeken?query=tapo+p110" rel="sponsored nofollow noopener" target="_blank">Coolblue</a></div>
-</div>
+<div data-product="tapo-p110"></div>
 
-<div class="product-box">
-<span class="badge">Goedkoopst</span>
-<h3>IKEA GRILLPLATS</h3>
-<p>De opvolger van de bekende TRÅDFRI-stekker kost maar €8,99 en meet ook je verbruik. Hij werkt via de open Matter-standaard, maar voor bediening met je telefoon heb je een Thread-hub nodig, zoals de IKEA DIRIGERA (€59,99) of een Google Nest/Apple TV die je misschien al hebt. Alleen te koop bij IKEA.</p>
-<div class="pros-cons">
-<div class="pros"><strong>Pluspunten</strong><ul><li>Laagste prijs per stekker</li><li>Matter: werkt met Apple, Google, Alexa en Homey</li><li>Energiemeting</li></ul></div>
-<div class="cons"><strong>Minpunten</strong><ul><li>Hub nodig voor app-bediening</li><li>Alleen bij IKEA verkrijgbaar</li></ul></div>
-</div>
-<div class="cta-row"><a class="cta cta--secondary" href="https://www.ikea.com/nl/nl/p/grillplats-stekker-smart-60604238/" rel="nofollow noopener" target="_blank">Bekijk bij IKEA NL</a><a class="cta cta--secondary" href="https://www.ikea.com/be/nl/p/grillplats-stekker-smart-90624744/" rel="nofollow noopener" target="_blank">IKEA België</a></div>
-</div>
+<div data-product="ikea-grillplats"></div>
 
-<div class="product-box">
-<span class="badge">Voor tinkeraars</span>
-<h3>Shelly Plug S Gen3</h3>
-<p>Populair bij mensen die met Home Assistant of Homey werken: de Shelly heeft een open lokale API, is Matter-gecertificeerd en werkt zonder hub. Let op het lagere maximum van 2.500 W, dus niet voor zware kachels of drogers. De voorraad wisselt nogal eens.</p>
-<div class="pros-cons">
-<div class="pros"><strong>Pluspunten</strong><ul><li>Lokale bediening, geen cloud verplicht</li><li>Matter + wifi + Bluetooth</li><li>Nauwkeurige energiemeting</li></ul></div>
-<div class="cons"><strong>Minpunten</strong><ul><li>Max. 2.500 W</li><li>Duurder dan Tapo, voorraad wisselt</li></ul></div>
-</div>
-<div class="cta-row"><a class="cta" href="https://www.bol.com/nl/nl/s/?searchtext=shelly+plug+s+gen3" rel="sponsored nofollow noopener" target="_blank">Bekijk prijs bij bol</a></div>
-</div>
+<div data-product="shelly-plug-s-gen3"></div>
 
-<div class="product-box">
-<span class="badge">Voor Apple Home</span>
-<h3>Meross Smart Wi-Fi Plug (Matter)</h3>
-<p>Gebruik je een iPhone en Apple Home? De Matter-versies van Meross werken met Apple Home, Google Home én Alexa, direct via wifi. Kies een model met energiemeter (zoals de MSS315) als je je verbruik wilt volgen.</p>
-<div class="pros-cons">
-<div class="pros"><strong>Pluspunten</strong><ul><li>Breed compatibel dankzij Matter</li><li>Geen hub nodig</li><li>Vaak voordelig geprijsd</li></ul></div>
-<div class="cons"><strong>Minpunten</strong><ul><li>Niet elk model meet verbruik</li><li>Voorraad per model wisselt</li></ul></div>
-</div>
-<div class="cta-row"><a class="cta" href="https://www.bol.com/nl/nl/s/?searchtext=meross+matter+slimme+stekker" rel="sponsored nofollow noopener" target="_blank">Bekijk prijs bij bol</a></div>
-</div>
+<div data-product="meross-smart-plug-matter"></div>
 
 ## Verhuizen? Zo neem je je slimme stekkers mee
 

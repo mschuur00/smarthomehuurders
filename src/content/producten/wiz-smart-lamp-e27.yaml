@@ -12,10 +12,6 @@ prijs:
   vanaf: 16.99
   tekst: ca. €17–€19 voor 2 lampen
   gecontroleerd: 2026-09-16
-huurderproof:
-  - { tekst: Zonder boren, status: ja }
-  - { tekst: Mee bij verhuizing, status: ja }
-  - { tekst: Geen hub nodig, status: ja }
 kenmerken:
   hub: geen
   matter: model

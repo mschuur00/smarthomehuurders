@@ -1,0 +1,22 @@
+# Bron: artikel slimme-stekker-huurwoning + claude/product-database.md (16-09-2026)
+naam: Shelly Plug S Gen3
+merk: Shelly
+categorie: plugs
+label: Voor tinkeraars
+volgorde: 3
+samenvatting: >-
+  Open lokale API, Matter-gecertificeerd en zonder hub. Populair bij Home Assistant-
+  en Homey-gebruikers. Let op het lagere maximum van 2.500 W.
+prijs: { vanaf: 22, tekst: ca. €22–€30, gecontroleerd: 2026-09-16 }
+kenmerken:
+  hub: geen
+  matter: ja
+  werktMet: [home-assistant, homey, apple-home, google-home, alexa]
+  energiemeting: ja
+  maxVermogen: '2500'
+  verbinding: [wifi, bluetooth]
+voordelen: ["Lokale bediening, geen cloud verplicht", Matter + wifi + Bluetooth, Nauwkeurige energiemeting]
+nadelen: [Max. 2.500 W, Duurder dan Tapo en voorraad wisselt]
+winkels:
+  - url: https://www.bol.com/nl/nl/s/?searchtext=shelly+plug+s+gen3
+artikel: slimme-stekker-huurwoning

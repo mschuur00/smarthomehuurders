@@ -11,10 +11,6 @@ prijs:
   vanaf: 27.50
   tekst: ca. €27,50 per lamp
   gecontroleerd: 2026-09-16
-huurderproof:
-  - { tekst: Zonder boren, status: ja }
-  - { tekst: Mee bij verhuizing, status: ja }
-  - { tekst: Geen hub nodig, status: ja }
 kenmerken:
   hub: geen
   matter: ja

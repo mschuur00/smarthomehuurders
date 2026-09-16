@@ -1,0 +1,36 @@
+---
+// "Mijn systeem" + land. Opgeslagen in localStorage, gezet als data-attributen op <html>
+// (Base.astro leest ze vóór render). Tonen/verbergen gebeurt puur met CSS.
+import { ECOSYSTEMEN } from '../data/filters.mjs';
+---
+<div class="prefs">
+  <label class="prefs-item">
+    <span>Mijn systeem</span>
+    <select data-pref="eco">
+      <option value="">Maakt niet uit</option>
+      {Object.entries(ECOSYSTEMEN).map(([k, v]) => <option value={k}>{v}</option>)}
+    </select>
+  </label>
+  <label class="prefs-item">
+    <span>Ik woon in</span>
+    <select data-pref="land">
+      <option value="">Nederland of België</option>
+      <option value="nl">Nederland</option>
+      <option value="be">België</option>
+    </select>
+  </label>
+</div>
+<script is:inline>
+  (function () {
+    var h = document.documentElement;
+    document.querySelectorAll('[data-pref]').forEach(function (sel) {
+      var k = sel.getAttribute('data-pref');
+      sel.value = h.getAttribute('data-' + k) || '';
+      sel.addEventListener('change', function () {
+        document.querySelectorAll('[data-pref="' + k + '"]').forEach(function (s) { s.value = sel.value; });
+        if (sel.value) h.setAttribute('data-' + k, sel.value); else h.removeAttribute('data-' + k);
+        try { localStorage.setItem('shh-' + k, sel.value); } catch (e) {}
+      });
+    });
+  })();
+</script>

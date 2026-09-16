@@ -6,20 +6,14 @@ category: "cameras"
 affiliateDisclosure: true
 snelleKeuze:
   - label: "Beste binnencamera"
-    product: "TP-Link Tapo C210"
+    id: "tapo-c210"
     reden: "Draait en kantelt, opslag op microSD zonder abonnement"
-    url: "https://www.bol.com/nl/nl/s/?searchtext=tapo+c210"
-    winkel: "bol"
   - label: "Beste buitencamera"
-    product: "TP-Link Tapo C425"
+    id: "tapo-c425"
     reden: "Accu tot maanden, magnetisch of met plakstrip te monteren"
-    url: "https://www.bol.com/nl/nl/s/?searchtext=tapo+c425"
-    winkel: "bol"
   - label: "Alternatief binnen"
-    product: "Eufy Indoor Cam 2K Pan & Tilt"
+    id: "eufy-indoor-cam-2k-pan-tilt"
     reden: "Lokale opslag, geen HomeBase nodig"
-    url: "https://www.coolblue.nl/product/863426/eufy-indoor-cam-2k-pan-tilt.html"
-    winkel: "Coolblue"
 ---
 
 Je fiets in de gang, een pakketje voor de deur of gewoon een oogje in het zeil als je op vakantie bent: er zijn genoeg redenen om als huurder een **beveiligingscamera** te willen. Maar gaten boren in de gevel mag vaak niet, en een camera brengt ook privacyregels met zich mee.
@@ -87,64 +81,17 @@ Controleer of je stukken van het beeld kunt afschermen en of de camera een priva
 
 ## Vergelijking: vier camera's voor huurders
 
-| Model | Prijs (indicatie) | Binnen/buiten | Opslag zonder abonnement | Montage |
-|---|---|---|---|---|
-| TP-Link Tapo C210 | ca. €40 | Binnen | Ja, microSD (tot 256 GB) | Neerzetten |
-| Eufy Indoor Cam 2K Pan & Tilt | ca. €40 | Binnen | Ja, microSD | Neerzetten |
-| TP-Link Tapo C425 | ca. €85–€100 | Buiten (IP66) | Ja, microSD (tot 512 GB) | Magneet, plakstrip of beugel |
-| Ring Indoor Cam (2nd Gen) | ca. €55 | Binnen | Nee, opnames via Ring Home (vanaf €3,99/mnd) | Neerzetten |
-
-*Prijzen gecontroleerd op 16 september 2026. Prijzen en voorraad wisselen snel; check de actuele prijs via de knoppen.*
+<div data-vergelijking="tapo-c210,eufy-indoor-cam-2k-pan-tilt,tapo-c425,ring-indoor-cam-2nd-gen"></div>
 
 ## Onze aanraders
 
-<div class="product-box">
-<span class="badge">Beste binnencamera</span>
-<h3>TP-Link Tapo C210</h3>
-<ul class="huurderproof"><li class="ja">Zonder boren</li><li class="ja">Geen abonnement nodig</li><li class="ja">Meeneembaar</li></ul>
-<p>Voor zo'n veertig euro een binnencamera die kan draaien en kantelen, bewegingen volgt en opnames opslaat op een microSD-kaart. Een privacymodus sluit het beeld af als je thuis bent. De microSD-kaart koop je er los bij.</p>
-<div class="pros-cons">
-<div class="pros"><strong>Pluspunten</strong><ul><li>Lokale opslag, geen abonnement</li><li>Pan en tilt</li><li>Zeer scherpe prijs</li></ul></div>
-<div class="cons"><strong>Minpunten</strong><ul><li>MicroSD-kaart niet inbegrepen</li><li>Minder slimme detectie dan duurdere merken</li></ul></div>
-</div>
-<div class="cta-row"><a class="cta" href="https://www.bol.com/nl/nl/s/?searchtext=tapo+c210" rel="sponsored nofollow noopener" target="_blank">Bekijk prijs bij bol</a><a class="cta cta--secondary" href="https://www.coolblue.nl/zoeken?query=tapo+c210" rel="sponsored nofollow noopener" target="_blank">Coolblue</a></div>
-</div>
+<div data-product="tapo-c210"></div>
 
-<div class="product-box">
-<span class="badge badge--budget">Alternatief binnen</span>
-<h3>Eufy Indoor Cam 2K Pan & Tilt</h3>
-<ul class="huurderproof"><li class="ja">Zonder boren</li><li class="ja">Geen abonnement nodig</li><li class="ja">Meeneembaar</li></ul>
-<p>Vergelijkbaar met de Tapo, met 2K-beeld en lokale opslag op een microSD-kaart. Eufy heeft geen HomeBase nodig voor deze camera. Goed om te weten: Eufy kreeg in het verleden kritiek op de beveiliging van cloudbeelden. Gebruik je alleen lokale opslag en een sterk wachtwoord, dan beperk je dat risico.</p>
-<div class="pros-cons">
-<div class="pros"><strong>Pluspunten</strong><ul><li>2K-beeld</li><li>Lokale opslag</li><li>Pan en tilt</li></ul></div>
-<div class="cons"><strong>Minpunten</strong><ul><li>Privacykritiek in het verleden</li><li>App minder uitgebreid</li></ul></div>
-</div>
-<div class="cta-row"><a class="cta" href="https://www.coolblue.nl/product/863426/eufy-indoor-cam-2k-pan-tilt.html" rel="sponsored nofollow noopener" target="_blank">Bekijk prijs bij Coolblue</a><a class="cta cta--secondary" href="https://www.bol.com/nl/nl/s/?searchtext=eufy+indoor+cam+2k+pan+tilt" rel="sponsored nofollow noopener" target="_blank">bol</a></div>
-</div>
+<div data-product="eufy-indoor-cam-2k-pan-tilt"></div>
 
-<div class="product-box">
-<span class="badge">Beste buitencamera</span>
-<h3>TP-Link Tapo C425</h3>
-<ul class="huurderproof"><li class="ja">Zonder boren</li><li class="ja">Geen abonnement nodig</li><li class="let-op">Buiten: vraag verhuurder</li></ul>
-<p>Een draadloze buitencamera op accu die volgens TP-Link tot zo'n 300 dagen meegaat bij normaal gebruik. Dankzij de magnetische voet en plakmontage hoef je niet te boren. Beelden in 2K, kleurennachtzicht en opslag op een microSD-kaart tot 512 GB. Ook als set met zonnepaneel te koop.</p>
-<div class="pros-cons">
-<div class="pros"><strong>Pluspunten</strong><ul><li>Geen kabels of stopcontact nodig</li><li>Lokale opslag</li><li>Weerbestendig (IP66)</li></ul></div>
-<div class="cons"><strong>Minpunten</strong><ul><li>Losse camera wisselend op voorraad</li><li>Soms iets vertraagde detectie</li></ul></div>
-</div>
-<div class="cta-row"><a class="cta" href="https://www.bol.com/nl/nl/s/?searchtext=tapo+c425" rel="sponsored nofollow noopener" target="_blank">Bekijk prijs bij bol</a><a class="cta cta--secondary" href="https://www.coolblue.nl/zoeken?query=tapo+c425" rel="sponsored nofollow noopener" target="_blank">Coolblue</a></div>
-</div>
+<div data-product="tapo-c425"></div>
 
-<div class="product-box">
-<span class="badge badge--premium">Voor Alexa-gebruikers</span>
-<h3>Ring Indoor Cam (2nd Gen)</h3>
-<ul class="huurderproof"><li class="ja">Zonder boren</li><li class="ja">Meeneembaar</li><li class="nee">Abonnement voor opnames</li></ul>
-<p>Ring (van Amazon) heeft een fijne app en werkt uitstekend met Alexa en de rest van Ring. Live meekijken en meldingen werken zonder abonnement, maar wil je opnames terugkijken, dan heb je Ring Home nodig (vanaf €3,99 per maand). De camera heeft een handmatige privacyklep.</p>
-<div class="pros-cons">
-<div class="pros"><strong>Pluspunten</strong><ul><li>Gebruiksvriendelijke app</li><li>Goede integratie met Alexa en Ring-deurbellen</li></ul></div>
-<div class="cons"><strong>Minpunten</strong><ul><li>Geen lokale opslag</li><li>Maandelijkse kosten voor opnames</li></ul></div>
-</div>
-<div class="cta-row"><a class="cta" href="https://www.bol.com/nl/nl/s/?searchtext=ring+indoor+cam+2nd+gen" rel="sponsored nofollow noopener" target="_blank">Bekijk prijs bij bol</a><a class="cta cta--secondary" href="https://www.coolblue.nl/zoeken?query=ring+indoor+cam" rel="sponsored nofollow noopener" target="_blank">Coolblue</a></div>
-</div>
+<div data-product="ring-indoor-cam-2nd-gen"></div>
 
 ## Verhuizen? Zo neem je je camera mee
 

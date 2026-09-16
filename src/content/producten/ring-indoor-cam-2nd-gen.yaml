@@ -1,0 +1,23 @@
+# Bron: artikel beveiligingscamera-huurwoning-zonder-boren + claude/product-database.md (16-09-2026)
+naam: Ring Indoor Cam (2nd Gen)
+merk: Ring
+categorie: cameras
+label: Voor Alexa-gebruikers
+volgorde: 4
+samenvatting: >-
+  Fijne app en goede integratie met Alexa en Ring-deurbellen. Live meekijken en meldingen
+  werken zonder abonnement; opnames terugkijken kan alleen met Ring Home. Handmatige privacyklep.
+prijs: { vanaf: 55, tekst: ca. €55, gecontroleerd: 2026-09-16 }
+kosten:
+  abonnement: { naam: Ring Home, perMaand: 3.99, nodig: true, voor: opnames terugkijken }
+kenmerken:
+  plaats: binnen
+  opslag: cloud
+  montage: neerzetten
+  voeding: stekker
+voordelen: [Gebruiksvriendelijke app, Goede integratie met Alexa en Ring-deurbellen]
+nadelen: [Geen lokale opslag, Maandelijkse kosten voor opnames]
+winkels:
+  - url: https://www.bol.com/nl/nl/s/?searchtext=ring+indoor+cam+2nd+gen
+  - url: https://www.coolblue.nl/zoeken?query=ring+indoor+cam
+artikel: beveiligingscamera-huurwoning-zonder-boren

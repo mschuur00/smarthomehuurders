@@ -1,0 +1,47 @@
+---
+import Icon from './Icon.astro';
+import { getCollection } from 'astro:content';
+import { pakketten } from '../data/pakketten';
+import { formatPrijs, kosten3Jaar, lijst } from '../lib/producten.mjs';
+import { ECOSYSTEMEN } from '../data/filters.mjs';
+
+const base = import.meta.env.BASE_URL;
+const map = new Map((await getCollection('producten')).map((p) => [p.id, p.data]));
+const rijen = pakketten.map((pk) => {
+  const items = pk.items.map((i) => {
+    const d = map.get(i.id);
+    if (!d) throw new Error(`Startpakket "${pk.titel}": onbekend product "${i.id}"`);
+    return { ...i, d };
+  });
+  const totaal = items.reduce((s, i) => s + i.d.prijs.vanaf * i.aantal, 0);
+  const drieJaar = items.reduce((s, i) => s + kosten3Jaar(i.d).totaal * i.aantal, 0);
+  const metEco = items.map((i) => lijst(i.d.kenmerken.werktMet)).filter((l) => l.length);
+  const eco = Object.keys(ECOSYSTEMEN).filter((e) => metEco.every((l) => l.includes(e)));
+  return { ...pk, items, totaal, drieJaar, eco };
+});
+---
+<section class="section container" aria-labelledby="pk-titel">
+  <div class="section-head">
+    <div>
+      <span class="eyebrow eyebrow--blue"><Icon name="box" /> Startpakketten</span>
+      <h2 id="pk-titel">Slim huurhuis per budget</h2>
+    </div>
+    <a href={`${base}keuzehulp/`}>Liever zelf samenstellen? Keuzehulp →</a>
+  </div>
+  <div class="card-grid card-grid--wide">
+    {rijen.map((r) => (
+      <article class="card pakket has-cat" style={`--cat: ${r.kleur}`}>
+        <div class="icon-bubble"><Icon name={r.icon} /></div>
+        <h3>{r.titel} <span class="pakket-prijs">± {formatPrijs(Math.round(r.totaal))}</span></h3>
+        <p>{r.tekst}</p>
+        <ul class="pakket-items">
+          {r.items.map((i) => <li><a href={`${base}product/${i.id}/`}>{i.aantal > 1 ? `${i.aantal}× ` : ''}{i.d.naam}</a> <span>{formatPrijs(i.d.prijs.vanaf * i.aantal)}</span></li>)}
+        </ul>
+        <div class="card-foot">
+          <span>3 jaar: {formatPrijs(Math.round(r.drieJaar))}</span>
+          {r.eco.length > 0 && <span>Samen in {r.eco.map((e) => ECOSYSTEMEN[e]).join(' of ')}</span>}
+        </div>
+      </article>
+    ))}
+  </div>
+</section>

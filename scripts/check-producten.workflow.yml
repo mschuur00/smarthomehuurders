@@ -1,0 +1,40 @@
+# KOPIEER NAAR .github/workflows/check-producten.yml (via GitHub-website: Add file → Create new file).
+name: Wekelijkse productcontrole
+
+on:
+  schedule:
+    - cron: "0 6 * * 1" # maandag 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - name: Controleer links en prijsdatums
+        id: check
+        run: |
+          set +e
+          node scripts/check-producten.mjs > rapport.md
+          echo "status=$?" >> "$GITHUB_OUTPUT"
+          cat rapport.md
+      - name: Issue aanmaken of bijwerken
+        if: steps.check.outputs.status == '2'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          nr=$(gh issue list --label productcontrole --state open --json number --jq '.[0].number')
+          if [ -n "$nr" ]; then
+            gh issue comment "$nr" --body-file rapport.md
+          else
+            gh label create productcontrole --color FBCA04 --force
+            gh issue create --title "Productcontrole: aandachtspunten" --label productcontrole --body-file rapport.md
+          fi

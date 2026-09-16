@@ -6,10 +6,12 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "postbuild": "node scripts/check-build.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "~3.2.1",
-    "astro": "^4.16.0"
+    "astro": "^4.16.0",
+    "js-yaml": "^4.1.0"
   }
 }

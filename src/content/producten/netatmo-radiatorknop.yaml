@@ -1,0 +1,22 @@
+# Bron: artikel slimme-thermostaat-huurwoning + claude/product-database.md (16-09-2026)
+naam: Netatmo Slimme Radiatorknop (startpakket)
+merk: Netatmo
+categorie: thermostats
+label: Degelijk alternatief
+volgorde: 4
+samenvatting: >-
+  Goede ondersteuning in NL en BE, werkt met alle grote spraakassistenten en is zonder
+  abonnement volledig te gebruiken. De ketel slim aansturen kan alleen met de Netatmo-
+  thermostaat, en dan kom je aan de installatie.
+prijs: { vanaf: 130, tekst: "startpakket vanaf ca. €130; losse knop ca. €90", gecontroleerd: 2026-09-16 }
+huurder: { terugzetten: onderdeel }
+kenmerken:
+  hub: nodig
+  abonnement: geen
+  opAfstand: ja
+  werktMet: [apple-home, google-home, alexa]
+voordelen: [Geen abonnement, "Werkt met Apple, Google en Alexa"]
+nadelen: [Volledig systeem wordt duurder, Minder uitgebreide app dan tado]
+winkels:
+  - url: https://www.bol.com/nl/nl/s/?searchtext=netatmo+slimme+radiatorknop
+artikel: slimme-thermostaat-huurwoning

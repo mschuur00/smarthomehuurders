@@ -1,0 +1,128 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { getCollection } from 'astro:content';
+import { categorieen } from '../data/categorieen';
+import { catStyle } from '../data/categorie-stijl';
+import { ECOSYSTEMEN } from '../data/filters.mjs';
+import { ecoLijst, formatPrijs, huurderScore, kosten3Jaar, lijst, scoreHtml } from '../lib/producten.mjs';
+
+const base = import.meta.env.BASE_URL;
+const producten = (await getCollection('producten', ({ data }) => !data.draft)).sort((a, b) => a.data.volgorde - b.data.volgorde);
+const metProducten = categorieen.filter((c) => producten.some((p) => p.data.categorie === c.slug));
+---
+<Base title="Keuzehulp" description="Beantwoord vier vragen en krijg per categorie het smart home product dat het beste past bij jouw huurwoning, systeem en budget.">
+  <div class="page-head page-head--band">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Kruimelpad">
+        <ol>
+          <li><a href={base}><Icon name="home" /><span class="sr-only">Home</span></a></li>
+          <li><span aria-current="page">Keuzehulp</span></li>
+        </ol>
+      </nav>
+      <h1>Keuzehulp</h1>
+      <p class="lead">Vier vragen, één persoonlijk lijstje. We kiezen per categorie het product met de hoogste huurder-score dat past bij jouw wensen en budget.</p>
+    </div>
+  </div>
+
+  <div class="container kh" data-kh>
+    <form class="kh-form" data-kh-form>
+      <fieldset class="kh-q">
+        <legend><span class="kh-n">1</span> Wat wil je slim maken?</legend>
+        <div class="kh-opts">
+          {metProducten.map((c) => (
+            <label class="kh-chip has-cat" style={catStyle(c.slug)}><input type="checkbox" name="cat" value={c.slug} checked /><Icon name={c.slug} />{c.label}</label>
+          ))}
+        </div>
+      </fieldset>
+      <fieldset class="kh-q">
+        <legend><span class="kh-n">2</span> Welk systeem gebruik je?</legend>
+        <select name="eco" data-pref="eco">
+          <option value="">Maakt niet uit / weet ik niet</option>
+          {Object.entries(ECOSYSTEMEN).map(([k, v]) => <option value={k}>{v}</option>)}
+        </select>
+      </fieldset>
+      <fieldset class="kh-q">
+        <legend><span class="kh-n">3</span> Wat wil je liever niet?</legend>
+        <label class="kh-check"><input type="checkbox" name="geenhub" /> Geen aparte hub of bridge (ook niet voor extra functies)</label>
+        <label class="kh-check"><input type="checkbox" name="geenabo" /> Geen abonnement</label>
+        <label class="kh-check"><input type="checkbox" name="geenoverleg" /> Niets waarvoor ik met mijn verhuurder moet overleggen</label>
+      </fieldset>
+      <fieldset class="kh-q">
+        <legend><span class="kh-n">4</span> Wat is je totale budget?</legend>
+        <label class="kh-budget">€ <input type="number" name="budget" min="0" step="10" placeholder="geen limiet" inputmode="numeric" /></label>
+      </fieldset>
+    </form>
+
+    <section class="kh-result" aria-live="polite">
+      <h2>Jouw lijstje</h2>
+      <ul class="kh-list">
+        {producten.map((p) => {
+          const d = p.data;
+          return (
+            <li
+              class="kh-item has-cat" style={catStyle(d.categorie)} hidden
+              data-cat={d.categorie} data-eco={ecoLijst(d).join(' ')} data-hub={d.kenmerken.hub ?? ''}
+              data-abo={d.kosten.abonnement?.nodig || lijst(d.kenmerken.abonnement).includes('optioneel') ? 'ja' : ''}
+              data-overleg={d.huurder.toestemming !== 'nee' ? 'ja' : ''}
+              data-volgorde={d.volgorde} data-prijs={d.prijs.vanaf} data-kosten={kosten3Jaar(d).totaal} data-score={huurderScore(d).score}
+            >
+              <span class="usp-icon"><Icon name={d.categorie} /></span>
+              <div class="kh-item-body">
+                <a href={`${base}product/${p.id}/`}><strong>{d.naam}</strong></a>
+                <span class="muted">{d.label}</span>
+              </div>
+              <Fragment set:html={scoreHtml(d)} />
+              <span class="kh-prijs">{formatPrijs(d.prijs.vanaf)}</span>
+            </li>
+          );
+        })}
+      </ul>
+      <p class="kh-total" data-kh-total></p>
+      <p class="kh-missing muted" data-kh-missing hidden></p>
+      <noscript><p>Zet JavaScript aan om de keuzehulp te gebruiken, of bekijk de <a href={`${base}categorie/`}>categorieën</a>.</p></noscript>
+    </section>
+  </div>
+
+  <script is:inline>
+    (function () {
+      var root = document.querySelector('[data-kh]');
+      var form = root.querySelector('[data-kh-form]');
+      var items = Array.prototype.slice.call(root.querySelectorAll('.kh-item'));
+      var fmt = new Intl.NumberFormat('nl-NL', { style: 'currency', currency: 'EUR' });
+      var eco = form.elements.eco;
+      eco.value = document.documentElement.getAttribute('data-eco') || '';
+      function run() {
+        var cats = Array.prototype.map.call(form.querySelectorAll('[name=cat]:checked'), function (i) { return i.value; });
+        var budget = parseFloat(form.elements.budget.value) || Infinity;
+        var rest = budget, totaal = 0, drie = 0, mis = [];
+        items.forEach(function (i) { i.hidden = true; });
+        // ponytail: greedy — goedkoopste categorie eerst, per categorie score > onze volgorde > prijs; geen optimale budgetverdeling
+        var lijsten = cats.map(function (cat) {
+          return { cat: cat, kand: items.filter(function (i) {
+            return i.dataset.cat === cat &&
+              (!eco.value || i.dataset.eco.split(' ').indexOf(eco.value) > -1) &&
+              (!form.elements.geenhub.checked || !i.dataset.hub || i.dataset.hub === 'geen') &&
+              (!form.elements.geenabo.checked || !i.dataset.abo) &&
+              (!form.elements.geenoverleg.checked || !i.dataset.overleg);
+          }).sort(function (a, b) { return b.dataset.score - a.dataset.score || a.dataset.volgorde - b.dataset.volgorde || a.dataset.prijs - b.dataset.prijs; }) };
+        }).sort(function (x, y) { return (x.kand[0] ? x.kand[0].dataset.prijs : 1e9) - (y.kand[0] ? y.kand[0].dataset.prijs : 1e9); });
+        lijsten.forEach(function (l) {
+          var keuze = l.kand.filter(function (i) { return parseFloat(i.dataset.prijs) <= rest; })[0];
+          if (!keuze) { mis.push(l.cat); return; }
+          keuze.hidden = false;
+          rest -= parseFloat(keuze.dataset.prijs);
+          totaal += parseFloat(keuze.dataset.prijs);
+          drie += parseFloat(keuze.dataset.kosten);
+        });
+        root.querySelector('[data-kh-total]').textContent = totaal ? 'Totaal vanaf ' + fmt.format(totaal) + ' · over 3 jaar ' + fmt.format(drie) : 'Kies minstens één categorie.';
+        var m = root.querySelector('[data-kh-missing]');
+        m.hidden = !mis.length;
+        m.textContent = mis.length ? 'Geen passend product gevonden voor: ' + mis.map(function (c) { return form.querySelector('[value="' + c + '"]').parentNode.textContent.trim(); }).join(', ') + '. Probeer een wens minder of een hoger budget.' : '';
+      }
+      form.addEventListener('input', run);
+      form.addEventListener('change', run);
+      run();
+    })();
+  </script>
+</Base>

@@ -56,48 +56,15 @@ Een smart lock voegt gemak toe, maar **de inbraakwerendheid blijft afhangen van 
 
 ## Vergelijking: drie smart locks voor huurders
 
-| Model | Prijs (indicatie) | Montage | Op afstand bedienen | Werkt met |
-|---|---|---|---|---|
-| Tedee GO | ca. €129–€149 | Over bestaande sleutel, cilinder blijft | Met Tedee Bridge | Google, Alexa, Homey e.a. |
-| SwitchBot Lock Ultra | ca. €160 | Over bestaande sleutel/slot, adapters meegeleverd | Met SwitchBot Hub (Mini of Hub 3) | Matter via hub: Apple, Google, Alexa |
-| Nuki Smart Lock Ultra | ca. €349 | Nieuwe SKG\*\*\*-cilinder, geen boren | Ingebouwde wifi, geen bridge | Matter: Apple, Google, Alexa, Homey |
-
-*Prijzen gecontroleerd op 16 september 2026. Prijzen en voorraad wisselen snel; check de actuele prijs via de knoppen.*
+<div data-vergelijking="tedee-go,switchbot-lock-ultra,nuki-smart-lock-ultra"></div>
 
 ## Onze aanraders
 
-<div class="product-box">
-<span class="badge">Beste voor huurders</span>
-<h3>Tedee GO</h3>
-<p>Het meest onopvallende en makkelijkst terug te draaien smart lock: je bestaande cilinder blijft zitten en de Tedee GO monteer je in een paar minuten over de sleutel aan de binnenkant. Werkt op batterijen (CR123, zo'n zes maanden) en is te bedienen met je telefoon, smartwatch of een los keypad. Voor bediening buitenshuis heb je de Tedee Bridge nodig.</p>
-<div class="pros-cons">
-<div class="pros"><strong>Pluspunten</strong><ul><li>Geen cilinder vervangen, geen boren</li><li>Compact en stil</li><li>Scherpe prijs voor een merk-smart lock</li></ul></div>
-<div class="cons"><strong>Minpunten</strong><ul><li>Cilinder met noodfunctie vereist</li><li>Bridge nodig voor bediening op afstand</li></ul></div>
-</div>
-<div class="cta-row"><a class="cta" href="https://www.bol.com/nl/nl/s/?searchtext=tedee+go" rel="sponsored nofollow noopener" target="_blank">Bekijk prijs bij bol</a><a class="cta cta--secondary" href="https://tedee.com/nl/product-info/tedee-go/" rel="nofollow noopener" target="_blank">Tedee.com</a></div>
-</div>
+<div data-product="tedee-go"></div>
 
-<div class="product-box">
-<span class="badge">Meeste opties</span>
-<h3>SwitchBot Lock Ultra</h3>
-<p>Ook dit slot gaat over je bestaande slot heen, met acht cilinderadapters in de doos. Het blinkt uit in ontgrendelmethoden: app, pincode, NFC-tag en (met het optionele keypad) vingerafdruk. De accu gaat maanden mee en er zit een reservebatterij in. Voor bediening op afstand en Matter heb je een SwitchBot Hub nodig.</p>
-<div class="pros-cons">
-<div class="pros"><strong>Pluspunten</strong><ul><li>Montage zonder de deur aan te passen</li><li>Veel manieren om te openen</li><li>Accu plus back-upbatterij</li></ul></div>
-<div class="cons"><strong>Minpunten</strong><ul><li>Hub apart kopen voor afstand/Matter</li><li>Gezichtsherkenning (duurste keypad) bleek in een test met een foto te misleiden</li></ul></div>
-</div>
-<div class="cta-row"><a class="cta" href="https://www.bol.com/nl/nl/s/?searchtext=switchbot+lock+ultra" rel="sponsored nofollow noopener" target="_blank">Bekijk prijs bij bol</a></div>
-</div>
+<div data-product="switchbot-lock-ultra"></div>
 
-<div class="product-box">
-<span class="badge">Premium</span>
-<h3>Nuki Smart Lock Ultra</h3>
-<p>Het meest complete slimme slot: ingebouwde wifi en Matter (geen bridge nodig), automatisch ontgrendelen als je thuiskomt en een meegeleverde SKG***-cilinder. Je vervangt wel je cilinder, dus bewaar de originele goed voor de oplevering. Installatie zonder boren, maar reken op iets meer dan de beloofde 15 minuten.</p>
-<div class="pros-cons">
-<div class="pros"><strong>Pluspunten</strong><ul><li>Geen bridge nodig, werkt met alle grote platforms</li><li>SKG***-cilinder inbegrepen</li><li>Oplaadbare accu</li></ul></div>
-<div class="cons"><strong>Minpunten</strong><ul><li>Duurste optie</li><li>Cilinder wisselen: overleg bij voorkeur met je verhuurder</li></ul></div>
-</div>
-<div class="cta-row"><a class="cta" href="https://www.bol.com/nl/nl/p/nuki-smart-lock-ultra-slim-deurslot-met-wifi-matter-auto-unlock-nachtmodus-lock-n-go-werkt-met-google-alexa-apple-incl-skg-cilinder/9300000229772639/" rel="sponsored nofollow noopener" target="_blank">Bekijk prijs bij bol</a><a class="cta cta--secondary" href="https://www.coolblue.nl/zoeken?query=nuki+smart+lock+ultra" rel="sponsored nofollow noopener" target="_blank">Coolblue</a></div>
-</div>
+<div data-product="nuki-smart-lock-ultra"></div>
 
 ## Verhuizen of de huur opzeggen? Zo haal je je slimme slot weg
 

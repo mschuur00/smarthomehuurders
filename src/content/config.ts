@@ -18,14 +18,17 @@ const artikelen = defineCollection({
     /** Optioneel: "Snelle keuze"-box bovenaan het artikel (max 5 producten). */
     snelleKeuze: z
       .array(
-        z.object({
-          label: z.string(), // bijv. "Beste keuze", "Beste budget"
-          product: z.string(),
-          reden: z.string().optional(), // één korte zin
-          url: z.string().url(), // affiliate link
-          winkel: z.string().optional(), // bijv. "bol" → knoptekst "Bekijk bij bol"
-          knop: z.string().optional(), // eigen knoptekst (overschrijft winkel)
-        })
+        z
+          .object({
+            id: z.string().optional(), // product-id uit src/content/producten → naam + link automatisch
+            label: z.string(), // bijv. "Beste keuze", "Beste budget"
+            product: z.string().optional(), // nodig als er geen id is
+            reden: z.string().optional(), // één korte zin
+            url: z.string().url().optional(), // nodig als er geen id is
+            winkel: z.string().optional(),
+            knop: z.string().optional(),
+          })
+          .refine((x) => x.id || (x.product && x.url), { message: 'snelleKeuze: geef een id, of product + url' })
       )
       .max(5)
       .optional(),
@@ -35,7 +38,7 @@ const artikelen = defineCollection({
 /**
  * Producten voor het vergelijk-/filteroverzicht op categoriepagina's.
  * Eén YAML-bestand per product in src/content/producten/ (bestandsnaam = id).
- * Toegestane kenmerken + labels per categorie: src/data/filters.ts
+ * Toegestane kenmerken + labels per categorie: src/data/filters.mjs
  * (onbekende kenmerk-waarden laten de build falen met een duidelijke melding).
  */
 const producten = defineCollection({
@@ -52,23 +55,37 @@ const producten = defineCollection({
       tekst: z.string(), // zoals getoond, bijv. "ca. €17–€19 (2-pack)"
       gecontroleerd: z.date(),
     }),
-    huurderproof: z
-      .array(z.object({ tekst: z.string(), status: z.enum(['ja', 'let-op', 'nee']) }))
-      .default([]),
-    /** Categorie-specifieke kenmerken; sleutels en waarden zie src/data/filters.ts */
+    /** Basis voor huurder-score en badges (zie src/lib/producten.mjs). */
+    huurder: z
+      .object({
+        boren: z.enum(['nee', 'optioneel', 'ja']).default('nee'),
+        terugzetten: z.enum(['niets', 'onderdeel', 'nee']).default('niets'), // origineel onderdeel terugzetten bij vertrek?
+        installatie: z.enum(['zelf', 'handig', 'installateur']).default('zelf'),
+        toestemming: z.enum(['nee', 'aanrader', 'nodig']).default('nee'), // toestemming verhuurder
+      })
+      .default({}),
+    /** Voor de 3-jaarskosten. */
+    kosten: z
+      .object({
+        extra: z
+          .array(z.object({ naam: z.string(), prijs: z.number().optional(), nodig: z.boolean(), reden: z.string().optional() }))
+          .default([]),
+        abonnement: z
+          .object({ naam: z.string(), perMaand: z.number(), nodig: z.boolean(), voor: z.string().optional() })
+          .optional(),
+      })
+      .default({}),
+    /** Extra badges bovenop de automatisch afgeleide (zie huurderBadges). */
+    huurderproof: z.array(z.object({ tekst: z.string(), status: z.enum(['ja', 'let-op', 'nee']) })).default([]),
+    /** Categorie-specifieke kenmerken; sleutels en waarden zie src/data/filters.mjs */
     kenmerken: z.record(z.string(), z.union([z.string(), z.array(z.string())])),
     voordelen: z.array(z.string()).default([]),
     nadelen: z.array(z.string()).default([]),
-    winkels: z
-      .array(
-        z.object({
-          naam: z.string(),
-          url: z.string().url(),
-          affiliate: z.boolean().default(true), // false = geen rel="sponsored" (bijv. IKEA)
-        })
-      )
-      .min(1),
-    artikel: z.string().optional(), // slug van de koopgids waarin dit product besproken wordt
+    /** Winkel wordt herkend aan de URL (src/lib/winkels.mjs); naam optioneel overschrijven. */
+    winkels: z.array(z.object({ url: z.string().url(), naam: z.string().optional() })).min(1),
+    /** Extra verhuisstappen specifiek voor dit product (naast die van de categorie). */
+    verhuizen: z.array(z.string()).default([]),
+    artikel: z.string().optional(), // slug van de koopgids
     draft: z.boolean().default(false),
   }),
 });

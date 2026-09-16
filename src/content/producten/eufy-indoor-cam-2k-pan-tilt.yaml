@@ -1,0 +1,26 @@
+# Bron: artikel beveiligingscamera-huurwoning-zonder-boren + claude/product-database.md (16-09-2026)
+naam: Eufy Indoor Cam 2K Pan & Tilt
+merk: Eufy
+categorie: cameras
+label: Alternatief binnen
+volgorde: 2
+samenvatting: >-
+  2K-beeld, draait en kantelt, lokale opslag op microSD en geen HomeBase nodig. Eufy kreeg
+  eerder kritiek op beveiliging van cloudbeelden; met alleen lokale opslag en een sterk
+  wachtwoord beperk je dat risico.
+prijs: { vanaf: 40, tekst: ca. €40, gecontroleerd: 2026-09-16 }
+kosten:
+  extra:
+    - { naam: microSD-kaart (los te koop), nodig: true }
+kenmerken:
+  plaats: binnen
+  opslag: lokaal
+  montage: neerzetten
+  panTilt: ja
+  voeding: stekker
+voordelen: [2K-beeld, Lokale opslag, Draait en kantelt]
+nadelen: [Privacykritiek in het verleden, App minder uitgebreid]
+winkels:
+  - url: https://www.coolblue.nl/product/863426/eufy-indoor-cam-2k-pan-tilt.html
+  - url: https://www.bol.com/nl/nl/s/?searchtext=eufy+indoor+cam+2k+pan+tilt
+artikel: beveiligingscamera-huurwoning-zonder-boren

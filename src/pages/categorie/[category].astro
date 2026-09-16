@@ -3,6 +3,8 @@ import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import ProductOverview from '../../components/ProductOverview.astro';
+import Faq from '../../components/Faq.astro';
+import { categorieInfo } from '../../data/categorie-info';
 import { categorieen } from '../../data/categorieen';
 import { catStyle } from '../../data/categorie-stijl';
 import { getArtikelen, getProducten, sorteerOpDatum } from '../../utils/artikel';
@@ -21,6 +23,7 @@ const producten = await getProducten(categorie.slug);
 const andere = categorieen.filter((c) => c.slug !== categorie.slug);
 const base = import.meta.env.BASE_URL;
 const labelLower = categorie.label.toLowerCase();
+const info = categorieInfo[categorie.slug];
 ---
 <Base title={categorie.label} description={categorie.omschrijving}>
   <div class="page-head page-head--band page-head--cat has-cat" style={catStyle(categorie.slug)}>
@@ -49,6 +52,17 @@ const labelLower = categorie.label.toLowerCase();
   </div>
 
   <div class="container has-cat" style={catStyle(categorie.slug)}>
+    {info && producten.length > 0 && (
+      <section class="letop" aria-label="Waar let je op">
+        {info.letOp.map((l) => (
+          <div class="letop-item">
+            <span class="usp-icon"><Icon name={l.icon} /></span>
+            <div><h3>{l.titel}</h3><p>{l.tekst}</p></div>
+          </div>
+        ))}
+      </section>
+    )}
+
     {producten.length > 0 && (
       <ProductOverview categorie={categorie.slug} producten={producten} titel={`${categorie.label} vergelijken`} />
     )}
@@ -78,6 +92,10 @@ const labelLower = categorie.label.toLowerCase();
           ))}
         </ul>
       </div>
+    )}
+
+    {info && (producten.length > 0 || artikelen.length > 0) && (
+      <Faq items={info.faq} titel={`Vragen over ${labelLower}`} intro="Korte antwoorden voor huurders. Meer uitleg vind je in de koopgids." id="cat-faq" losseSectie={false} />
     )}
 
     {(producten.length > 0 || artikelen.length > 0) && (

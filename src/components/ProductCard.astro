@@ -1,63 +1,57 @@
 ---
 import Icon from './Icon.astro';
-import type { Product } from '../utils/artikel';
-import { formatDatum, formatPrijs } from '../utils/artikel';
-import type { FilterGroep } from '../data/filters';
-import { prijsKlasse } from '../data/filters';
+import type { CollectionEntry } from 'astro:content';
+import { ecoLijst, formatDatum, formatPrijs, huurderBadges, kosten3Jaar, kostenRegel, lijst, scoreHtml, specs, winkels, huurderScore } from '../lib/producten.mjs';
+import { filtersPerCategorie, prijsKlasse, scoreKlasse } from '../data/filters.mjs';
 import { catStyle } from '../data/categorie-stijl';
 
 interface Props {
-  product: Product;
-  groepen: FilterGroep[]; // alle kenmerk-definities van deze categorie
+  product: CollectionEntry<'producten'>;
 }
-const { product, groepen } = Astro.props;
+const { product } = Astro.props;
 const d = product.data;
 const base = import.meta.env.BASE_URL;
+const groepen = filtersPerCategorie[d.categorie]?.groepen ?? [];
+const score = huurderScore(d).score;
+const kosten = kosten3Jaar(d);
 
-const lijst = (v: string | string[] | undefined) => (v === undefined ? [] : Array.isArray(v) ? v : [v]);
-
-// data-attributen voor de filters (waarden gescheiden door spaties)
 const dataAttrs: Record<string, string> = {
+  'data-id': product.id,
   'data-prijs': String(d.prijs.vanaf),
+  'data-kosten': String(kosten.totaal),
+  'data-score': String(score),
   'data-volgorde': String(d.volgorde),
   'data-f-prijs': prijsKlasse(d.prijs.vanaf),
+  'data-f-score': scoreKlasse(score),
 };
 for (const g of groepen) dataAttrs[`data-f-${g.key.toLowerCase()}`] = lijst(d.kenmerken[g.key]).join(' ');
 
-const specs = groepen
-  .filter((g) => d.kenmerken[g.key] !== undefined)
-  .map((g) => ({
-    key: g.key,
-    label: g.specLabel ?? g.label,
-    waarden: lijst(d.kenmerken[g.key]).map((v) => g.waarden[v] ?? v),
-    positief: g.key === 'matter' ? d.kenmerken[g.key] === 'ja' : g.key === 'hub' ? d.kenmerken[g.key] === 'geen' : false,
-  }));
-
-const heeftAffiliate = d.winkels.some((w) => w.affiliate);
+const badges = huurderBadges(d).slice(0, 4);
+const ws = winkels(d);
 ---
 <article class="product-card has-cat" style={catStyle(d.categorie)} id={`product-${product.id}`} {...dataAttrs}>
   <div class="pc-top">
-    {d.label ? <span class="pc-label"><Icon name="star" />{d.label}</span> : <span />}
-    <span class="pc-brand">{d.merk}</span>
+    {d.label ? <span class="pc-label"><Icon name="star" />{d.label}</span> : <span class="pc-brand">{d.merk}</span>}
+    <Fragment set:html={scoreHtml(d)} />
   </div>
 
-  <h3 class="pc-name">{d.naam}</h3>
+  <h3 class="pc-name"><a href={`${base}product/${product.id}/`}>{d.naam}</a></h3>
 
   <p class="pc-price">
     <span class="pc-price-main"><small>vanaf</small> <strong>{formatPrijs(d.prijs.vanaf)}</strong></span>
     <span class="pc-price-note">{d.prijs.tekst}</span>
+    <span class="pc-kosten">{kostenRegel(d)}</span>
   </p>
 
-  {d.huurderproof.length > 0 && (
-    <ul class="huurderproof pc-badges" aria-label="Huurder-check">
-      {d.huurderproof.map((h) => <li class={h.status}>{h.tekst}</li>)}
-    </ul>
-  )}
+  <ul class="huurderproof pc-badges" aria-label="Huurder-check">
+    {badges.map((h) => <li class={h.status}>{h.tekst}</li>)}
+  </ul>
+  <span class="eco-fit" data-eco={ecoLijst(d).join(' ')}></span>
 
   <p class="pc-summary">{d.samenvatting}</p>
 
   <dl class="pc-specs">
-    {specs.map((s) => (
+    {specs(d).map((s) => (
       <div class:list={['pc-spec', { 'is-positive': s.positief }]}>
         <dt>{s.label}</dt>
         <dd>{s.waarden.join(', ')}</dd>
@@ -65,33 +59,25 @@ const heeftAffiliate = d.winkels.some((w) => w.affiliate);
     ))}
   </dl>
 
-  {(d.voordelen.length > 0 || d.nadelen.length > 0) && (
-    <details class="pc-details">
-      <summary>Voor- en nadelen <Icon name="chevron-down" class="pc-chevron" /></summary>
-      <div class="pros-cons">
-        <div class="pros"><strong>Pluspunten</strong><ul>{d.voordelen.map((v) => <li>{v}</li>)}</ul></div>
-        <div class="cons"><strong>Minpunten</strong><ul>{d.nadelen.map((v) => <li>{v}</li>)}</ul></div>
-      </div>
-    </details>
-  )}
+  <details class="pc-details">
+    <summary>Voor- en nadelen <Icon name="chevron-down" class="pc-chevron" /></summary>
+    <div class="pros-cons">
+      <div class="pros"><strong>Pluspunten</strong><ul>{d.voordelen.map((v) => <li>{v}</li>)}</ul></div>
+      <div class="cons"><strong>Minpunten</strong><ul>{d.nadelen.map((v) => <li>{v}</li>)}</ul></div>
+    </div>
+  </details>
 
   <div class="pc-actions">
-    {d.winkels.map((w, i) => (
-      <a
-        class:list={['cta', { 'cta--secondary': i > 0 }]}
-        href={w.url}
-        rel={w.affiliate ? 'sponsored nofollow noopener' : 'nofollow noopener'}
-        target="_blank"
-      >
+    {ws.map((w, i) => (
+      <a class:list={['cta', { 'cta--secondary': i > 0 }]} href={w.url} rel={w.rel} target="_blank" data-land={w.landen.join(' ')}>
         {i === 0 ? `Bekijk bij ${w.naam}` : w.naam}
       </a>
     ))}
   </div>
 
   <div class="pc-foot">
-    <span>{heeftAffiliate ? 'Affiliate link · ' : ''}Prijs gecontroleerd {formatDatum(d.prijs.gecontroleerd)}</span>
-    {d.artikel && (
-      <a href={`${base}artikelen/${d.artikel}/`}>Lees de koopgids <Icon name="arrow" /></a>
-    )}
+    <label class="pc-compare"><input type="checkbox" data-compare value={product.id} /> Vergelijk</label>
+    <a href={`${base}product/${product.id}/`}>Details <Icon name="arrow" /></a>
   </div>
+  <p class="pc-meta">{ws.some((w) => w.affiliate) ? 'Affiliate link · ' : ''}Prijs gecontroleerd {formatDatum(d.prijs.gecontroleerd)}</p>
 </article>

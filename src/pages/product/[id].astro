@@ -1,0 +1,152 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import Voorkeuren from '../../components/Voorkeuren.astro';
+import { getCollection } from 'astro:content';
+import { catStyle } from '../../data/categorie-stijl';
+import { categorieInfo } from '../../data/categorie-info';
+import { vindCategorie, getProducten } from '../../utils/artikel';
+import {
+  ecoLijst, formatDatum, formatPrijs, formatScore, huurderBadges, huurderScore, kosten3Jaar, kostenRegel, scoreHtml, specs, valideerProduct, winkels, JAREN,
+} from '../../lib/producten.mjs';
+
+export async function getStaticPaths() {
+  const producten = await getCollection('producten', ({ data }) => !data.draft);
+  return producten.map((p) => ({ params: { id: p.id }, props: { product: p } }));
+}
+
+const { product } = Astro.props;
+const d = product.data;
+valideerProduct(product.id, d);
+const base = import.meta.env.BASE_URL;
+const cat = vindCategorie(d.categorie);
+const s = huurderScore(d);
+const k = kosten3Jaar(d);
+const ws = winkels(d);
+const artikel = d.artikel ? (await getCollection('artikelen')).find((a) => a.slug === d.artikel && !a.data.draft) : undefined;
+const alternatieven = (await getProducten(d.categorie)).filter((p) => p.id !== product.id).slice(0, 3);
+const stappen = [...(categorieInfo[d.categorie]?.verhuizen ?? []), ...d.verhuizen];
+const abs = (p: string) => new URL(p, Astro.site).href;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: abs(base) },
+    { '@type': 'ListItem', position: 2, name: cat?.label ?? d.categorie, item: abs(`${base}categorie/${d.categorie}/`) },
+    { '@type': 'ListItem', position: 3, name: d.naam, item: abs(`${base}product/${product.id}/`) },
+  ],
+};
+---
+<Base title={`${d.naam} in een huurwoning`} description={`${d.naam}: huurder-score ${formatScore(s.score)}/5, ${kostenRegel(d)}. ${d.samenvatting}`} activeCategory={d.categorie}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
+
+  <div class="page-head page-head--band page-head--cat has-cat" style={catStyle(d.categorie)}>
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Kruimelpad">
+        <ol>
+          <li><a href={base}><Icon name="home" /><span class="sr-only">Home</span></a></li>
+          <li><a href={`${base}categorie/${d.categorie}/`}>{cat?.label}</a></li>
+          <li><span aria-current="page">{d.naam}</span></li>
+        </ol>
+      </nav>
+      <div class="pp-head">
+        <div>
+          <p class="pp-kicker">{d.label && <span class="pc-label"><Icon name="star" />{d.label}</span>} <span class="pc-brand">{d.merk}</span></p>
+          <h1>{d.naam}</h1>
+          <p class="lead">{d.samenvatting}</p>
+          <span class="eco-fit" data-eco={ecoLijst(d).join(' ')}></span>
+        </div>
+        <aside class="pp-buy">
+          <div class="pp-score"><Fragment set:html={scoreHtml(d, { groot: true })} /><span>{s.oordeel}</span></div>
+          <p class="pc-price">
+            <span class="pc-price-main"><small>vanaf</small> <strong>{formatPrijs(d.prijs.vanaf)}</strong></span>
+            <span class="pc-price-note">{d.prijs.tekst}</span>
+            <span class="pc-kosten">{kostenRegel(d)}</span>
+          </p>
+          <div class="pc-actions no-print">
+            {ws.map((w, i) => (
+              <a class:list={['cta', { 'cta--secondary': i > 0 }]} href={w.url} rel={w.rel} target="_blank" data-land={w.landen.join(' ')}>
+                {i === 0 ? `Bekijk bij ${w.naam}` : w.naam}
+              </a>
+            ))}
+          </div>
+          <p class="pc-meta">{ws.some((w) => w.affiliate) ? 'Affiliate link · ' : ''}Prijs gecontroleerd {formatDatum(d.prijs.gecontroleerd)}</p>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <div class="container has-cat pp-body" style={catStyle(d.categorie)}>
+    <div class="no-print"><Voorkeuren /></div>
+
+    <div class="pp-grid">
+      <section class="pp-block" aria-labelledby="hc">
+        <h2 id="hc"><Icon name="shield" /> Huurder-check</h2>
+        <ul class="huurderproof">{huurderBadges(d).map((b) => <li class={b.status}>{b.tekst}</li>)}</ul>
+        <p class="pp-why">
+          <strong>Waarom {formatScore(s.score)}/5?</strong>
+          {s.factoren.length === 0 ? ' Geen aandachtspunten: zonder boren, zelf te installeren en volledig mee te nemen.' : ''}
+        </p>
+        {s.factoren.length > 0 && <ul class="pp-factoren">{s.factoren.map((f) => <li>{f.tekst} <span>−{formatScore(f.aftrek)}</span></li>)}</ul>}
+        <p class="muted pp-small"><a href={`${base}over-ons/#huurder-score`}>Hoe we de huurder-score berekenen</a></p>
+      </section>
+
+      <section class="pp-block" aria-labelledby="kst">
+        <h2 id="kst"><Icon name="tag" /> Kosten over {JAREN} jaar</h2>
+        <table class="pp-kosten"><tbody>
+          <tr><th scope="row">Aanschaf (vanaf)</th><td>{formatPrijs(k.aanschaf)}</td></tr>
+          {d.kosten.extra.filter((e) => e.nodig).map((e) => <tr><th scope="row">{e.naam}</th><td>{typeof e.prijs === 'number' ? formatPrijs(e.prijs) : 'los te koop'}</td></tr>)}
+          {k.abonnement > 0 && <tr><th scope="row">{k.abonnementInfo?.naam} ({formatPrijs(k.abonnementInfo!.perMaand)}/mnd × {JAREN * 12})</th><td>{formatPrijs(k.abonnement)}</td></tr>}
+          <tr class="pp-totaal"><th scope="row">Totaal</th><td>{formatPrijs(k.totaal)}{k.onbekend.length > 0 && <small> + {k.onbekend.length === 1 ? 'accessoire' : 'accessoires'}</small>}</td></tr>
+        </tbody></table>
+        {(k.optioneel.length > 0 || (k.abonnementInfo && !k.abonnementInfo.nodig)) && (
+          <p class="pp-small"><strong>Optioneel:</strong> {[
+            ...k.optioneel.map((e) => `${e.naam}${typeof e.prijs === 'number' ? ` (${formatPrijs(e.prijs)})` : ''}`),
+            ...(k.abonnementInfo && !k.abonnementInfo.nodig ? [`${k.abonnementInfo.naam} (${formatPrijs(k.abonnementInfo.perMaand)}/mnd${k.abonnementInfo.voor ? `, ${k.abonnementInfo.voor}` : ''})`] : []),
+          ].join(' · ')}</p>
+        )}
+      </section>
+
+      <section class="pp-block" aria-labelledby="spc">
+        <h2 id="spc"><Icon name="list" /> Specificaties</h2>
+        <dl class="pc-specs">
+          {specs(d).map((x) => <div class:list={['pc-spec', { 'is-positive': x.positief }]}><dt>{x.label}</dt><dd>{x.waarden.join(', ')}</dd></div>)}
+        </dl>
+      </section>
+
+      <section class="pp-block" aria-labelledby="vn">
+        <h2 id="vn"><Icon name="compare" /> Voor- en nadelen</h2>
+        <div class="pros-cons pp-pc">
+          <div class="pros"><strong>Pluspunten</strong><ul>{d.voordelen.map((v) => <li>{v}</li>)}</ul></div>
+          <div class="cons"><strong>Minpunten</strong><ul>{d.nadelen.map((v) => <li>{v}</li>)}</ul></div>
+        </div>
+      </section>
+
+      {stappen.length > 0 && (
+        <section class="pp-block pp-block--wide" aria-labelledby="vh">
+          <div class="pp-block-head">
+            <h2 id="vh"><Icon name="box" /> Verhuischecklist</h2>
+            <button type="button" class="btn btn-ghost no-print" onclick="window.print()">Printen</button>
+          </div>
+          <ul class="checklist">
+            {stappen.map((st) => <li><label><input type="checkbox" /> <span>{st}</span></label></li>)}
+          </ul>
+        </section>
+      )}
+    </div>
+
+    {artikel && (
+      <p class="pp-guide no-print">
+        <Icon name="article" /> Meer uitleg in de koopgids: <a href={`${base}artikelen/${artikel.slug}/`}>{artikel.data.title}</a>
+      </p>
+    )}
+
+    {alternatieven.length > 0 && (
+      <section class="related no-print" aria-labelledby="alt">
+        <div class="section-head"><h2 id="alt">Alternatieven</h2><a href={`${base}categorie/${d.categorie}/`}>Alle {cat?.label.toLowerCase()} vergelijken →</a></div>
+        <div class="po-grid">{alternatieven.map((p) => <ProductCard product={p} />)}</div>
+      </section>
+    )}
+  </div>
+</Base>

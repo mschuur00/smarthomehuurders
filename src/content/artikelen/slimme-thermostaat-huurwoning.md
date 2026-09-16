@@ -6,20 +6,14 @@ category: "thermostats"
 affiliateDisclosure: true
 snelleKeuze:
   - label: "Beste keuze"
-    product: "tado° Slimme Radiatorknop X"
+    id: "tado-radiatorknop-x"
     reden: "Beste app en automatiseringen, veel gebruikt in NL/BE"
-    url: "https://www.coolblue.nl/product/948683/tado-slimme-radiatorknop-x-startpakket.html"
-    winkel: "Coolblue"
   - label: "Zonder hub"
-    product: "Shelly TRV"
+    id: "shelly-trv"
     reden: "Direct via wifi, geen bridge of abonnement"
-    url: "https://www.bol.com/nl/nl/s/?searchtext=shelly+trv"
-    winkel: "bol"
   - label: "Voor Apple Home"
-    product: "Eve Thermo"
+    id: "eve-thermo"
     reden: "Lokaal, privacyvriendelijk, geen account nodig"
-    url: "https://www.bol.com/nl/nl/s/?searchtext=eve+thermo"
-    winkel: "bol"
 ---
 
 Een slimme thermostaat bespaart energie en comfort: de verwarming gaat pas aan als je onderweg naar huis bent en slaapkamers blijven koel als je er niet bent. Veel huurders denken dan meteen aan **Toon** of **Google Nest**. Maar in een huurwoning ligt het net even anders, en die twee merken zijn inmiddels ook niet meer nieuw te koop.
@@ -70,64 +64,17 @@ Heeft je radiator nu een **knop met cijfers (1 tot 5)**, dan is het bijna altijd
 
 ## Vergelijking: vier slimme radiatorknoppen
 
-| Model | Prijs (indicatie) | Hub nodig? | Abonnement | Werkt met |
-|---|---|---|---|---|
-| tado° Slimme Radiatorknop X | startpakket (Bridge X + 1 knop) ca. €145; extra knop ca. €90 | Ja, Bridge X | Optioneel Auto-Assist (ca. €4/mnd) | Apple, Google, Alexa |
-| Shelly TRV | ca. €80 | Nee (wifi) | Nee | Home Assistant, Alexa, Google |
-| Eve Thermo | ca. €160 voor 2 (ca. €80/stuk) | Nee lokaal; Apple TV/HomePod voor op afstand | Nee | Apple Home |
-| Netatmo Slimme Radiatorknop | ca. €90 los; startpakket vanaf ca. €130 | Ja, bij startpakket | Nee | Apple, Google, Alexa |
-
-*Prijzen gecontroleerd op 16 september 2026. Prijzen en voorraad wisselen snel; check de actuele prijs via de knoppen.*
+<div data-vergelijking="tado-radiatorknop-x,shelly-trv,eve-thermo,netatmo-radiatorknop"></div>
 
 ## Onze aanraders
 
-<div class="product-box">
-<span class="badge">Beste keuze</span>
-<h3>tado° Slimme Radiatorknop X</h3>
-<ul class="huurderproof"><li class="ja">Zonder installateur</li><li class="ja">Geen toestemming nodig</li><li class="ja">Meeneembaar</li><li class="let-op">Bridge nodig</li></ul>
-<p>tado is marktleider in Nederland en België en heeft de meest uitgebreide app: schema's per kamer, open-raamdetectie en inzicht in je verbruik. Het startpakket bevat de Bridge X, één radiatorknop en zes adapters; extra knoppen koop je los bij. Automatisch verwarmen op basis van je locatie (geofencing) zit achter het optionele Auto-Assist-abonnement.</p>
-<div class="pros-cons">
-<div class="pros"><strong>Pluspunten</strong><ul><li>Beste app en automatiseringen</li><li>Adapters voor veel radiatorkranen</li><li>Uit te breiden met eigen thermostaat</li></ul></div>
-<div class="cons"><strong>Minpunten</strong><ul><li>Bridge X nodig</li><li>Sommige functies alleen met abonnement</li></ul></div>
-</div>
-<div class="cta-row"><a class="cta" href="https://www.coolblue.nl/product/948683/tado-slimme-radiatorknop-x-startpakket.html" rel="sponsored nofollow noopener" target="_blank">Bekijk prijs bij Coolblue</a><a class="cta cta--secondary" href="https://www.bol.com/nl/nl/s/?searchtext=tado+radiatorknop+x" rel="sponsored nofollow noopener" target="_blank">bol</a></div>
-</div>
+<div data-product="tado-radiatorknop-x"></div>
 
-<div class="product-box">
-<span class="badge badge--budget">Zonder hub</span>
-<h3>Shelly TRV</h3>
-<ul class="huurderproof"><li class="ja">Zonder installateur</li><li class="ja">Geen hub nodig</li><li class="ja">Geen abonnement</li></ul>
-<p>De Shelly TRV verbindt direct met je wifi, dus geen bridge en geen abonnement. Populair bij Home Assistant-gebruikers door de open API. De app is minder gepolijst dan die van tado, en met veel knoppen op wifi vraag je wat meer van je netwerk.</p>
-<div class="pros-cons">
-<div class="pros"><strong>Pluspunten</strong><ul><li>Geen extra hardware</li><li>Geen abonnement of lock-in</li><li>Open API</li></ul></div>
-<div class="cons"><strong>Minpunten</strong><ul><li>Minder gebruiksvriendelijke app</li><li>Wifi per radiator belast je netwerk</li></ul></div>
-</div>
-<div class="cta-row"><a class="cta" href="https://www.bol.com/nl/nl/s/?searchtext=shelly+trv" rel="sponsored nofollow noopener" target="_blank">Bekijk prijs bij bol</a></div>
-</div>
+<div data-product="shelly-trv"></div>
 
-<div class="product-box">
-<span class="badge badge--premium">Voor Apple Home</span>
-<h3>Eve Thermo</h3>
-<ul class="huurderproof"><li class="ja">Zonder installateur</li><li class="ja">Geen account of cloud</li><li class="let-op">Apple-hub voor op afstand</li></ul>
-<p>Heb je een iPhone en een Apple TV of HomePod? Dan is Eve Thermo een privacyvriendelijke keuze: alles werkt lokaal, zonder account of abonnement. De motor is stil, handig in de slaapkamer. Voor Android-gebruikers minder geschikt.</p>
-<div class="pros-cons">
-<div class="pros"><strong>Pluspunten</strong><ul><li>Lokaal en privacyvriendelijk</li><li>Stille motor</li><li>Geen abonnement</li></ul></div>
-<div class="cons"><strong>Minpunten</strong><ul><li>Vooral voor Apple-huishoudens</li><li>Relatief duur per knop</li></ul></div>
-</div>
-<div class="cta-row"><a class="cta" href="https://www.bol.com/nl/nl/s/?searchtext=eve+thermo" rel="sponsored nofollow noopener" target="_blank">Bekijk prijs bij bol</a></div>
-</div>
+<div data-product="eve-thermo"></div>
 
-<div class="product-box">
-<span class="badge">Degelijk alternatief</span>
-<h3>Netatmo Slimme Radiatorknop</h3>
-<ul class="huurderproof"><li class="ja">Zonder installateur</li><li class="ja">Geen abonnement</li><li class="let-op">Startpakket met relay</li></ul>
-<p>Het Franse Netatmo heeft goede ondersteuning in Nederland en België en werkt met alle grote spraakassistenten. De knoppen zijn zonder abonnement volledig te gebruiken. Wil je ook de ketel slim aansturen, dan heb je de Netatmo-thermostaat nodig, en dan kom je weer aan de installatie.</p>
-<div class="pros-cons">
-<div class="pros"><strong>Pluspunten</strong><ul><li>Geen abonnement</li><li>Werkt met Apple, Google en Alexa</li></ul></div>
-<div class="cons"><strong>Minpunten</strong><ul><li>Volledig systeem wordt duurder</li><li>Minder uitgebreide app dan tado</li></ul></div>
-</div>
-<div class="cta-row"><a class="cta" href="https://www.bol.com/nl/nl/s/?searchtext=netatmo+slimme+radiatorknop" rel="sponsored nofollow noopener" target="_blank">Bekijk prijs bij bol</a></div>
-</div>
+<div data-product="netatmo-radiatorknop"></div>
 
 ## Zo installeer je slimme radiatorknoppen
 

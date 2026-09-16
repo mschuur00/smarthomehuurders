@@ -1,0 +1,21 @@
+# Bron: artikel slimme-stekker-huurwoning + claude/product-database.md (16-09-2026)
+naam: Meross Smart Wi-Fi Plug (Matter)
+merk: Meross
+categorie: plugs
+label: Voor Apple Home
+volgorde: 4
+samenvatting: >-
+  De Matter-versies werken met Apple Home, Google Home én Alexa, direct via wifi.
+  Kies een model met energiemeter (zoals de MSS315) als je verbruik wilt volgen.
+prijs: { vanaf: 15, tekst: ca. €15–€20, gecontroleerd: 2026-09-16 }
+kenmerken:
+  hub: geen
+  matter: ja
+  werktMet: [apple-home, google-home, alexa]
+  energiemeting: model
+  verbinding: [wifi]
+voordelen: [Breed compatibel dankzij Matter, Geen hub nodig, Vaak voordelig geprijsd]
+nadelen: [Niet elk model meet verbruik, Voorraad per model wisselt]
+winkels:
+  - url: https://www.bol.com/nl/nl/s/?searchtext=meross+matter+slimme+stekker
+artikel: slimme-stekker-huurwoning

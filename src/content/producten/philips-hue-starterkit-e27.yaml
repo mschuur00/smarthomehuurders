@@ -13,8 +13,6 @@ prijs:
   tekst: ca. €80–€130 (2 lampen + Bridge)
   gecontroleerd: 2026-09-16
 huurderproof:
-  - { tekst: Zonder boren, status: ja }
-  - { tekst: Mee bij verhuizing, status: ja }
   - { tekst: Bridge zit in de set, status: ja }
 kenmerken:
   hub: optioneel

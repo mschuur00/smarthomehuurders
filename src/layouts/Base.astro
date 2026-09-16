@@ -56,7 +56,7 @@ const jaar = new Date().getFullYear();
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <script is:inline>document.documentElement.classList.add('js')</script>
+  <script is:inline>(function(h){h.classList.add('js');try{['eco','land'].forEach(function(k){var v=localStorage.getItem('shh-'+k);if(v)h.setAttribute('data-'+k,v)})}catch(e){}})(document.documentElement)</script>
   <title>{fullTitle}</title>
   <meta name="description" content={description} />
   {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
@@ -163,6 +163,7 @@ const jaar = new Date().getFullYear();
         <ul>
           <li><a class="footer-link" href={`${base}artikelen/`}><Icon name="article" />Alle artikelen</a></li>
           <li><a class="footer-link" href={`${base}categorie/`}><Icon name="grid" />Alle categorieën</a></li>
+          <li><a class="footer-link" href={`${base}keuzehulp/`}><Icon name="compare" />Keuzehulp</a></li>
           <li><a class="footer-link" href={`${base}over-ons/`}><Icon name="users" />Over ons &amp; werkwijze</a></li>
           <li><a class="footer-link" href={`${base}disclosure/`}><Icon name="info" />Affiliate disclosure</a></li>
         </ul>

@@ -1,0 +1,27 @@
+# Bron: artikel slim-slot-huurwoning + claude/product-database.md (16-09-2026)
+naam: Nuki Smart Lock Ultra
+merk: Nuki
+categorie: smart-locks
+label: Premium
+volgorde: 3
+samenvatting: >-
+  Ingebouwde wifi en Matter (geen bridge nodig), automatisch ontgrendelen bij thuiskomst
+  en een meegeleverde SKG***-cilinder. Je vervangt wel je cilinder: bewaar de originele
+  voor de oplevering.
+prijs: { vanaf: 349, tekst: ca. €349 (incl. SKG***-cilinder), gecontroleerd: 2026-09-16 }
+huurder: { terugzetten: onderdeel, toestemming: aanrader }
+kenmerken:
+  montage: cilinder
+  opAfstand: ingebouwd
+  hub: geen
+  matter: ja
+  werktMet: [apple-home, google-home, alexa, homey]
+  voeding: accu
+voordelen: [Geen bridge nodig en werkt met alle grote platforms, SKG***-cilinder inbegrepen, Oplaadbare accu]
+nadelen: [Duurste optie, "Cilinder wisselen: overleg bij voorkeur met je verhuurder"]
+winkels:
+  - url: https://www.bol.com/nl/nl/p/nuki-smart-lock-ultra-slim-deurslot-met-wifi-matter-auto-unlock-nachtmodus-lock-n-go-werkt-met-google-alexa-apple-incl-skg-cilinder/9300000229772639/
+  - url: https://www.coolblue.nl/zoeken?query=nuki+smart+lock+ultra
+verhuizen:
+  - Zet de originele cilinder terug en lever alle originele sleutels in.
+artikel: slim-slot-huurwoning

@@ -12,10 +12,9 @@ prijs:
   vanaf: 9.99
   tekst: vanaf €9,99 (startset met afstandsbediening)
   gecontroleerd: 2026-09-16
-huurderproof:
-  - { tekst: Zonder boren, status: ja }
-  - { tekst: Mee bij verhuizing, status: ja }
-  - { tekst: Hub nodig voor app, status: let-op }
+kosten:
+  extra:
+    - { naam: IKEA DIRIGERA-hub (voor app en spraak), prijs: 59.99, nodig: false }
 kenmerken:
   hub: optioneel
   matter: ja
@@ -33,8 +32,6 @@ nadelen:
 winkels:
   - naam: IKEA NL
     url: https://www.ikea.com/nl/nl/p/kajplats-startset-smart-wit-spectrum-60611446/
-    affiliate: false
   - naam: IKEA België
     url: https://www.ikea.com/be/nl/cat/slimme-led-lampen-36813/f/e27-slimme-ledlampen-f-base--49108/
-    affiliate: false
 artikel: slimme-verlichting-huurwoning

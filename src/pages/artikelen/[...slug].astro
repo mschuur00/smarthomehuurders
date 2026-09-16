@@ -4,6 +4,8 @@ import Icon from '../../components/Icon.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import { catStyle } from '../../data/categorie-stijl';
 import { formatDatum, getArtikelen, leestijd, sorteerOpDatum, vindCategorie } from '../../utils/artikel';
+import { getCollection } from 'astro:content';
+import { affiliateUrl, relVoor, winkelInfo } from '../../lib/winkels.mjs';
 
 export async function getStaticPaths() {
   const artikelen = await getArtikelen();
@@ -18,6 +20,15 @@ const base = import.meta.env.BASE_URL;
 const { title, description, pubDate, updatedDate, category, affiliateDisclosure, image, imageAlt, snelleKeuze } = entry.data;
 const cat = vindCategorie(category);
 const toc = headings.filter((h) => h.depth === 2);
+
+// Snelle keuze: met `id` komen naam + eerste winkel uit de productdata
+const productMap = new Map((await getCollection('producten')).map((p) => [p.id, p.data]));
+const keuzes = (snelleKeuze ?? []).map((k) => {
+  const p = k.id ? productMap.get(k.id) : undefined;
+  if (k.id && !p) throw new Error(`Artikel ${entry.slug}: snelleKeuze verwijst naar onbekend product "${k.id}"`);
+  const url = k.url ?? p!.winkels[0].url;
+  return { ...k, product: k.product ?? p!.naam, href: affiliateUrl(url), rel: relVoor(url), winkel: k.winkel ?? winkelInfo(url).naam, detail: k.id ? `${base}product/${k.id}/` : undefined };
+});
 const toonToc = toc.length >= 3;
 
 const gerelateerd = sorteerOpDatum(
@@ -96,19 +107,19 @@ const jsonLd = [
         </aside>
       )}
 
-      {snelleKeuze && snelleKeuze.length > 0 && (
+      {keuzes.length > 0 && (
         <section class="quick-picks" aria-labelledby="snelle-keuze">
           <h2 id="snelle-keuze" class="quick-picks-title"><Icon name="star" /> Snelle keuze</h2>
           <ol class="qp-list">
-            {snelleKeuze.map((p, i) => (
+            {keuzes.map((p, i) => (
               <li class="qp">
                 <span class="qp-rank" aria-hidden="true">{i + 1}</span>
                 <div class="qp-body">
                   <span class="qp-label">{p.label}</span>
-                  <strong class="qp-product">{p.product}</strong>
+                  <strong class="qp-product">{p.detail ? <a href={p.detail}>{p.product}</a> : p.product}</strong>
                   {p.reden && <span class="qp-why">{p.reden}</span>}
                 </div>
-                <a class="cta" href={p.url} rel="sponsored nofollow noopener" target="_blank">
+                <a class="cta" href={p.href} rel={p.rel} target="_blank">
                   {p.knop ?? (p.winkel ? `Bekijk bij ${p.winkel}` : 'Bekijk prijs')}
                 </a>
               </li>

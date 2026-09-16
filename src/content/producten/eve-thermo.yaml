@@ -1,0 +1,24 @@
+# Bron: artikel slimme-thermostaat-huurwoning + claude/product-database.md (16-09-2026)
+naam: Eve Thermo (2-pack)
+merk: Eve
+categorie: thermostats
+label: Voor Apple Home
+volgorde: 3
+samenvatting: >-
+  Privacyvriendelijk: alles lokaal, zonder account of abonnement, met stille motor. Voor
+  bediening buitenshuis heb je een Apple TV of HomePod nodig. Voor Android minder geschikt.
+prijs: { vanaf: 160, tekst: ca. €160 voor 2 (ca. €80 per knop), gecontroleerd: 2026-09-16 }
+huurder: { terugzetten: onderdeel }
+kosten:
+  extra:
+    - { naam: Apple TV of HomePod (voor bediening buitenshuis), nodig: false }
+kenmerken:
+  hub: optioneel
+  abonnement: geen
+  opAfstand: thuishub
+  werktMet: [apple-home]
+voordelen: [Lokaal en privacyvriendelijk, Stille motor, Geen abonnement]
+nadelen: [Vooral voor Apple-huishoudens, Relatief duur per knop]
+winkels:
+  - url: https://www.bol.com/nl/nl/s/?searchtext=eve+thermo
+artikel: slimme-thermostaat-huurwoning

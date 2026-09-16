@@ -1,0 +1,21 @@
+# Bron: artikel slimme-thermostaat-huurwoning + claude/product-database.md (16-09-2026)
+naam: Shelly TRV
+merk: Shelly
+categorie: thermostats
+label: Zonder hub
+volgorde: 2
+samenvatting: >-
+  Verbindt direct met je wifi: geen bridge en geen abonnement. Populair bij Home
+  Assistant-gebruikers door de open API. App minder gepolijst dan tado.
+prijs: { vanaf: 80, tekst: ca. €80 per knop, gecontroleerd: 2026-09-16 }
+huurder: { terugzetten: onderdeel }
+kenmerken:
+  hub: geen
+  abonnement: geen
+  opAfstand: ja
+  werktMet: [home-assistant, alexa, google-home]
+voordelen: [Geen extra hardware, Geen abonnement of lock-in, Open API]
+nadelen: [Minder gebruiksvriendelijke app, Wifi per radiator belast je netwerk]
+winkels:
+  - url: https://www.bol.com/nl/nl/s/?searchtext=shelly+trv
+artikel: slimme-thermostaat-huurwoning

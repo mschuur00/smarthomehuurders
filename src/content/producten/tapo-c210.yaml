@@ -1,0 +1,25 @@
+# Bron: artikel beveiligingscamera-huurwoning-zonder-boren + claude/product-database.md (16-09-2026)
+naam: TP-Link Tapo C210
+merk: TP-Link
+categorie: cameras
+label: Beste binnencamera
+volgorde: 1
+samenvatting: >-
+  Binnencamera die draait en kantelt, bewegingen volgt en opneemt op een microSD-kaart
+  (tot 256 GB). Privacymodus sluit het beeld af als je thuis bent.
+prijs: { vanaf: 40, tekst: ca. €40, gecontroleerd: 2026-09-16 }
+kosten:
+  extra:
+    - { naam: microSD-kaart (los te koop), nodig: true }
+kenmerken:
+  plaats: binnen
+  opslag: lokaal
+  montage: neerzetten
+  panTilt: ja
+  voeding: stekker
+voordelen: [Lokale opslag zonder abonnement, Draait en kantelt, Zeer scherpe prijs]
+nadelen: [MicroSD-kaart niet inbegrepen, Minder slimme detectie dan duurdere merken]
+winkels:
+  - url: https://www.bol.com/nl/nl/s/?searchtext=tapo+c210
+  - url: https://www.coolblue.nl/zoeken?query=tapo+c210
+artikel: beveiligingscamera-huurwoning-zonder-boren

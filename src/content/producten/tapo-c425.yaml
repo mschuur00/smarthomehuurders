@@ -1,0 +1,29 @@
+# Bron: artikel beveiligingscamera-huurwoning-zonder-boren (16-09-2026)
+naam: TP-Link Tapo C425
+merk: TP-Link
+categorie: cameras
+label: Beste buitencamera
+volgorde: 3
+samenvatting: >-
+  Draadloze buitencamera op accu (volgens TP-Link tot ca. 300 dagen). Magnetische voet of
+  plakmontage, 2K-beeld, kleurennachtzicht en microSD tot 512 GB. Buiten: overleg eerst
+  met je verhuurder en film alleen je eigen woning.
+prijs: { vanaf: 85, tekst: ca. €85–€100, gecontroleerd: 2026-09-16 }
+huurder: { toestemming: aanrader }
+kosten:
+  extra:
+    - { naam: microSD-kaart (los te koop), nodig: true }
+kenmerken:
+  plaats: buiten
+  opslag: lokaal
+  montage: magneet-plak
+  voeding: accu
+voordelen: [Geen kabels of stopcontact nodig, Lokale opslag, Weerbestendig (IP66)]
+nadelen: [Losse camera wisselend op voorraad, Soms iets vertraagde detectie]
+winkels:
+  - url: https://www.bol.com/nl/nl/s/?searchtext=tapo+c425
+  - url: https://www.coolblue.nl/zoeken?query=tapo+c425
+verhuizen:
+  - Verwijder plakstrips langzaam; een föhn maakt de lijm zachter.
+  - Haal het bordje of de sticker over camerabewaking weg.
+artikel: beveiligingscamera-huurwoning-zonder-boren

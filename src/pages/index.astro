@@ -4,6 +4,7 @@ import Icon from '../components/Icon.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import HeroIllustration from '../components/HeroIllustration.astro';
 import Faq from '../components/Faq.astro';
+import Pakketten from '../components/Pakketten.astro';
 import { categorieen } from '../data/categorieen';
 import { catStyle } from '../data/categorie-stijl';
 import { faq } from '../data/faq';
@@ -40,8 +41,8 @@ const stappen = [
           <a class="btn btn-primary" href={`${base}categorie/`}>
             Bekijk categorieën <Icon name="arrow" />
           </a>
-          <a class="btn btn-ghost" href={`${base}over-ons/`}>
-            <Icon name="shield" /> Hoe wij selecteren
+          <a class="btn btn-ghost" href={`${base}keuzehulp/`}>
+            <Icon name="compare" /> Start de keuzehulp
           </a>
         </div>
       </div>
@@ -105,7 +106,9 @@ const stappen = [
     </div>
   </section>
 
-  <section class="section container" aria-labelledby="art-titel">
+  <Pakketten />
+
+  <section class="section container" aria-labelledby="art-titel" style="padding-top: 0">
     <div class="section-head">
       <div>
         <span class="eyebrow eyebrow--rose"><Icon name="article" /> Nieuw</span>

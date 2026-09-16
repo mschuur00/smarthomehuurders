@@ -1,0 +1,23 @@
+# Bron: artikel slimme-stekker-huurwoning + claude/product-database.md (16-09-2026)
+naam: TP-Link Tapo P110
+merk: TP-Link
+categorie: plugs
+label: Beste keuze
+volgorde: 1
+samenvatting: >-
+  Goedkoop, compact, direct via wifi te koppelen en met ingebouwde verbruiksmeter.
+  Stekker erin, app installeren, klaar. Voordelig per stuk in een 4-pack.
+prijs: { vanaf: 17.95, tekst: ca. €18 per stuk (goedkoper in 4-pack), gecontroleerd: 2026-09-16 }
+kenmerken:
+  hub: geen
+  matter: nee
+  werktMet: [google-home, alexa]
+  energiemeting: ja
+  maxVermogen: '3680'
+  verbinding: [wifi]
+voordelen: [Geen hub nodig, Energiemeting in de app, Tot 3.680 W belastbaar, Scherpe prijs ook in 4-pack]
+nadelen: [TP-Link-account nodig, Geen officiële Apple Home-ondersteuning bij dit model]
+winkels:
+  - url: https://www.bol.com/nl/nl/p/tp-link-tapo-p110-slimme-stekker-smart-plug-wifi-stopcontact-energiebewaking/9300000050248500/
+  - url: https://www.coolblue.nl/zoeken?query=tapo+p110
+artikel: slimme-stekker-huurwoning

@@ -1,0 +1,32 @@
+# Bron: artikel slim-slot-huurwoning + claude/content-pipeline.md (16-09-2026)
+naam: Tedee GO
+merk: Tedee
+categorie: smart-locks
+label: Beste voor huurders
+volgorde: 1
+samenvatting: >-
+  Je cilinder blijft zitten: de Tedee GO monteer je in een paar minuten over de sleutel
+  aan de binnenkant. Op batterijen (CR123, ca. zes maanden). Voor bediening buitenshuis
+  heb je de Tedee Bridge nodig.
+prijs: { vanaf: 129, tekst: ca. €129–€149, gecontroleerd: 2026-09-16 }
+huurder: { toestemming: aanrader }
+kosten:
+  extra:
+    - { naam: Tedee Bridge (voor bediening op afstand), nodig: false }
+huurderproof:
+  - { tekst: Cilinder met noodfunctie nodig, status: let-op }
+kenmerken:
+  montage: over-sleutel
+  opAfstand: bridge
+  hub: optioneel
+  werktMet: [google-home, alexa, homey]
+  voeding: batterij
+voordelen: [Geen cilinder vervangen en geen boren, Compact en stil, Scherpe prijs voor een merk-smart lock]
+nadelen: [Cilinder met noodfunctie vereist, Bridge nodig voor bediening op afstand]
+winkels:
+  - url: https://www.bol.com/nl/nl/s/?searchtext=tedee+go
+  - url: https://tedee.com/nl/product-info/tedee-go/
+    naam: Tedee.com
+verhuizen:
+  - Haal het slot van de binnenkant van de deur; je cilinder bleef zitten.
+artikel: slim-slot-huurwoning

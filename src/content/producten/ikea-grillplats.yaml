@@ -1,0 +1,26 @@
+# Bron: artikel slimme-stekker-huurwoning + claude/product-database.md (16-09-2026)
+naam: IKEA GRILLPLATS
+merk: IKEA
+categorie: plugs
+label: Goedkoopst
+volgorde: 2
+samenvatting: >-
+  Opvolger van de TRÅDFRI-stekker met energiemeting. Werkt via Matter over Thread:
+  voor bediening met je telefoon heb je een Thread-hub nodig, zoals de IKEA DIRIGERA
+  of een Google Nest/Apple TV die je misschien al hebt.
+prijs: { vanaf: 8.99, tekst: "€8,99 per stuk", gecontroleerd: 2026-09-16 }
+kosten:
+  extra:
+    - { naam: IKEA DIRIGERA-hub (als je nog geen Thread-hub hebt), prijs: 59.99, nodig: false }
+kenmerken:
+  hub: optioneel
+  matter: ja
+  werktMet: [google-home, alexa, apple-home, homey]
+  energiemeting: ja
+  verbinding: [thread]
+voordelen: [Laagste prijs per stekker, "Matter: werkt met Apple, Google, Alexa en Homey", Energiemeting]
+nadelen: [Hub nodig voor app-bediening, Alleen bij IKEA verkrijgbaar]
+winkels:
+  - url: https://www.ikea.com/nl/nl/p/grillplats-stekker-smart-60604238/
+  - url: https://www.ikea.com/be/nl/p/grillplats-stekker-smart-90624744/
+artikel: slimme-stekker-huurwoning

@@ -1,0 +1,29 @@
+# Bron: artikel slim-slot-huurwoning (16-09-2026)
+naam: SwitchBot Lock Ultra
+merk: SwitchBot
+categorie: smart-locks
+label: Meeste opties
+volgorde: 2
+samenvatting: >-
+  Gaat over je bestaande slot heen, met acht cilinderadapters in de doos. Openen met app,
+  pincode, NFC-tag of (optioneel keypad) vingerafdruk. Accu plus reservebatterij. Voor
+  bediening op afstand en Matter heb je een SwitchBot Hub nodig.
+prijs: { vanaf: 160, tekst: ca. €160, gecontroleerd: 2026-09-16 }
+huurder: { toestemming: aanrader }
+kosten:
+  extra:
+    - { naam: SwitchBot Hub Mini of Hub 3 (voor afstand en Matter), nodig: false }
+kenmerken:
+  montage: over-sleutel
+  opAfstand: bridge
+  hub: optioneel
+  matter: via-hub
+  werktMet: [apple-home, google-home, alexa]
+  voeding: accu
+voordelen: [Montage zonder de deur aan te passen, Veel manieren om te openen, Accu plus back-upbatterij]
+nadelen: [Hub apart kopen voor afstand en Matter, Gezichtsherkenning (duurste keypad) bleek in een test met een foto te misleiden]
+winkels:
+  - url: https://www.bol.com/nl/nl/s/?searchtext=switchbot+lock+ultra
+verhuizen:
+  - Haal het slot van de binnenkant van de deur en bewaar de adapters.
+artikel: slim-slot-huurwoning
