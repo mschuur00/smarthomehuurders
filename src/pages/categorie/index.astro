@@ -1,23 +1,42 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
 import { getCollection } from 'astro:content';
 import { categorieen } from '../../data/categorieen';
 
 const artikelen = await getCollection('artikelen');
 const base = import.meta.env.BASE_URL;
 ---
-<Base title="Categorieën">
-  <h1>Categorieën</h1>
-  <ul>
-    {categorieen.map((c) => {
-      const count = artikelen.filter((a) => a.data.category === c.slug).length;
-      return (
-        <li>
-          <a href={`${base}categorie/${c.slug}/`}>{c.label}</a>
-          <p>{c.omschrijving}</p>
-          <small>{count} artikel{count === 1 ? '' : 'en'}</small>
-        </li>
-      );
-    })}
-  </ul>
+<Base title="Categorieën" description="Alle smart home categorieën voor huurders: verlichting, sloten, thermostaten, stekkers en camera's zonder boren.">
+  <div class="page-head page-head--band">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Kruimelpad">
+        <ol>
+          <li><a href={base}>Home</a></li>
+          <li><span aria-current="page">Categorieën</span></li>
+        </ol>
+      </nav>
+      <h1>Categorieën</h1>
+      <p class="lead">Kies waar je mee wilt beginnen. Elke categorie bevat alleen producten die je zonder verbouwing installeert.</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="card-grid card-grid--cats">
+      {categorieen.map((c) => {
+        const count = artikelen.filter((a) => a.data.category === c.slug).length;
+        return (
+          <article class="card">
+            <div class="icon-bubble"><Icon name={c.slug} /></div>
+            <h3><a href={`${base}categorie/${c.slug}/`}>{c.label}</a></h3>
+            <p>{c.omschrijving}</p>
+            <div class="card-foot">
+              <span>{count === 0 ? 'Binnenkort' : `${count} artikel${count === 1 ? '' : 'en'}`}</span>
+              <span class="card-more" aria-hidden="true">Bekijk →</span>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </div>
 </Base>

@@ -1,0 +1,33 @@
+---
+import Base from '../../layouts/Base.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+import { sorteerOpDatum } from '../../utils/artikel';
+
+const artikelen = sorteerOpDatum(await getCollection('artikelen'));
+const base = import.meta.env.BASE_URL;
+---
+<Base title="Alle artikelen" description="Alle koopgidsen en artikelen over smart home producten voor huurders, nieuwste eerst.">
+  <div class="page-head page-head--band">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Kruimelpad">
+        <ol>
+          <li><a href={base}>Home</a></li>
+          <li><span aria-current="page">Artikelen</span></li>
+        </ol>
+      </nav>
+      <h1>Alle artikelen</h1>
+      <p class="lead">Koopgidsen en uitleg over slimme producten die passen bij een huurwoning.</p>
+    </div>
+  </div>
+
+  <div class="container">
+    {artikelen.length === 0 ? (
+      <div class="empty-state"><p>De eerste artikelen verschijnen binnenkort.</p></div>
+    ) : (
+      <div class="card-grid card-grid--wide">
+        {artikelen.map((a) => <ArticleCard artikel={a} />)}
+      </div>
+    )}
+  </div>
+</Base>

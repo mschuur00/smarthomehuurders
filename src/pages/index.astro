@@ -1,25 +1,90 @@
 ---
 import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import ArticleCard from '../components/ArticleCard.astro';
 import { getCollection } from 'astro:content';
 import { categorieen } from '../data/categorieen';
-const artikelen = await getCollection('artikelen');
+import { sorteerOpDatum } from '../utils/artikel';
+
+const alleArtikelen = await getCollection('artikelen');
+const artikelen = sorteerOpDatum(alleArtikelen).slice(0, 6);
 const base = import.meta.env.BASE_URL;
+const telPerCategorie = (slug: string) => alleArtikelen.filter((a) => a.data.category === slug).length;
+
+const checks = [
+  { titel: 'Geen boorgaten', tekst: 'Plakken, klemmen of inpluggen — je muren blijven heel.' },
+  { titel: 'Mee bij verhuizing', tekst: 'Alles gaat met je mee naar je volgende woning.' },
+  { titel: 'Werkt met wat er al is', tekst: 'Geschikt voor bestaande cv-ketels, deuren en stopcontacten.' },
+];
 ---
-<Base title="Home">
-  <h1>Smart home producten voor huurders</h1>
-  <p>Slim wonen zonder boren, zonder gedoe met de verhuurder.</p>
+<Base>
+  <section class="hero">
+    <div class="container hero-inner">
+      <div>
+        <span class="eyebrow">Voor huurders in Nederland &amp; België</span>
+        <h1>Slim wonen zonder boren of gedoe met de verhuurder</h1>
+        <p class="hero-lead">
+          Wij zoeken uit welke slimme lampen, sloten, thermostaten, stekkers en camera's écht geschikt zijn voor een huurwoning — zodat jij niet hoeft te verbouwen.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href={`${base}categorie/`}>
+            Bekijk categorieën <Icon name="arrow" />
+          </a>
+          <a class="btn btn-ghost" href={`${base}artikelen/`}>Laatste artikelen</a>
+        </div>
+      </div>
 
-  <h2>Categorieën</h2>
-  <ul>
-    {categorieen.map((c) => (
-      <li><a href={`${base}categorie/${c.slug}/`}>{c.label}</a></li>
-    ))}
-  </ul>
+      <aside class="check-card" aria-label="Waar wij op letten">
+        <div class="check-card-title">
+          <strong>De huurder-check</strong>
+          <span>Waar wij op letten</span>
+        </div>
+        <ul class="check-list">
+          {checks.map((c) => (
+            <li>
+              <Icon name="check" />
+              <div><b>{c.titel}</b><small>{c.tekst}</small></div>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    </div>
+  </section>
 
-  <h2>Laatste artikelen</h2>
-  <ul>
-    {artikelen.map((a) => (
-      <li><a href={`${base}artikelen/${a.slug}/`}>{a.data.title}</a></li>
-    ))}
-  </ul>
+  <section class="section container" aria-labelledby="cat-titel">
+    <div class="section-head">
+      <h2 id="cat-titel">Kies een categorie</h2>
+      <p>Van verlichting tot beveiliging, allemaal huurwoning-proof.</p>
+    </div>
+    <div class="card-grid card-grid--cats">
+      {categorieen.map((c) => {
+        const n = telPerCategorie(c.slug);
+        return (
+          <article class="card">
+            <div class="icon-bubble"><Icon name={c.slug} /></div>
+            <h3><a href={`${base}categorie/${c.slug}/`}>{c.label}</a></h3>
+            <p>{c.omschrijving}</p>
+            <div class="card-foot">
+              <span>{n === 0 ? 'Binnenkort' : `${n} artikel${n === 1 ? '' : 'en'}`}</span>
+              <span class="card-more" aria-hidden="true">Bekijk →</span>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+
+  <section class="section container" aria-labelledby="art-titel" style="padding-top: 0">
+    <div class="section-head">
+      <h2 id="art-titel">Laatste artikelen</h2>
+      {alleArtikelen.length > artikelen.length && <a href={`${base}artikelen/`}>Alle artikelen →</a>}
+    </div>
+    {artikelen.length === 0 ? (
+      <div class="empty-state"><p>De eerste artikelen verschijnen binnenkort.</p></div>
+    ) : (
+      <div class="card-grid card-grid--wide">
+        {artikelen.map((a) => <ArticleCard artikel={a} />)}
+      </div>
+    )}
+  </section>
 </Base>

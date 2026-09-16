@@ -1,0 +1,23 @@
+---
+import type { Artikel } from '../utils/artikel';
+import { formatDatum, leestijd, vindCategorie } from '../utils/artikel';
+
+interface Props {
+  artikel: Artikel;
+  toonCategorie?: boolean;
+}
+const { artikel, toonCategorie = true } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const cat = vindCategorie(artikel.data.category);
+---
+<article class="card">
+  {toonCategorie && cat && (
+    <a class="tag" href={`${base}categorie/${cat.slug}/`}>{cat.label}</a>
+  )}
+  <h3><a href={`${base}artikelen/${artikel.slug}/`}>{artikel.data.title}</a></h3>
+  <p>{artikel.data.description}</p>
+  <div class="card-foot">
+    <span><time datetime={artikel.data.pubDate.toISOString()}>{formatDatum(artikel.data.pubDate)}</time> · {leestijd(artikel.body)} min</span>
+    <span class="card-more" aria-hidden="true">Lees →</span>
+  </div>
+</article>

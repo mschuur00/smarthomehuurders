@@ -1,7 +1,20 @@
 ---
 import Base from '../layouts/Base.astro';
+const base = import.meta.env.BASE_URL;
 ---
-<Base title="Disclosure">
-  <h1>Affiliate disclosure</h1>
-  <p>SmartHomeHuurders.nl bevat affiliate links. Als je via zo'n link iets koopt, ontvangen wij mogelijk een commissie, zonder extra kosten voor jou. Dit beinvloedt onze productkeuzes niet — we adviseren op basis van geschiktheid voor huurders.</p>
+<Base title="Affiliate disclosure" description="Hoe SmartHomeHuurders geld verdient met affiliate links en waarom dat onze productkeuzes niet beïnvloedt.">
+  <article class="article">
+    <header class="article-header">
+      <nav class="breadcrumbs" aria-label="Kruimelpad">
+        <ol>
+          <li><a href={base}>Home</a></li>
+          <li><span aria-current="page">Disclosure</span></li>
+        </ol>
+      </nav>
+      <h1>Affiliate disclosure</h1>
+    </header>
+    <div class="prose">
+      <p>SmartHomeHuurders.nl bevat affiliate links. Als je via zo'n link iets koopt, ontvangen wij mogelijk een commissie, zonder extra kosten voor jou. Dit beïnvloedt onze productkeuzes niet — we adviseren op basis van geschiktheid voor huurders.</p>
+    </div>
+  </article>
 </Base>
