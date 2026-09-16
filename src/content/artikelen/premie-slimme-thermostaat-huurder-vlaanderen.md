@@ -3,7 +3,7 @@ title: "Premie voor een slimme thermostaat in Vlaanderen: kan je als huurder iet
 description: "Mijn VerbouwPremie, Fluvius-premies, energienormen: wat betekenen ze voor huurders? Kort antwoord: als huurder kan je Mijn VerbouwPremie niet zelf aanvragen. Wat kan wel, en hoe bespaar je toch op je verwarming?"
 pubDate: 2026-09-16
 category: "thermostats"
-affiliateDisclosure: true
+affiliateDisclosure: false
 ---
 
 Wie in Vlaanderen zoekt naar een **premie voor een slimme thermostaat**, vindt vooral informatie voor eigenaars. En dat is geen toeval: de meeste renovatie- en energiepremies zijn gekoppeld aan wie de woning bezit. In dit artikel zetten we op een rij wat dat voor **huurders** betekent, wat er in 2026 veranderde en hoe je toch zuiniger stookt.
