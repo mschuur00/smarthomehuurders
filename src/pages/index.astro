@@ -2,26 +2,36 @@
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import ArticleCard from '../components/ArticleCard.astro';
-import { getCollection } from 'astro:content';
+import HeroIllustration from '../components/HeroIllustration.astro';
+import Faq from '../components/Faq.astro';
 import { categorieen } from '../data/categorieen';
-import { sorteerOpDatum } from '../utils/artikel';
+import { catStyle } from '../data/categorie-stijl';
+import { faq } from '../data/faq';
+import { getArtikelen, sorteerOpDatum } from '../utils/artikel';
 
-const alleArtikelen = await getCollection('artikelen');
+const alleArtikelen = await getArtikelen();
 const artikelen = sorteerOpDatum(alleArtikelen).slice(0, 6);
 const base = import.meta.env.BASE_URL;
 const telPerCategorie = (slug: string) => alleArtikelen.filter((a) => a.data.category === slug).length;
 
-const checks = [
-  { titel: 'Geen boorgaten', tekst: 'Plakken, klemmen of inpluggen — je muren blijven heel.' },
-  { titel: 'Mee bij verhuizing', tekst: 'Alles gaat met je mee naar je volgende woning.' },
-  { titel: 'Werkt met wat er al is', tekst: 'Geschikt voor bestaande cv-ketels, deuren en stopcontacten.' },
+const usps = [
+  { icon: 'no-drill', kleur: '#0f766e', titel: 'Zonder boren', tekst: 'Inpluggen, indraaien of plakken' },
+  { icon: 'box', kleur: '#2563eb', titel: 'Mee bij verhuizing', tekst: 'Alles gaat met je mee' },
+  { icon: 'no-tool', kleur: '#e11d48', titel: 'Geen installateur', tekst: 'Zelf te installeren' },
+  { icon: 'bag', kleur: '#d97706', titel: 'Winkels in NL & BE', tekst: 'Gewoon online te koop' },
+];
+
+const stappen = [
+  { icon: 'grid', kleur: '#0f766e', titel: 'Kies wat je slim wilt maken', tekst: 'Verlichting, sloten, verwarming, stekkers of camera\'s: begin waar jij het meeste aan hebt.' },
+  { icon: 'compare', kleur: '#2563eb', titel: 'Vergelijk huurder-proof opties', tekst: 'Per product zie je of het zonder boren kan, of je het meeneemt en wat de nadelen zijn.' },
+  { icon: 'cart', kleur: '#c2410c', titel: 'Koop bij een bekende winkel', tekst: 'Via onze links naar Nederlandse en Belgische webwinkels. Dat kost jou niets extra; wij krijgen soms een kleine commissie.' },
 ];
 ---
 <Base>
   <section class="hero">
     <div class="container hero-inner">
-      <div>
-        <span class="eyebrow">Voor huurders in Nederland &amp; België</span>
+      <div class="hero-text">
+        <span class="eyebrow"><Icon name="home" /> Voor huurders in Nederland &amp; België</span>
         <h1>Slim wonen zonder boren of gedoe met de verhuurder</h1>
         <p class="hero-lead">
           Wij zoeken uit welke slimme lampen, sloten, thermostaten, stekkers en camera's écht geschikt zijn voor een huurwoning — zodat jij niet hoeft te verbouwen.
@@ -30,42 +40,46 @@ const checks = [
           <a class="btn btn-primary" href={`${base}categorie/`}>
             Bekijk categorieën <Icon name="arrow" />
           </a>
-          <a class="btn btn-ghost" href={`${base}artikelen/`}>Laatste artikelen</a>
+          <a class="btn btn-ghost" href={`${base}over-ons/`}>
+            <Icon name="shield" /> Hoe wij selecteren
+          </a>
         </div>
       </div>
-
-      <aside class="check-card" aria-label="Waar wij op letten">
-        <div class="check-card-title">
-          <strong>De huurder-check</strong>
-          <span>Waar wij op letten</span>
-        </div>
-        <ul class="check-list">
-          {checks.map((c) => (
-            <li>
-              <Icon name="check" />
-              <div><b>{c.titel}</b><small>{c.tekst}</small></div>
-            </li>
-          ))}
-        </ul>
-      </aside>
+      <div class="hero-art">
+        <HeroIllustration />
+      </div>
     </div>
+  </section>
+
+  <section class="usp-strip" aria-label="Waar wij op letten">
+    <ul class="container usp-list">
+      {usps.map((u) => (
+        <li class="usp has-cat" style={`--cat: ${u.kleur}`}>
+          <span class="usp-icon"><Icon name={u.icon} /></span>
+          <span><b>{u.titel}</b><small>{u.tekst}</small></span>
+        </li>
+      ))}
+    </ul>
   </section>
 
   <section class="section container" aria-labelledby="cat-titel">
     <div class="section-head">
-      <h2 id="cat-titel">Kies een categorie</h2>
+      <div>
+        <span class="eyebrow eyebrow--amber"><Icon name="grid" /> Categorieën</span>
+        <h2 id="cat-titel">Kies een categorie</h2>
+      </div>
       <p>Van verlichting tot beveiliging, allemaal huurwoning-proof.</p>
     </div>
     <div class="card-grid card-grid--cats">
       {categorieen.map((c) => {
         const n = telPerCategorie(c.slug);
         return (
-          <article class="card">
+          <article class="card card--cat has-cat" style={catStyle(c.slug)}>
             <div class="icon-bubble"><Icon name={c.slug} /></div>
             <h3><a href={`${base}categorie/${c.slug}/`}>{c.label}</a></h3>
             <p>{c.omschrijving}</p>
             <div class="card-foot">
-              <span>{n === 0 ? 'Binnenkort' : `${n} artikel${n === 1 ? '' : 'en'}`}</span>
+              <span class="count-pill">{n === 0 ? 'Binnenkort' : `${n} artikel${n === 1 ? '' : 'en'}`}</span>
               <span class="card-more" aria-hidden="true">Bekijk →</span>
             </div>
           </article>
@@ -74,17 +88,45 @@ const checks = [
     </div>
   </section>
 
-  <section class="section container" aria-labelledby="art-titel" style="padding-top: 0">
+  <section class="steps-section" aria-labelledby="stappen-titel">
+    <div class="container section">
+      <div class="section-head section-head--center">
+        <span class="eyebrow eyebrow--blue"><Icon name="list" /> Zo werkt het</span>
+        <h2 id="stappen-titel">In drie stappen een slimmer huurhuis</h2>
+      </div>
+      <ol class="steps">
+        {stappen.map((s, i) => (
+          <li class="step has-cat" style={`--cat: ${s.kleur}`}>
+            <span class="step-icon"><Icon name={s.icon} /><span class="step-num">{i + 1}</span></span>
+            <h3>{s.titel}</h3>
+            <p>{s.tekst}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section container" aria-labelledby="art-titel">
     <div class="section-head">
-      <h2 id="art-titel">Laatste artikelen</h2>
+      <div>
+        <span class="eyebrow eyebrow--rose"><Icon name="article" /> Nieuw</span>
+        <h2 id="art-titel">Laatste artikelen</h2>
+      </div>
       {alleArtikelen.length > artikelen.length && <a href={`${base}artikelen/`}>Alle artikelen →</a>}
     </div>
     {artikelen.length === 0 ? (
-      <div class="empty-state"><p>De eerste artikelen verschijnen binnenkort.</p></div>
+      <div class="empty-state">
+        <span class="empty-icon"><Icon name="article" /></span>
+        <h3>De eerste koopgidsen zijn in de maak</h3>
+        <p>We zetten per categorie de beste huurder-proof producten op een rij. Kijk intussen welke categorieën eraan komen.</p>
+        <a class="btn btn-ghost" href={`${base}categorie/`}>Bekijk categorieën</a>
+      </div>
     ) : (
       <div class="card-grid card-grid--wide">
         {artikelen.map((a) => <ArticleCard artikel={a} />)}
       </div>
     )}
   </section>
+
+  <Faq items={faq} />
 </Base>

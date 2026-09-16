@@ -1,0 +1,72 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+const base = import.meta.env.BASE_URL;
+
+const criteria = [
+  { icon: 'no-drill', kleur: '#0f766e', titel: 'Zonder boren of breken', tekst: 'Het product werkt door het in te pluggen, in te draaien, te plakken of neer te zetten. Aan muren, deuren en leidingen verandert niets.' },
+  { icon: 'box', kleur: '#2563eb', titel: 'Mee te nemen bij verhuizing', tekst: 'Je kunt het product weer verwijderen en de oorspronkelijke situatie herstellen, bijvoorbeeld door de originele radiatorknop of cilinder terug te zetten.' },
+  { icon: 'no-tool', kleur: '#e11d48', titel: 'Zelf te installeren', tekst: 'Je hebt geen installateur of elektricien nodig en hoeft niet aan de cv-ketel of meterkast te komen.' },
+  { icon: 'bag', kleur: '#d97706', titel: 'Te koop in Nederland en België', tekst: 'We noemen alleen producten die bij Nederlandse of Belgische (web)winkels verkrijgbaar zijn.' },
+];
+---
+<Base title="Over ons & werkwijze" description="Wie SmartHomeHuurders is, hoe we producten selecteren voor huurders en hoe we geld verdienen.">
+  <div class="page-head page-head--band">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Kruimelpad">
+        <ol>
+          <li><a href={base}><Icon name="home" /><span class="sr-only">Home</span></a></li>
+          <li><span aria-current="page">Over ons</span></li>
+        </ol>
+      </nav>
+      <div class="page-head-row">
+        <div class="icon-bubble"><Icon name="users" /></div>
+        <div>
+          <h1>Over SmartHomeHuurders</h1>
+          <p class="lead">Slim wonen hoort niet alleen bij een koophuis.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="article-wrap">
+    <article class="article">
+      <div class="prose">
+        <p>Wie huurt, kan niet zomaar gaten boren, bedrading aanpassen of de thermostaat aan de cv-ketel vervangen. Toch wil je ook comfort, veiligheid en grip op je energieverbruik. Veel smart home advies gaat ervan uit dat je eigenaar bent. SmartHomeHuurders zoekt uit welke slimme producten wél passen bij een huurwoning in Nederland of België.</p>
+
+        <h2>Onze huurder-check</h2>
+        <p>Elk product dat we aanraden, toetsen we aan vier criteria:</p>
+      </div>
+
+      <ul class="criteria">
+        {criteria.map((c) => (
+          <li class="criterion has-cat" style={`--cat: ${c.kleur}`}>
+            <span class="usp-icon"><Icon name={c.icon} /></span>
+            <div><h3>{c.titel}</h3><p>{c.tekst}</p></div>
+          </li>
+        ))}
+      </ul>
+
+      <div class="prose">
+        <h2>Hoe we tot een advies komen</h2>
+        <ul>
+          <li>We bestuderen specificaties, handleidingen, installatie-instructies en ervaringen van gebruikers.</li>
+          <li>We noemen per product zowel voor- als nadelen, zoals een verplichte hub of een betaald abonnement.</li>
+          <li>Prijzen en voorraad veranderen snel. Daarom staat bij elk artikel wanneer het is gepubliceerd of bijgewerkt.</li>
+          <li>Tenzij we het in een artikel expliciet vermelden, hebben we een product niet zelf getest.</li>
+        </ul>
+
+        <div class="tip">
+          <p><strong>Geen juridisch advies.</strong> Wat je in een huurwoning mag aanpassen, hangt af van je huurcontract en de afspraken met je verhuurder. Twijfel je? Vraag het vooraf na.</p>
+        </div>
+
+        <h2>Hoe we geld verdienen</h2>
+        <p>SmartHomeHuurders is gratis te lezen. We verdienen geld via affiliate links: koop je via een link op onze site, dan ontvangen we mogelijk een kleine commissie van de winkel. Voor jou verandert de prijs niet. Dit bepaalt niet welke producten we aanraden. Lees meer in onze <a href={`${base}disclosure/`}>affiliate disclosure</a>.</p>
+      </div>
+
+      <footer class="article-footer">
+        <a class="btn btn-primary" href={`${base}categorie/`}>Bekijk de categorieën <Icon name="arrow" /></a>
+      </footer>
+    </article>
+  </div>
+</Base>

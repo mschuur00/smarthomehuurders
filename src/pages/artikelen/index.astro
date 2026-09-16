@@ -1,10 +1,10 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
-import { getCollection } from 'astro:content';
-import { sorteerOpDatum } from '../../utils/artikel';
+import { getArtikelen, sorteerOpDatum } from '../../utils/artikel';
 
-const artikelen = sorteerOpDatum(await getCollection('artikelen'));
+const artikelen = sorteerOpDatum(await getArtikelen());
 const base = import.meta.env.BASE_URL;
 ---
 <Base title="Alle artikelen" description="Alle koopgidsen en artikelen over smart home producten voor huurders, nieuwste eerst.">
@@ -12,7 +12,7 @@ const base = import.meta.env.BASE_URL;
     <div class="container">
       <nav class="breadcrumbs" aria-label="Kruimelpad">
         <ol>
-          <li><a href={base}>Home</a></li>
+          <li><a href={base}><Icon name="home" /><span class="sr-only">Home</span></a></li>
           <li><span aria-current="page">Artikelen</span></li>
         </ol>
       </nav>
@@ -23,7 +23,12 @@ const base = import.meta.env.BASE_URL;
 
   <div class="container">
     {artikelen.length === 0 ? (
-      <div class="empty-state"><p>De eerste artikelen verschijnen binnenkort.</p></div>
+      <div class="empty-state">
+        <span class="empty-icon"><Icon name="article" /></span>
+        <h2>De eerste koopgidsen zijn in de maak</h2>
+        <p>Binnenkort vind je hier vergelijkingen per categorie.</p>
+        <a class="btn btn-ghost" href={`${base}categorie/`}>Bekijk categorieën</a>
+      </div>
     ) : (
       <div class="card-grid card-grid--wide">
         {artikelen.map((a) => <ArticleCard artikel={a} />)}

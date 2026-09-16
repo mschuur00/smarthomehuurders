@@ -2,28 +2,31 @@
 import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
-import { getCollection } from 'astro:content';
-import { formatDatum, leestijd, sorteerOpDatum, vindCategorie } from '../../utils/artikel';
+import { catStyle } from '../../data/categorie-stijl';
+import { formatDatum, getArtikelen, leestijd, sorteerOpDatum, vindCategorie } from '../../utils/artikel';
 
 export async function getStaticPaths() {
-  const artikelen = await getCollection('artikelen');
+  const artikelen = await getArtikelen();
   return artikelen.map((entry) => ({
     params: { slug: entry.slug },
     props: { entry },
   }));
 }
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { Content, headings } = await entry.render();
 const base = import.meta.env.BASE_URL;
-const { title, description, pubDate, category, affiliateDisclosure } = entry.data;
+const { title, description, pubDate, updatedDate, category, affiliateDisclosure, image, imageAlt, snelleKeuze } = entry.data;
 const cat = vindCategorie(category);
+const toc = headings.filter((h) => h.depth === 2);
+const toonToc = toc.length >= 3;
 
 const gerelateerd = sorteerOpDatum(
-  (await getCollection('artikelen')).filter((a) => a.data.category === category && a.slug !== entry.slug)
+  (await getArtikelen()).filter((a) => a.data.category === category && a.slug !== entry.slug)
 ).slice(0, 3);
 
 const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
 const abs = (p: string) => new URL(p, Astro.site).href;
+const ogImagePath = image ? image.replace(/^\//, '') : 'og-default.png';
 const jsonLd = [
   {
     '@context': 'https://schema.org',
@@ -31,9 +34,11 @@ const jsonLd = [
     headline: title,
     description,
     datePublished: pubDate.toISOString(),
+    ...(updatedDate ? { dateModified: updatedDate.toISOString() } : {}),
     inLanguage: 'nl-NL',
     mainEntityOfPage: pageUrl,
-    image: abs(`${base}og-default.png`),
+    image: abs(`${base}${ogImagePath}`),
+    author: { '@type': 'Organization', name: 'SmartHomeHuurders', url: abs(`${base}over-ons/`) },
     publisher: { '@type': 'Organization', name: 'SmartHomeHuurders', url: abs(base) },
   },
   {
@@ -47,49 +52,105 @@ const jsonLd = [
   },
 ];
 ---
-<Base title={title} description={description} type="article" publishedTime={pubDate} activeCategory={category}>
+<Base
+  title={title}
+  description={description}
+  type="article"
+  image={image}
+  imageAlt={imageAlt}
+  publishedTime={pubDate}
+  modifiedTime={updatedDate}
+  activeCategory={category}
+>
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
 
-  <article class="article">
-    <header class="article-header">
-      <nav class="breadcrumbs" aria-label="Kruimelpad">
-        <ol>
-          <li><a href={base}>Home</a></li>
-          {cat && <li><a href={`${base}categorie/${cat.slug}/`}>{cat.label}</a></li>}
-          <li><span aria-current="page">{title}</span></li>
-        </ol>
-      </nav>
-      {cat && <a class="tag" href={`${base}categorie/${cat.slug}/`}>{cat.label}</a>}
-      <h1>{title}</h1>
-      <p class="lead">{description}</p>
-      <div class="article-meta">
-        <span>Gepubliceerd <time datetime={pubDate.toISOString()}>{formatDatum(pubDate)}</time></span>
-        <span>{leestijd(entry.body)} min leestijd</span>
-      </div>
-    </header>
+  <div class:list={['article-wrap', { 'has-toc': toonToc }]}>
+    <article class="article has-cat" style={catStyle(category)}>
+      <header class="article-header">
+        <nav class="breadcrumbs" aria-label="Kruimelpad">
+          <ol>
+            <li><a href={base}><Icon name="home" /><span class="sr-only">Home</span></a></li>
+            {cat && <li><a href={`${base}categorie/${cat.slug}/`}>{cat.label}</a></li>}
+            <li><span aria-current="page">{title}</span></li>
+          </ol>
+        </nav>
+        {cat && <a class="tag" href={`${base}categorie/${cat.slug}/`}><Icon name={cat.slug} />{cat.label}</a>}
+        <h1>{title}</h1>
+        <p class="lead">{description}</p>
+        <div class="article-meta">
+          <span class="meta-item"><Icon name="calendar" />Gepubliceerd <time datetime={pubDate.toISOString()}>{formatDatum(pubDate)}</time></span>
+          {updatedDate && (
+            <span class="meta-item meta-item--updated"><Icon name="refresh" />Bijgewerkt <time datetime={updatedDate.toISOString()}>{formatDatum(updatedDate)}</time></span>
+          )}
+          <span class="meta-item"><Icon name="clock" />{leestijd(entry.body)} min leestijd</span>
+        </div>
+      </header>
 
-    {affiliateDisclosure && (
-      <aside class="notice" aria-label="Affiliate melding">
-        <Icon name="info" />
-        <p>
-          <strong>Dit artikel bevat affiliate links.</strong> Koop je via zo'n link, dan ontvangen wij mogelijk een kleine commissie — zonder extra kosten voor jou.
-          <a href={`${base}disclosure/`}>Meer uitleg</a>.
-        </p>
+      {affiliateDisclosure && (
+        <aside class="notice" aria-label="Affiliate melding">
+          <Icon name="info" />
+          <p>
+            <strong>Dit artikel bevat affiliate links.</strong> Koop je via zo'n link, dan ontvangen wij mogelijk een kleine commissie — zonder extra kosten voor jou.
+            <a href={`${base}disclosure/`}>Meer uitleg</a>.
+          </p>
+        </aside>
+      )}
+
+      {snelleKeuze && snelleKeuze.length > 0 && (
+        <section class="quick-picks" aria-labelledby="snelle-keuze">
+          <h2 id="snelle-keuze" class="quick-picks-title"><Icon name="star" /> Snelle keuze</h2>
+          <ol class="qp-list">
+            {snelleKeuze.map((p, i) => (
+              <li class="qp">
+                <span class="qp-rank" aria-hidden="true">{i + 1}</span>
+                <div class="qp-body">
+                  <span class="qp-label">{p.label}</span>
+                  <strong class="qp-product">{p.product}</strong>
+                  {p.reden && <span class="qp-why">{p.reden}</span>}
+                </div>
+                <a class="cta" href={p.url} rel="sponsored nofollow noopener" target="_blank">
+                  {p.knop ?? (p.winkel ? `Bekijk bij ${p.winkel}` : 'Bekijk prijs')}
+                </a>
+              </li>
+            ))}
+          </ol>
+          <p class="qp-note">Affiliate links · prijzen en voorraad kunnen wijzigen</p>
+        </section>
+      )}
+
+      {toonToc && (
+        <details class="toc toc--inline">
+          <summary><Icon name="list" /> Inhoud van dit artikel <Icon name="chevron-down" class="toc-chevron" /></summary>
+          <ol>
+            {toc.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}
+          </ol>
+        </details>
+      )}
+
+      <div class="prose">
+        <Content />
+      </div>
+
+      <footer class="article-footer">
+        {cat && (
+          <a class="btn btn-ghost" href={`${base}categorie/${cat.slug}/`}>
+            <Icon name={cat.slug} /> Meer over {cat.label.toLowerCase()} <Icon name="arrow" />
+          </a>
+        )}
+      </footer>
+    </article>
+
+    {toonToc && (
+      <aside class="toc-side" aria-label="Inhoudsopgave">
+        <nav class="toc toc--side">
+          <p class="toc-title"><Icon name="list" /> Inhoud</p>
+          <ol>
+            {toc.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}
+          </ol>
+        </nav>
       </aside>
     )}
-
-    <div class="prose">
-      <Content />
-    </div>
-
-    <footer class="article-footer">
-      {cat && (
-        <a class="btn btn-ghost" href={`${base}categorie/${cat.slug}/`}>
-          Meer over {cat.label.toLowerCase()} <Icon name="arrow" />
-        </a>
-      )}
-    </footer>
-  </article>
+  </div>
 
   {gerelateerd.length > 0 && (
     <section class="container related" aria-labelledby="gerelateerd">
@@ -98,5 +159,26 @@ const jsonLd = [
         {gerelateerd.map((a) => <ArticleCard artikel={a} toonCategorie={false} />)}
       </div>
     </section>
+  )}
+
+  {toonToc && (
+    <script is:inline>
+      (function () {
+        if (!('IntersectionObserver' in window)) return;
+        var links = document.querySelectorAll('.toc--side a');
+        var map = {};
+        links.forEach(function (a) { map[decodeURIComponent(a.hash.slice(1))] = a; });
+        var heads = document.querySelectorAll('.prose h2[id]');
+        var obs = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (!e.isIntersecting) return;
+            links.forEach(function (a) { a.removeAttribute('aria-current'); });
+            var a = map[e.target.id];
+            if (a) a.setAttribute('aria-current', 'true');
+          });
+        }, { rootMargin: '-80px 0px -70% 0px' });
+        heads.forEach(function (h) { obs.observe(h); });
+      })();
+    </script>
   )}
 </Base>

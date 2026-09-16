@@ -1,0 +1,75 @@
+---
+// Decoratieve hero-illustratie: huis met slimme apparaten in de categoriekleuren.
+// Pure inline SVG (~3 KB), kleuren via CSS-klassen zodat dark mode meewerkt.
+import { categorieStijl as s } from '../data/categorie-stijl';
+const amber = s['smart-lighting'].kleur;
+const blue = s['smart-locks'].kleur;
+const rose = s.thermostats.kleur;
+const green = s.plugs.kleur;
+const violet = s.cameras.kleur;
+---
+<svg class="hero-illu" viewBox="0 0 520 440" aria-hidden="true" focusable="false">
+  <!-- achtergrond -->
+  <circle class="illu-bg" cx="270" cy="236" r="196" />
+  <circle cx="470" cy="118" r="7" fill={amber} opacity=".55" />
+  <circle cx="58" cy="300" r="5" fill={violet} opacity=".45" />
+  <circle cx="486" cy="352" r="4" fill={green} opacity=".5" />
+
+  <!-- wifi -->
+  <g class="illu-primary" fill="none" stroke-width="7" stroke-linecap="round">
+    <path d="M234 30 Q270 0 306 30" />
+    <path d="M250 44 Q270 28 290 44" />
+  </g>
+  <circle class="illu-primary-fill" cx="270" cy="56" r="5.5" />
+
+  <!-- huis -->
+  <path class="illu-surface illu-line" stroke-width="3" d="M110 202 L270 82 L430 202 V380 Q430 392 418 392 H122 Q110 392 110 380 Z" />
+  <path class="illu-primary" fill="none" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" d="M86 218 L270 72 L454 218" />
+  <path class="illu-line" stroke-width="3" d="M110 392 H430" />
+
+  <!-- raam -->
+  <rect class="illu-soft illu-line" stroke-width="3" x="242" y="160" width="76" height="64" rx="8" />
+  <path class="illu-line" stroke-width="3" d="M280 160 V224 M242 192 H318" />
+
+  <!-- lamp (verlichting) -->
+  <circle cx="178" cy="238" r="48" fill={amber} opacity=".16" />
+  <path class="illu-line" stroke-width="3" d="M178 150 V206" />
+  <path d="M154 234 Q178 196 202 234 Z" fill={amber} />
+  <circle cx="178" cy="238" r="7" fill="#fde68a" />
+
+  <!-- radiator + slimme knop (thermostaat) -->
+  <rect class="illu-surface2 illu-line" stroke-width="3" x="136" y="326" width="100" height="46" rx="9" />
+  <path class="illu-line" stroke-width="3" stroke-linecap="round" d="M158 336 V362 M178 336 V362 M198 336 V362 M218 336 V362" />
+  <circle cx="250" cy="349" r="13" fill={rose} />
+  <path d="M250 341 V349" stroke="#fff" stroke-width="3" stroke-linecap="round" />
+
+  <!-- stopcontact + stekker -->
+  <rect class="illu-surface illu-line" stroke-width="3" x="284" y="328" width="34" height="34" rx="8" />
+  <rect x="292" y="336" width="18" height="18" rx="5" fill={green} />
+  <path d="M301 354 Q301 380 330 382" fill="none" stroke={green} stroke-width="4" stroke-linecap="round" />
+
+  <!-- deur + slim slot -->
+  <rect class="illu-soft illu-line" stroke-width="3" x="348" y="276" width="62" height="116" rx="7" />
+  <rect x="386" y="324" width="16" height="24" rx="5" fill={blue} />
+  <circle cx="394" cy="333" r="3" fill="#fff" />
+
+  <!-- camera -->
+  <path class="illu-line" stroke-width="4" stroke-linecap="round" d="M430 214 H414" />
+  <g transform="rotate(-14 390 214)">
+    <rect x="364" y="202" width="46" height="24" rx="8" fill={violet} />
+    <circle cx="374" cy="214" r="6" fill="#fff" />
+    <circle cx="374" cy="214" r="2.5" fill={violet} />
+  </g>
+
+  <!-- zwevende badges -->
+  <g transform="translate(62 116)">
+    <circle class="illu-surface illu-line" stroke-width="2" cx="24" cy="24" r="26" />
+    <path class="illu-primary" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M14 25 l7 7 l14 -15" />
+  </g>
+  <g transform="translate(440 236)">
+    <circle class="illu-surface illu-line" stroke-width="2" cx="24" cy="24" r="26" />
+    <g transform="translate(10 10) scale(1.17)" fill="none" style="stroke: var(--c-accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 7h10v6H4z" /><path d="M14 9h3" /><path d="M17 10h4" /><path d="M7 13l-1 7h4l1-7" /><path d="M2.5 2.5l19 19" />
+    </g>
+  </g>
+</svg>

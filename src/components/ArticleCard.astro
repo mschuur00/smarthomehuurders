@@ -1,6 +1,8 @@
 ---
+import Icon from './Icon.astro';
 import type { Artikel } from '../utils/artikel';
 import { formatDatum, leestijd, vindCategorie } from '../utils/artikel';
+import { catStyle } from '../data/categorie-stijl';
 
 interface Props {
   artikel: Artikel;
@@ -9,15 +11,19 @@ interface Props {
 const { artikel, toonCategorie = true } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const cat = vindCategorie(artikel.data.category);
+const datum = artikel.data.updatedDate ?? artikel.data.pubDate;
 ---
-<article class="card">
+<article class="card card--article has-cat" style={catStyle(artikel.data.category)}>
   {toonCategorie && cat && (
-    <a class="tag" href={`${base}categorie/${cat.slug}/`}>{cat.label}</a>
+    <a class="tag" href={`${base}categorie/${cat.slug}/`}><Icon name={cat.slug} />{cat.label}</a>
   )}
   <h3><a href={`${base}artikelen/${artikel.slug}/`}>{artikel.data.title}</a></h3>
   <p>{artikel.data.description}</p>
   <div class="card-foot">
-    <span><time datetime={artikel.data.pubDate.toISOString()}>{formatDatum(artikel.data.pubDate)}</time> · {leestijd(artikel.body)} min</span>
-    <span class="card-more" aria-hidden="true">Lees →</span>
+    <span class="meta-item">
+      <Icon name={artikel.data.updatedDate ? 'refresh' : 'calendar'} />
+      <time datetime={datum.toISOString()}>{formatDatum(datum)}</time>
+    </span>
+    <span class="meta-item"><Icon name="clock" />{leestijd(artikel.body)} min</span>
   </div>
 </article>

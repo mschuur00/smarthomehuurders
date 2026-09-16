@@ -1,7 +1,12 @@
-import type { CollectionEntry } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import { categorieen } from '../data/categorieen';
 
 export type Artikel = CollectionEntry<'artikelen'>;
+
+/** Alle gepubliceerde artikelen (zonder draft: true). Gebruik dit i.p.v. getCollection. */
+export async function getArtikelen(): Promise<Artikel[]> {
+  return getCollection('artikelen', ({ data }) => !data.draft);
+}
 
 /** Nieuwste artikelen eerst. */
 export function sorteerOpDatum(artikelen: Artikel[]): Artikel[] {

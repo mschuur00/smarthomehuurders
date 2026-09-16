@@ -1,10 +1,11 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
-import { getCollection } from 'astro:content';
 import { categorieen } from '../../data/categorieen';
+import { catStyle } from '../../data/categorie-stijl';
+import { getArtikelen } from '../../utils/artikel';
 
-const artikelen = await getCollection('artikelen');
+const artikelen = await getArtikelen();
 const base = import.meta.env.BASE_URL;
 ---
 <Base title="Categorieën" description="Alle smart home categorieën voor huurders: verlichting, sloten, thermostaten, stekkers en camera's zonder boren.">
@@ -12,7 +13,7 @@ const base = import.meta.env.BASE_URL;
     <div class="container">
       <nav class="breadcrumbs" aria-label="Kruimelpad">
         <ol>
-          <li><a href={base}>Home</a></li>
+          <li><a href={base}><Icon name="home" /><span class="sr-only">Home</span></a></li>
           <li><span aria-current="page">Categorieën</span></li>
         </ol>
       </nav>
@@ -26,12 +27,12 @@ const base = import.meta.env.BASE_URL;
       {categorieen.map((c) => {
         const count = artikelen.filter((a) => a.data.category === c.slug).length;
         return (
-          <article class="card">
+          <article class="card card--cat has-cat" style={catStyle(c.slug)}>
             <div class="icon-bubble"><Icon name={c.slug} /></div>
             <h3><a href={`${base}categorie/${c.slug}/`}>{c.label}</a></h3>
             <p>{c.omschrijving}</p>
             <div class="card-foot">
-              <span>{count === 0 ? 'Binnenkort' : `${count} artikel${count === 1 ? '' : 'en'}`}</span>
+              <span class="count-pill">{count === 0 ? 'Binnenkort' : `${count} artikel${count === 1 ? '' : 'en'}`}</span>
               <span class="card-more" aria-hidden="true">Bekijk →</span>
             </div>
           </article>

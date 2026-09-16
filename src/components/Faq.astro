@@ -1,0 +1,42 @@
+---
+import Icon from './Icon.astro';
+import type { FaqItem } from '../data/faq';
+
+interface Props {
+  items: FaqItem[];
+  titel?: string;
+}
+const { items, titel = 'Veelgestelde vragen' } = Astro.props;
+
+const strip = (html: string) => html.replace(/<[^>]+>/g, '');
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: items.map((i) => ({
+    '@type': 'Question',
+    name: i.vraag,
+    acceptedAnswer: { '@type': 'Answer', text: strip(i.antwoord) },
+  })),
+};
+---
+<section class="section container faq-section" aria-labelledby="faq-titel">
+  <div class="faq-grid">
+    <div class="faq-intro">
+      <span class="eyebrow eyebrow--violet"><Icon name="question" /> Vragen</span>
+      <h2 id="faq-titel">{titel}</h2>
+      <p class="muted">Korte antwoorden op wat huurders ons het vaakst vragen. Geen juridisch advies: kijk bij twijfel altijd in je huurcontract.</p>
+    </div>
+    <div class="faq-list">
+      {items.map((item) => (
+        <details class="faq-item">
+          <summary>
+            <span>{item.vraag}</span>
+            <Icon name="chevron-down" class="faq-chevron" />
+          </summary>
+          <div class="faq-answer"><p set:html={item.antwoord} /></div>
+        </details>
+      ))}
+    </div>
+  </div>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+</section>

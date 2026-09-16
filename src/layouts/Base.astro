@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Icon from '../components/Icon.astro';
 import { categorieen } from '../data/categorieen';
+import { categorieStijl, catStyle } from '../data/categorie-stijl';
 
 interface Props {
   /** Paginatitel zonder sitenaam. Leeg = homepage-titel. */
@@ -13,6 +14,7 @@ interface Props {
   image?: string;
   imageAlt?: string;
   publishedTime?: Date;
+  modifiedTime?: Date;
   noindex?: boolean;
   /** Categorie-slug om in de hoofdnavigatie te markeren (bijv. op artikelpagina's) */
   activeCategory?: string;
@@ -26,6 +28,7 @@ const {
   image = 'og-default.png',
   imageAlt = 'SmartHomeHuurders — slim wonen zonder boren',
   publishedTime,
+  modifiedTime,
   noindex = false,
   activeCategory,
 } = Astro.props;
@@ -33,24 +36,19 @@ const {
 const base = import.meta.env.BASE_URL;
 const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} — Smart home voor huurders (NL/BE)`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const ogImage = new URL(`${base}${image}`, Astro.site);
+const ogImage = new URL(`${base}${image.replace(/^\//, '')}`, Astro.site);
 const path = Astro.url.pathname;
 
-// Korte labels voor de hoofdnavigatie; valt terug op het volledige label.
-const kortLabel: Record<string, string> = {
-  'smart-lighting': 'Verlichting',
-  'smart-locks': 'Sloten',
-  thermostats: 'Thermostaten',
-  plugs: 'Stekkers',
-  cameras: "Camera's",
-};
-const nav = [
-  ...categorieen.map((c) => {
-    const href = `${base}categorie/${c.slug}/`;
-    return { href, label: kortLabel[c.slug] ?? c.label, active: path.startsWith(href) || activeCategory === c.slug };
-  }),
-  { href: `${base}artikelen/`, label: 'Alle artikelen', active: path === `${base}artikelen/` },
-];
+const navCats = categorieen.map((c) => {
+  const href = `${base}categorie/${c.slug}/`;
+  return {
+    slug: c.slug,
+    href,
+    label: categorieStijl[c.slug]?.kort ?? c.label,
+    active: path.startsWith(href) || activeCategory === c.slug,
+  };
+});
+const artikelenActive = path === `${base}artikelen/`;
 const jaar = new Date().getFullYear();
 ---
 <!doctype html>
@@ -62,6 +60,7 @@ const jaar = new Date().getFullYear();
   <title>{fullTitle}</title>
   <meta name="description" content={description} />
   {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+  <link rel="sitemap" href={`${base}sitemap-index.xml`} />
 
   <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
   <link rel="icon" href={`${base}favicon-32.png`} type="image/png" sizes="32x32" />
@@ -80,6 +79,7 @@ const jaar = new Date().getFullYear();
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content={imageAlt} />
   {publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
+  {modifiedTime && <meta property="article:modified_time" content={modifiedTime.toISOString()} />}
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title ?? fullTitle} />
   <meta name="twitter:description" content={description} />
@@ -110,11 +110,18 @@ const jaar = new Date().getFullYear();
 
       <nav class="main-nav" id="main-nav" aria-label="Hoofdmenu">
         <ul>
-          {nav.map((item) => (
+          {navCats.map((item) => (
             <li>
-              <a href={item.href} aria-current={item.active ? 'page' : undefined}>{item.label}</a>
+              <a class="has-cat" style={catStyle(item.slug)} href={item.href} aria-current={item.active ? 'page' : undefined}>
+                <span class="nav-icon"><Icon name={item.slug} /></span>{item.label}
+              </a>
             </li>
           ))}
+          <li>
+            <a href={`${base}artikelen/`} aria-current={artikelenActive ? 'page' : undefined}>
+              <span class="nav-icon"><Icon name="article" /></span>Alle artikelen
+            </a>
+          </li>
         </ul>
       </nav>
     </div>
@@ -125,9 +132,16 @@ const jaar = new Date().getFullYear();
   </main>
 
   <footer class="site-footer">
+    <div class="color-bar" aria-hidden="true"></div>
     <div class="container footer-grid">
       <div class="footer-about">
         <a class="brand" href={base}>
+          <svg viewBox="0 0 64 64" aria-hidden="true">
+            <rect width="64" height="64" rx="15" fill="#0f766e" />
+            <path d="M15 31 32 17l17 14v17a3 3 0 0 1-3 3H18a3 3 0 0 1-3-3Z" fill="none" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" />
+            <path d="M25.5 37.5a9 9 0 0 1 13 0" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" />
+            <circle cx="32" cy="43.5" r="3.2" fill="#fbbf24" />
+          </svg>
           <span>SmartHome<b>Huurders</b></span>
         </a>
         <p>Praktisch advies over smart home producten die je als huurder zonder boren of verbouwen installeert — en bij verhuizing gewoon meeneemt.</p>
@@ -136,16 +150,21 @@ const jaar = new Date().getFullYear();
         <h2>Categorieën</h2>
         <ul>
           {categorieen.map((c) => (
-            <li><a href={`${base}categorie/${c.slug}/`}>{c.label}</a></li>
+            <li>
+              <a class="footer-link has-cat" style={catStyle(c.slug)} href={`${base}categorie/${c.slug}/`}>
+                <Icon name={c.slug} />{c.label}
+              </a>
+            </li>
           ))}
         </ul>
       </nav>
       <nav aria-label="Informatie">
         <h2>Informatie</h2>
         <ul>
-          <li><a href={`${base}artikelen/`}>Alle artikelen</a></li>
-          <li><a href={`${base}categorie/`}>Alle categorieën</a></li>
-          <li><a href={`${base}disclosure/`}>Affiliate disclosure</a></li>
+          <li><a class="footer-link" href={`${base}artikelen/`}><Icon name="article" />Alle artikelen</a></li>
+          <li><a class="footer-link" href={`${base}categorie/`}><Icon name="grid" />Alle categorieën</a></li>
+          <li><a class="footer-link" href={`${base}over-ons/`}><Icon name="users" />Over ons &amp; werkwijze</a></li>
+          <li><a class="footer-link" href={`${base}disclosure/`}><Icon name="info" />Affiliate disclosure</a></li>
         </ul>
       </nav>
     </div>
