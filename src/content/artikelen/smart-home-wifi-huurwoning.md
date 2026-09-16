@@ -3,7 +3,7 @@ title: "Smart home en wifi in je huurwoning: 2,4 GHz, gedeeld internet en geen t
 description: "Slimme stekker of lamp wil niet verbinden? Vaak ligt het aan de wifi. Wat smart home-apparaten nodig hebben, en wat je doet als je internet deelt in een studentenhuis, kot of complex zonder eigen router."
 pubDate: 2026-09-16
 category: "plugs"
-affiliateDisclosure: true
+affiliateDisclosure: false
 ---
 
 Je hebt een slimme stekker of lamp gekocht, de app geïnstalleerd en dan... "Verbinding mislukt". Heel vaak ligt dat niet aan het apparaat, maar aan de **wifi**. En juist in huurwoningen, studentenhuizen en koten heb je daar niet altijd grip op: je deelt het internet, je hebt geen toegang tot de router, of je moet inloggen via een webpagina.
