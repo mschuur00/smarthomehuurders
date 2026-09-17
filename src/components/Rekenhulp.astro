@@ -1,0 +1,51 @@
+---
+// Kleine rekenhulp: wat kost een apparaat per jaar aan stroom?
+// Puur client-side, geen afhankelijkheden.
+interface Props { titel?: string }
+const { titel = 'Wat kost dat apparaat per jaar?' } = Astro.props;
+const voorbeelden = [
+  { naam: 'Tv + soundbar (stand-by)', watt: 15, uren: 24 },
+  { naam: 'Oude koelkast', watt: 90, uren: 8 },
+  { naam: 'Spelcomputer aan', watt: 150, uren: 3 },
+  { naam: 'Waterkoker', watt: 2000, uren: 0.2 },
+];
+---
+<section class="rekenhulp" data-rekenhulp aria-labelledby="rh-titel">
+  <h2 id="rh-titel">{titel}</h2>
+  <p class="muted">Een slimme stekker met verbruiksmeter laat dit zien. Reken hier vast door wat het scheelt.</p>
+  <div class="rh-velden">
+    <label>Vermogen <span><input type="number" data-rh="watt" value="15" min="1" max="4000" inputmode="numeric" /> watt</span></label>
+    <label>Gebruik <span><input type="number" data-rh="uren" value="24" min="0" max="24" step="0.5" inputmode="decimal" /> uur/dag</span></label>
+    <label>Stroomprijs <span>€ <input type="number" data-rh="prijs" value="0.30" min="0.05" max="1" step="0.01" inputmode="decimal" /> /kWh</span></label>
+  </div>
+  <ul class="rh-voorbeelden">
+    {voorbeelden.map((v) => (
+      <li><button type="button" data-rh-voorbeeld data-watt={v.watt} data-uren={v.uren}>{v.naam}</button></li>
+    ))}
+  </ul>
+  <p class="rh-uitkomst"><strong data-rh-euro>–</strong> per jaar <span class="muted" data-rh-kwh></span></p>
+  <p class="rh-note muted">Indicatie: verbruik × uren × 365 × stroomprijs. Zet je het apparaat met een slimme stekker helemaal uit, dan bespaar je (bijna) dit hele bedrag.</p>
+</section>
+
+<script is:inline>
+  (function () {
+    var root = document.querySelector('[data-rekenhulp]');
+    if (!root) return;
+    var euro = new Intl.NumberFormat('nl-NL', { style: 'currency', currency: 'EUR' });
+    var veld = function (n) { return root.querySelector('[data-rh="' + n + '"]'); };
+    function reken() {
+      var kwh = (+veld('watt').value * +veld('uren').value * 365) / 1000;
+      root.querySelector('[data-rh-euro]').textContent = euro.format(kwh * +veld('prijs').value);
+      root.querySelector('[data-rh-kwh]').textContent = '≈ ' + Math.round(kwh) + ' kWh';
+    }
+    root.addEventListener('input', reken);
+    root.querySelectorAll('[data-rh-voorbeeld]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        veld('watt').value = b.dataset.watt;
+        veld('uren').value = b.dataset.uren;
+        reken();
+      });
+    });
+    reken();
+  })();
+</script>

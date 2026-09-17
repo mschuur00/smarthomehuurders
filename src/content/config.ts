@@ -54,7 +54,14 @@ const producten = defineCollection({
       vanaf: z.number(), // voor sorteren/filteren, in euro
       tekst: z.string(), // zoals getoond, bijv. "ca. €17–€19 (2-pack)"
       gecontroleerd: z.date(),
+      vorige: z.number().optional(), // vorige prijs → toont "prijs gedaald"
     }),
+    /** Producttekening: lamp | stekker | slot | knop | camera-binnen | camera-buiten | hub. Default per categorie. */
+    beeld: z.string().optional(),
+    /** Datum waarop dit product is toegevoegd → "Nieuw"-label (30 dagen). */
+    toegevoegd: z.date().optional(),
+    /** Winkelbeoordeling, zodra de affiliate-feeds die leveren. */
+    beoordeling: z.object({ sterren: z.number().min(0).max(5), aantal: z.number().optional(), bron: z.string(), url: z.string().url().optional() }).optional(),
     /** Basis voor huurder-score en badges (zie src/lib/producten.mjs). */
     huurder: z
       .object({

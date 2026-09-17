@@ -4,6 +4,7 @@ import Icon from '../../components/Icon.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import ProductOverview from '../../components/ProductOverview.astro';
 import Faq from '../../components/Faq.astro';
+import Rekenhulp from '../../components/Rekenhulp.astro';
 import { categorieInfo } from '../../data/categorie-info';
 import { categorieen } from '../../data/categorieen';
 import { catStyle } from '../../data/categorie-stijl';
@@ -94,6 +95,8 @@ const info = categorieInfo[categorie.slug];
         </ul>
       </div>
     )}
+
+    {categorie.slug === 'plugs' && <Rekenhulp />}
 
     {info && (producten.length > 0 || artikelen.length > 0) && (
       <Faq items={info.faq} titel={`Vragen over ${labelLower}`} intro="Korte antwoorden voor huurders. Meer uitleg vind je in de koopgids." id="cat-faq" losseSectie={false} />

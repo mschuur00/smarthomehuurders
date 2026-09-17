@@ -191,10 +191,16 @@ export function vergelijkingHtml(items, { base = '/' } = {}) {
   const cfg = filtersPerCategorie[items[0].data.categorie];
   const kolommen = (cfg?.tabel || []).map((key) => cfg.groepen.find((g) => g.key === key)).filter(Boolean);
   const laatste = items.map((i) => new Date(i.data.prijs.gecontroleerd)).sort((a, b) => b - a)[0];
+  const GOED = { hub: ['geen'], matter: ['ja'], abonnement: ['geen'], opslag: ['lokaal'], energiemeting: ['ja'] };
   const cel = (d, g) => {
-    const w = lijst(d.kenmerken?.[g.key]).map((v) => g.waarden[v] ?? v);
-    return w.length ? esc(w.join(', ')) : '–';
+    const ruw = lijst(d.kenmerken?.[g.key]);
+    if (!ruw.length) return '<span class="vg-leeg">–</span>';
+    const tekst = esc(ruw.map((v) => g.waarden[v] ?? v).join(', '));
+    if (!GOED[g.key]) return tekst;
+    const goed = ruw.some((v) => GOED[g.key].includes(v));
+    return `<span class="vg-mark ${goed ? 'vg-ja' : 'vg-nee'}">${tekst}</span>`;
   };
+  const beste = items.reduce((b, i) => (huurderScore(i.data).score > huurderScore(b.data).score ? i : b), items[0]).id;
   return `<div class="vergelijking">
 <table>
 <thead><tr><th scope="col">Product</th><th scope="col">Vanaf</th><th scope="col">${JAREN} jaar</th><th scope="col">Huurder-score</th>${kolommen.map((g) => `<th scope="col">${esc(g.specLabel || g.label)}</th>`).join('')}</tr></thead>
@@ -202,7 +208,7 @@ export function vergelijkingHtml(items, { base = '/' } = {}) {
 ${items
   .map(({ id, data: d }) => {
     const k = kosten3Jaar(d);
-    return `<tr><th scope="row"><a href="${base}product/${esc(id)}/">${esc(d.naam)}</a>${d.label ? `<small>${esc(d.label)}</small>` : ''}</th><td>${formatPrijs(d.prijs.vanaf)}</td><td>${formatPrijs(k.totaal)}${k.abonnement ? '<small>incl. abonnement</small>' : ''}</td><td>${scoreHtml(d)}</td>${kolommen.map((g) => `<td>${cel(d, g)}</td>`).join('')}</tr>`;
+    return `<tr${id === beste ? ' class="vg-winnaar"' : ''}><th scope="row"><a href="${base}product/${esc(id)}/">${esc(d.naam)}</a>${d.label ? `<small>${esc(d.label)}</small>` : ''}${id === beste ? '<small class="vg-badge">Hoogste huurder-score</small>' : ''}</th><td>${formatPrijs(d.prijs.vanaf)}</td><td>${formatPrijs(k.totaal)}${k.abonnement ? '<small>incl. abonnement</small>' : ''}</td><td>${scoreHtml(d)}</td>${kolommen.map((g) => `<td>${cel(d, g)}</td>`).join('')}</tr>`;
   })
   .join('\n')}
 </tbody>

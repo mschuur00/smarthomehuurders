@@ -1,0 +1,76 @@
+---
+// Eenvoudige, eigen producttekening per soort (geen foto's: die mogen we pas gebruiken
+// als de affiliate-programma's zijn goedgekeurd). Valt terug op de categorie.
+interface Props {
+  soort?: string;
+  categorie: string;
+  buiten?: boolean;
+  class?: string;
+}
+const { soort, categorie, buiten = false, class: className } = Astro.props;
+const standaard: Record<string, string> = {
+  'smart-lighting': 'lamp',
+  plugs: 'stekker',
+  'smart-locks': 'slot',
+  thermostats: 'knop',
+  cameras: buiten ? 'camera-buiten' : 'camera-binnen',
+};
+const s = soort ?? standaard[categorie] ?? 'lamp';
+---
+<svg class:list={['product-art', className]} viewBox="0 0 120 100" aria-hidden="true" focusable="false">
+  <ellipse class="pa-schaduw" cx="60" cy="90" rx="34" ry="5" />
+  {s === 'lamp' && (
+    <g>
+      <path class="pa-vorm" d="M60 12a26 26 0 0 0-15 47c3 2 4 5 4 8h22c0-3 1-6 4-8a26 26 0 0 0-15-47z" />
+      <path class="pa-detail" d="M49 72h22v6H49zM53 82h14v5H53z" />
+      <path class="pa-licht" d="M60 24a14 14 0 0 0-8 25h16a14 14 0 0 0-8-25z" />
+    </g>
+  )}
+  {s === 'stekker' && (
+    <g>
+      <rect class="pa-vorm" x="36" y="26" width="48" height="52" rx="12" />
+      <circle class="pa-licht" cx="60" cy="44" r="9" />
+      <rect class="pa-detail" x="52" y="60" width="16" height="6" rx="3" />
+      <path class="pa-detail" d="M45 20h6v8h-6zM69 20h6v8h-6z" />
+    </g>
+  )}
+  {s === 'slot' && (
+    <g>
+      <rect class="pa-vorm" x="38" y="22" width="44" height="58" rx="14" />
+      <circle class="pa-licht" cx="60" cy="44" r="12" />
+      <rect class="pa-detail" x="57" y="44" width="6" height="16" rx="3" />
+      <rect class="pa-detail" x="50" y="68" width="20" height="5" rx="2.5" />
+    </g>
+  )}
+  {s === 'knop' && (
+    <g>
+      <rect class="pa-detail" x="20" y="40" width="26" height="34" rx="5" />
+      <path class="pa-detail" d="M26 44v26M34 44v26M40 44v26" stroke-width="2" />
+      <rect class="pa-vorm" x="48" y="38" width="42" height="26" rx="13" />
+      <circle class="pa-licht" cx="78" cy="51" r="8" />
+    </g>
+  )}
+  {s === 'camera-binnen' && (
+    <g>
+      <rect class="pa-vorm" x="40" y="20" width="40" height="34" rx="14" />
+      <circle class="pa-licht" cx="60" cy="37" r="10" />
+      <path class="pa-detail" d="M56 54h8v14h-8z" />
+      <rect class="pa-detail" x="44" y="68" width="32" height="8" rx="4" />
+    </g>
+  )}
+  {s === 'camera-buiten' && (
+    <g>
+      <rect class="pa-vorm" x="30" y="30" width="54" height="28" rx="14" />
+      <circle class="pa-licht" cx="44" cy="44" r="9" />
+      <path class="pa-detail" d="M84 40h10v8H84z" />
+      <path class="pa-detail" d="M57 58h6v16h-6z" />
+      <rect class="pa-detail" x="46" y="74" width="28" height="7" rx="3.5" />
+    </g>
+  )}
+  {s === 'hub' && (
+    <g>
+      <rect class="pa-vorm" x="34" y="34" width="52" height="40" rx="12" />
+      <circle class="pa-licht" cx="60" cy="54" r="8" />
+    </g>
+  )}
+</svg>

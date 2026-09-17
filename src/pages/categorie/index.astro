@@ -3,9 +3,10 @@ import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
 import { categorieen } from '../../data/categorieen';
 import { catStyle } from '../../data/categorie-stijl';
-import { categorieTelling } from '../../utils/artikel';
+import { categorieSamenvatting } from '../../utils/artikel';
+import { formatPrijs } from '../../lib/producten.mjs';
 
-const telling = await categorieTelling();
+const samenvatting = await categorieSamenvatting();
 const base = import.meta.env.BASE_URL;
 ---
 <Base title="Categorieën" description="Alle smart home categorieën voor huurders: verlichting, sloten, thermostaten, stekkers en camera's zonder boren.">
@@ -31,7 +32,8 @@ const base = import.meta.env.BASE_URL;
             <h3><a href={`${base}categorie/${c.slug}/`}>{c.label}</a></h3>
             <p>{c.omschrijving}</p>
             <div class="card-foot">
-              <span class="count-pill">{telling[c.slug]}</span>
+              <span class="count-pill">{samenvatting[c.slug].tekst}</span>
+              {samenvatting[c.slug].vanaf !== undefined && <span class="count-pill count-pill--prijs">vanaf {formatPrijs(samenvatting[c.slug].vanaf!)}</span>}
               <span class="card-more" aria-hidden="true">Bekijk →</span>
             </div>
           </article>

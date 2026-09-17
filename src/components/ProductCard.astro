@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import ProductArt from './ProductArt.astro';
 import type { CollectionEntry } from 'astro:content';
 import { ecoLijst, formatDatum, formatPrijs, huurderBadges, kosten3Jaar, kostenRegel, lijst, scoreHtml, specs, winkels, huurderScore } from '../lib/producten.mjs';
 import { filtersPerCategorie, prijsKlasse, scoreKlasse } from '../data/filters.mjs';
@@ -28,9 +29,20 @@ for (const g of groepen) dataAttrs[`data-f-${g.key.toLowerCase()}`] = lijst(d.ke
 
 const badges = huurderBadges(d).slice(0, 4);
 const ws = winkels(d);
+const nieuw = d.toegevoegd ? (Date.now() - d.toegevoegd.valueOf()) / 864e5 < 30 : false;
+const gedaald = d.prijs.vorige && d.prijs.vorige > d.prijs.vanaf ? d.prijs.vorige : null;
 ---
 <article class="product-card product-card--beeld has-cat" style={catStyle(d.categorie)} id={`product-${product.id}`} {...dataAttrs}>
-  <div class="pc-visual" aria-hidden="true"><Icon name={d.categorie} /><b>{d.merk}</b></div>
+  <div class="pc-visual" aria-hidden="true">
+    <ProductArt soort={d.beeld} categorie={d.categorie} buiten={d.kenmerken.plaats === 'buiten'} />
+    <b>{d.merk}</b>
+    {(nieuw || gedaald) && (
+      <span class="pc-flags">
+        {nieuw && <span class="pc-flag pc-flag--nieuw">Nieuw</span>}
+        {gedaald && <span class="pc-flag pc-flag--deal">Prijs gedaald</span>}
+      </span>
+    )}
+  </div>
 
   <div class="pc-top">
     {d.label ? <span class="pc-label"><Icon name="star" />{d.label}</span> : <span class="pc-brand">{d.merk}</span>}
@@ -41,7 +53,13 @@ const ws = winkels(d);
 
   <p class="pc-price">
     <span class="pc-price-main"><small>vanaf</small> <strong>{formatPrijs(d.prijs.vanaf)}</strong></span>
-    <span class="pc-price-note">{d.prijs.tekst}</span>
+    <span class="pc-price-note">{gedaald ? <><s>{formatPrijs(gedaald)}</s> · {d.prijs.tekst}</> : d.prijs.tekst}</span>
+    {d.beoordeling && (
+      <span class="pc-sterren" title={`${d.beoordeling.sterren} van 5 bij ${d.beoordeling.bron}`}>
+        <span class="sterren" style={`--s:${d.beoordeling.sterren}`} aria-hidden="true"></span>
+        {d.beoordeling.sterren.toString().replace('.', ',')}{d.beoordeling.aantal ? ` (${d.beoordeling.aantal})` : ''} · {d.beoordeling.bron}
+      </span>
+    )}
     <span class="pc-kosten">{kostenRegel(d)}</span>
   </p>
 

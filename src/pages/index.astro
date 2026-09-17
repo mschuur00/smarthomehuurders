@@ -5,15 +5,19 @@ import ArticleCard from '../components/ArticleCard.astro';
 import HeroIllustration from '../components/HeroIllustration.astro';
 import Faq from '../components/Faq.astro';
 import Pakketten from '../components/Pakketten.astro';
+import ProductCard from '../components/ProductCard.astro';
+import Zoek from '../components/Zoek.astro';
 import { categorieen } from '../data/categorieen';
 import { catStyle } from '../data/categorie-stijl';
 import { faq } from '../data/faq';
-import { categorieTelling, getArtikelen, sorteerOpDatum } from '../utils/artikel';
+import { categorieSamenvatting, getArtikelen, sorteerOpDatum, topProducten } from '../utils/artikel';
+import { formatPrijs } from '../lib/producten.mjs';
 
 const alleArtikelen = await getArtikelen();
 const artikelen = sorteerOpDatum(alleArtikelen).slice(0, 6);
 const base = import.meta.env.BASE_URL;
-const telling = await categorieTelling();
+const samenvatting = await categorieSamenvatting();
+const populair = await topProducten(6);
 
 const usps = [
   { icon: 'no-drill', kleur: '#0f766e', titel: 'Zonder boren', tekst: 'Inpluggen, indraaien of plakken' },
@@ -37,6 +41,8 @@ const stappen = [
         <p class="hero-lead">
           Wij zoeken uit welke slimme lampen, sloten, thermostaten, stekkers en camera's écht geschikt zijn voor een huurwoning — zodat jij niet hoeft te verbouwen.
         </p>
+        <Zoek />
+
         <div class="hero-actions">
           <a class="btn btn-primary" href={`${base}categorie/`}>
             Bekijk categorieën <Icon name="arrow" />
@@ -63,7 +69,22 @@ const stappen = [
     </ul>
   </section>
 
-  <section class="section container" aria-labelledby="cat-titel">
+  {populair.length > 0 && (
+    <section class="section container" aria-labelledby="pop-titel">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow eyebrow--amber"><Icon name="star" /> Populair</span>
+          <h2 id="pop-titel">Producten die huurders het vaakst kiezen</h2>
+        </div>
+        <a href={`${base}categorie/`}>Alles vergelijken →</a>
+      </div>
+      <div class="po-grid">
+        {populair.map((p) => <ProductCard product={p} />)}
+      </div>
+    </section>
+  )}
+
+  <section class="section container" aria-labelledby="cat-titel" style="padding-top: 0">
     <div class="section-head">
       <div>
         <span class="eyebrow eyebrow--amber"><Icon name="grid" /> Categorieën</span>
@@ -79,7 +100,8 @@ const stappen = [
             <h3><a href={`${base}categorie/${c.slug}/`}>{c.label}</a></h3>
             <p>{c.omschrijving}</p>
             <div class="card-foot">
-              <span class="count-pill">{telling[c.slug]}</span>
+              <span class="count-pill">{samenvatting[c.slug].tekst}</span>
+              {samenvatting[c.slug].vanaf !== undefined && <span class="count-pill count-pill--prijs">vanaf {formatPrijs(samenvatting[c.slug].vanaf!)}</span>}
               <span class="card-more" aria-hidden="true">Bekijk →</span>
             </div>
           </article>

@@ -60,6 +60,7 @@
   --i-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12.5 4.5 4.5L19 7.5'/%3E%3C/svg%3E");
   --i-x: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.8' stroke-linecap='round'%3E%3Cpath d='M6.5 6.5l11 11M17.5 6.5l-11 11'/%3E%3C/svg%3E");
   --i-alert: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3.2' stroke-linecap='round'%3E%3Cpath d='M12 4.5v10'/%3E%3Cpath d='M12 19.5h.01'/%3E%3C/svg%3E");
+  --i-sterren: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000'%3E%3Cpath d='m12 2.6 2.9 6 6.6.9-4.8 4.5 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.5l6.6-.9z'/%3E%3C/svg%3E");
   --i-cart: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='9' cy='20' r='1.4'/%3E%3Ccircle cx='18' cy='20' r='1.4'/%3E%3Cpath d='M2.5 3h2.8l2.2 12.2h11.4l2-8.2H6.2'/%3E%3C/svg%3E");
 }
 
@@ -138,7 +139,7 @@ a { color: var(--c-primary); text-underline-offset: .18em; text-decoration-thick
 a:hover { color: var(--c-primary-hover); }
 :focus-visible { outline: 3px solid var(--c-primary); outline-offset: 2px; border-radius: 4px; }
 
-.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.sr-only { position: absolute; left: 0; top: 0; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
 .container { width: 100%; max-width: var(--container); margin-inline: auto; padding-inline: var(--gutter); }
 .section { padding-block: var(--space-7); }
@@ -859,9 +860,18 @@ html[data-land="be"] [data-land]:not([data-land~="be"]) { display: none; }
 .pb-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .3rem 1rem; font-size: .82rem; color: var(--c-muted); }
 .pb-foot a { font-weight: 650; }
 
-.vergelijking { margin-block: var(--space-5); }
-.vergelijking table { display: block; overflow-x: auto; }
-.vergelijking th[scope="row"] { font-weight: 650; min-width: 150px; }
+.vergelijking { margin-block: var(--space-5); overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.vergelijking table { width: max-content; min-width: 100%; }
+/* schaduwhint dat de tabel opzij schuift (CSS-only, background-attachment: local) */
+.vergelijking { background:
+    linear-gradient(to right, var(--c-surface) 30%, transparent) left / 24px 100% no-repeat local,
+    linear-gradient(to left, var(--c-surface) 30%, transparent) right / 24px 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, color-mix(in srgb, var(--c-text) 14%, transparent), transparent) left / 12px 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, color-mix(in srgb, var(--c-text) 14%, transparent), transparent) right / 12px 100% no-repeat scroll; }
+.vergelijking th, .vergelijking td { vertical-align: top; }
+.vergelijking thead th { white-space: nowrap; }
+.vergelijking th[scope="row"] { font-weight: 650; min-width: 170px; max-width: 220px; }
+.vergelijking td { max-width: 230px; }
 .vergelijking th small, .vergelijking td small { display: block; font-size: .76rem; color: var(--c-muted); font-weight: 500; }
 .vergelijking-note { font-size: .85rem; color: var(--c-muted); font-style: italic; }
 
@@ -1010,14 +1020,14 @@ html[data-land="be"] [data-land]:not([data-land~="be"]) { display: none; }
 
 /* ---------- 1 + 2. Beeldvlakken (geen foto's: kleurverloop + categorie-icoon) ---------- */
 .pc-visual {
-  position: relative; display: grid; place-items: center; height: 96px; margin: calc(var(--space-5) * -1) calc(var(--space-5) * -1) 0;
+  position: relative; display: grid; place-items: center; height: 132px; margin: calc(var(--space-5) * -1) calc(var(--space-5) * -1) 0;
   border-radius: var(--radius) var(--radius) 0 0; overflow: hidden;
   background: linear-gradient(135deg, color-mix(in srgb, var(--cat) 22%, var(--c-surface)), color-mix(in srgb, var(--cat) 6%, var(--c-surface)));
 }
-.pc-visual svg { width: 46px; height: 46px; color: color-mix(in srgb, var(--cat) 70%, var(--c-text)); }
+.pc-visual > svg:not(.product-art) { width: 46px; height: 46px; color: color-mix(in srgb, var(--cat) 70%, var(--c-text)); }
 .pc-visual b { position: absolute; right: .7rem; bottom: .5rem; font-size: .76rem; font-weight: 700; color: var(--cat-ink); opacity: .85; }
 .product-card .pc-visual + .pc-top { margin-top: var(--space-3); }
-@media (max-width: 560px) { .pc-visual { height: 76px; margin: calc(var(--space-4) * -1) calc(var(--space-4) * -1) 0; } }
+@media (max-width: 560px) { .pc-visual { height: 108px; margin: calc(var(--space-4) * -1) calc(var(--space-4) * -1) 0; } }
 
 .page-head--cat { position: relative; overflow: hidden; }
 .page-head--cat::before {
@@ -1057,3 +1067,87 @@ html[data-land="be"] [data-land]:not([data-land~="be"]) { display: none; }
 @keyframes fade-in { from { opacity: 0; transform: translateY(6px); } }
 .page-head--cat .container { position: relative; }
 .hp-score-wrap { display: inline-grid; gap: .35rem; justify-items: start; --hp-c: color-mix(in srgb, var(--c-good) calc((var(--score) - 3) * 50%), var(--c-warn)); }
+
+/* ---------- Producttekening ---------- */
+.product-art { width: 100%; height: 100%; max-height: 84px; }
+.pa-vorm { fill: color-mix(in srgb, var(--cat) 78%, var(--c-surface)); }
+.pa-detail { fill: color-mix(in srgb, var(--c-text) 22%, var(--c-surface)); stroke: none; }
+.pa-licht { fill: color-mix(in srgb, #fff 72%, var(--cat)); }
+.pa-schaduw { fill: color-mix(in srgb, var(--c-text) 10%, transparent); }
+.pc-visual { padding: .5rem; }
+.pc-visual .product-art { width: 100%; height: 100%; max-height: 116px; }
+.pc-flags { position: absolute; left: .6rem; top: .55rem; display: flex; gap: .3rem; }
+.pc-flag { font-size: .7rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; padding: .15rem .5rem; border-radius: 999px; }
+.pc-flag--nieuw { background: var(--c-primary); color: var(--c-on-primary); }
+.pc-flag--deal { background: var(--c-accent); color: var(--c-on-accent); }
+.count-pill--prijs { background: var(--cat-soft); color: var(--cat-ink); }
+.pc-sterren { display: inline-flex; align-items: center; gap: .35rem; font-size: .8rem; color: var(--c-muted); margin-top: .15rem; }
+.sterren { --s: 0; width: 72px; height: 13px; background: linear-gradient(90deg, #f59e0b calc(var(--s) / 5 * 100%), color-mix(in srgb, var(--c-text) 15%, transparent) 0);
+  -webkit-mask: var(--i-sterren) repeat-x left center / 14.4px 13px; mask: var(--i-sterren) repeat-x left center / 14.4px 13px; }
+
+/* ---------- Rekenhulp ---------- */
+.rekenhulp { background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--radius); padding: var(--space-5); margin-block: var(--space-6); }
+.rekenhulp h2 { font-size: 1.3rem; margin-bottom: var(--space-2); }
+.rh-velden { display: flex; flex-wrap: wrap; gap: var(--space-4); margin-bottom: var(--space-3); }
+.rh-velden label { display: grid; gap: .2rem; font-size: .85rem; font-weight: 650; color: var(--c-muted); }
+.rh-velden span { display: inline-flex; align-items: center; gap: .35rem; color: var(--c-text); font-weight: 600; }
+.rh-velden input { font: inherit; width: 5.5rem; padding: .45rem .6rem; border: 1px solid var(--c-border); border-radius: var(--radius-s); background: var(--c-bg); color: var(--c-text); }
+.rh-voorbeelden { list-style: none; display: flex; flex-wrap: wrap; gap: .4rem; padding: 0; margin: 0 0 var(--space-4); }
+.rh-voorbeelden button { font: inherit; font-size: .85rem; font-weight: 600; cursor: pointer; padding: .35rem .8rem; border-radius: 999px; border: 1px solid var(--c-border); background: var(--c-bg); color: var(--c-text); }
+.rh-voorbeelden button:hover { border-color: var(--cat, var(--c-primary)); background: var(--cat-soft, var(--c-primary-soft)); }
+.rh-uitkomst { font-size: 1.1rem; margin-bottom: var(--space-2); }
+.rh-uitkomst strong { font-size: 2rem; font-family: var(--font-kop); color: var(--cat-ink, var(--c-primary)); }
+.rh-note { font-size: .82rem; margin: 0; }
+
+/* ---------- Zoekbalk ---------- */
+.zoek { position: relative; max-width: 520px; margin-bottom: var(--space-4); }
+.zoek-veld { display: flex; align-items: center; gap: .6rem; background: var(--c-surface); border: 1px solid var(--c-border); border-radius: 999px; padding: .2rem .4rem .2rem 1rem; box-shadow: var(--shadow); }
+.zoek-veld:focus-within { border-color: var(--c-primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c-primary) 20%, transparent); }
+.zoek-icoon { width: 20px; height: 20px; color: var(--c-muted); }
+.zoek input { flex: 1; font: inherit; font-size: 1rem; min-height: 46px; border: 0; background: none; color: var(--c-text); outline: none; }
+.zoek-resultaten { position: absolute; z-index: 30; top: calc(100% + .4rem); left: 0; right: 0; list-style: none; margin: 0; padding: .3rem; background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--radius); box-shadow: var(--shadow-hover); }
+.zoek-resultaten[hidden] { display: none; }
+.zoek-resultaten a { display: grid; grid-template-columns: auto 1fr; gap: .1rem .6rem; padding: .5rem .6rem; border-radius: var(--radius-s); color: var(--c-text); text-decoration: none; }
+.zoek-resultaten a:hover { background: var(--c-surface-2); }
+.zoek-kind { grid-row: span 2; align-self: center; font-size: .68rem; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; color: var(--c-primary); background: var(--c-primary-soft); border-radius: 999px; padding: .15rem .5rem; height: fit-content; }
+.zoek-resultaten b { font-size: .95rem; }
+.zoek-resultaten small { color: var(--c-muted); font-size: .82rem; }
+.zoek-leeg { padding: .6rem; color: var(--c-muted); font-size: .9rem; }
+
+/* ---------- 5. Filters als klikbare tegels ---------- */
+.po--js .po-layout { grid-template-columns: minmax(0, 1fr); }
+.po-filters { background: none; border: 0; padding: 0; }
+.po-filters form { display: flex; flex-direction: column; gap: var(--space-3); margin-bottom: var(--space-4); }
+.po-group { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; }
+.po-group legend { float: left; width: 100%; font-size: .82rem; text-transform: uppercase; letter-spacing: .05em; color: var(--c-muted); margin-bottom: .25rem; }
+.po-help { display: none; }
+.po-option {
+  margin: 0; padding: .4rem .85rem .4rem .6rem; border-radius: 999px; border: 1px solid var(--c-border); background: var(--c-surface);
+  font-size: .9rem; font-weight: 600;
+}
+.po-option:hover { border-color: var(--cat, var(--c-primary)); background: var(--cat-soft, var(--c-primary-soft)); }
+.po-option:has(input:checked) { border-color: var(--cat, var(--c-primary)); background: var(--cat-soft, var(--c-primary-soft)); color: var(--cat-ink, var(--c-primary)); }
+.po-check { width: 16px; height: 16px; border-radius: 5px; }
+.po-n { background: none; min-width: 0; }
+@media (min-width: 960px) {
+  .po--js .po-filter-toggle { display: none; }
+  .po--js .po-filters { display: block; }
+}
+
+/* ---------- 7. Vergelijkingstabel ---------- */
+.vergelijking th[scope="row"] { position: sticky; left: 0; background: var(--c-surface); z-index: 1; }
+.vg-winnaar > * { background: color-mix(in srgb, var(--c-good) 8%, transparent); }
+.vg-badge { color: var(--c-good); font-weight: 700; }
+.vg-mark { display: inline-flex; align-items: center; gap: .3rem; }
+.vg-mark::before { content: ""; width: 15px; height: 15px; flex-shrink: 0; background: currentColor;
+  -webkit-mask: var(--i-check) center / contain no-repeat; mask: var(--i-check) center / contain no-repeat; }
+.vg-ja { color: var(--c-good); font-weight: 650; }
+.vg-nee { color: var(--c-muted); }
+.vg-nee::before { -webkit-mask-image: var(--i-x); mask-image: var(--i-x); }
+.vg-leeg { color: var(--c-muted); }
+
+/* ---------- 8. Klikbare apparaten in de hero-illustratie ---------- */
+.illu-hot { cursor: pointer; }
+.illu-vlak { fill: transparent; stroke: transparent; stroke-width: 2; transition: fill .15s, stroke .15s; }
+.illu-hot:hover .illu-vlak, .illu-hot:focus-visible .illu-vlak { fill: color-mix(in srgb, var(--c-primary) 10%, transparent); stroke: var(--c-primary); }
+.illu-hot:focus-visible { outline: none; }

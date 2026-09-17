@@ -39,6 +39,31 @@ export function formatPrijs(bedrag: number): string {
   return bedrag.toLocaleString('nl-NL', { style: 'currency', currency: 'EUR', minimumFractionDigits: bedrag % 1 === 0 ? 0 : 2 });
 }
 
+/** Populairste producten over alle categorieën (hoogste huurder-score, dan onze volgorde). */
+export async function topProducten(aantal = 6): Promise<Product[]> {
+  const { huurderScore } = await import('../lib/producten.mjs');
+  const alle = await getCollection('producten', ({ data }) => !data.draft);
+  return alle
+    .sort((a, b) => huurderScore(b.data).score - huurderScore(a.data).score || a.data.volgorde - b.data.volgorde || a.data.prijs.vanaf - b.data.prijs.vanaf)
+    .slice(0, aantal);
+}
+
+/** Per categorie: aantal producten/artikelen + vanafprijs, voor de categoriekaarten. */
+export async function categorieSamenvatting(): Promise<Record<string, { tekst: string; vanaf?: number }>> {
+  const artikelen = await getArtikelen();
+  const producten = await getCollection('producten', ({ data }) => !data.draft);
+  const uit: Record<string, { tekst: string; vanaf?: number }> = {};
+  for (const c of categorieen) {
+    const p = producten.filter((x) => x.data.categorie === c.slug);
+    const na = artikelen.filter((a) => a.data.category === c.slug).length;
+    uit[c.slug] = {
+      tekst: p.length > 0 ? `${p.length} ${p.length === 1 ? 'product' : 'producten'}` : na > 0 ? `${na} ${na === 1 ? 'artikel' : 'artikelen'}` : 'Binnenkort',
+      vanaf: p.length ? Math.min(...p.map((x) => x.data.prijs.vanaf)) : undefined,
+    };
+  }
+  return uit;
+}
+
 /** Korte telling voor categorie-cards: "4 producten", "2 artikelen" of "Binnenkort". */
 export async function categorieTelling(): Promise<Record<string, string>> {
   const artikelen = await getArtikelen();

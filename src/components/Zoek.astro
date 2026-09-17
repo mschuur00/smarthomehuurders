@@ -1,0 +1,46 @@
+---
+import Icon from './Icon.astro';
+const base = import.meta.env.BASE_URL;
+---
+<div class="zoek" data-zoek>
+  <label class="zoek-veld">
+    <Icon name="search" class="zoek-icoon" />
+    <span class="sr-only">Zoek een product of artikel</span>
+    <input type="search" placeholder="Zoek: slimme stekker, Hue, camera zonder abonnement…" autocomplete="off" data-zoek-invoer />
+  </label>
+  <ul class="zoek-resultaten" data-zoek-lijst hidden></ul>
+  <noscript><a class="btn btn-ghost" href={`${base}categorie/`}>Bekijk alle categorieën</a></noscript>
+</div>
+
+<script is:inline define:vars={{ indexUrl: `${base}zoek.json` }}>
+  (function () {
+    var root = document.querySelector('[data-zoek]');
+    if (!root) return;
+    var invoer = root.querySelector('[data-zoek-invoer]');
+    var lijst = root.querySelector('[data-zoek-lijst]');
+    var data = null;
+    function laad() { if (!data) data = fetch(indexUrl).then(function (r) { return r.json(); }); return data; }
+    invoer.addEventListener('focus', laad, { once: true });
+    invoer.addEventListener('input', function () {
+      var q = invoer.value.trim().toLowerCase();
+      if (q.length < 2) { lijst.hidden = true; lijst.innerHTML = ''; return; }
+      laad().then(function (items) {
+        var hits = items.filter(function (i) { return (i.t + ' ' + i.s + ' ' + i.c).toLowerCase().indexOf(q) > -1; }).slice(0, 6);
+        lijst.innerHTML = hits.length
+          ? hits.map(function (i) { return '<li><a href="' + i.u + '"><span class="zoek-kind">' + i.k + '</span><b></b><small></small></a></li>'; }).join('')
+          : '<li class="zoek-leeg">Niets gevonden. Probeer bijvoorbeeld "stekker" of "camera".</li>';
+        // tekst apart zetten (geen HTML uit data)
+        lijst.querySelectorAll('li a').forEach(function (a, n) {
+          a.querySelector('b').textContent = hits[n].t;
+          a.querySelector('small').textContent = hits[n].s;
+        });
+        lijst.hidden = false;
+      });
+    });
+    invoer.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { var eerste = lijst.querySelector('a'); if (eerste) { e.preventDefault(); location.href = eerste.href; } }
+      if (e.key === 'Escape') { lijst.hidden = true; }
+    });
+    document.addEventListener('click', function (e) { if (!root.contains(e.target)) lijst.hidden = true; });
+  })();
+</script>
