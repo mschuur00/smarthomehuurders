@@ -4,6 +4,19 @@ description: "Een slimme stekker is de makkelijkste smart home-start voor huurde
 pubDate: 2026-09-16
 category: "plugs"
 affiliateDisclosure: true
+snelleKeuze:
+  - label: "Beste keuze"
+    id: "tapo-p110"
+    reden: "Direct via wifi, met energiemeter en tot 3.680 W belastbaar"
+  - label: "Goedkoopst"
+    id: "ikea-grillplats"
+    reden: "Laagste prijs met energiemeter, als je al een Thread-hub hebt"
+  - label: "Voor Home Assistant"
+    id: "shelly-plug-s-gen3"
+    reden: "Lokale bediening zonder cloud, met Matter en zonder hub"
+  - label: "Voor Apple Home"
+    id: "meross-smart-plug-matter"
+    reden: "Matter via wifi: werkt zonder hub met Apple Home, Google en Alexa"
 ---
 
 Wil je als huurder beginnen met smart home, maar mag je niets aan de woning veranderen? Dan is een **slimme stekker** (smart plug) de logische eerste stap. Je stopt 'm in een gewoon stopcontact, steekt je apparaat erin en bedient het vanaf dat moment met je telefoon. Geen elektricien, geen gaten in de muur en bij een verhuizing trek je 'm er gewoon weer uit.

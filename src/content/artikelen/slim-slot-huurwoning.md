@@ -4,6 +4,16 @@ description: "Een smart lock op je voordeur als huurder? Dat kan vaak zonder bor
 pubDate: 2026-09-16
 category: "smart-locks"
 affiliateDisclosure: true
+snelleKeuze:
+  - label: "Beste voor huurders"
+    id: "tedee-go"
+    reden: "Over je bestaande sleutel: je cilinder blijft zitten en je haalt 'm spoorloos weg"
+  - label: "Meeste opties"
+    id: "switchbot-lock-ultra"
+    reden: "Veel manieren om te openen, met acht cilinderadapters in de doos"
+  - label: "Meest compleet"
+    id: "nuki-smart-lock-ultra"
+    reden: "Wifi en Matter ingebouwd plus SKG***-cilinder; bewaar wel je originele cilinder"
 ---
 
 Nooit meer zoeken naar je sleutels, de schoonmaker of je ouders tijdelijk toegang geven, of vanaf je werk checken of de deur echt op slot zit: een **slim slot** (smart lock) is handig. Maar als huurder is de voordeur niet van jou. Mag je er dan wel een smart lock op zetten?
