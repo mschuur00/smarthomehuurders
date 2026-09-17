@@ -43,6 +43,7 @@ const jsonLd = {
 
   <div class="page-head page-head--band page-head--cat has-cat" style={catStyle(d.categorie)}>
     <div class="container">
+      <Icon name={d.categorie} class="page-head-art" />
       <nav class="breadcrumbs" aria-label="Kruimelpad">
         <ol>
           <li><a href={base}><Icon name="home" /><span class="sr-only">Home</span></a></li>
@@ -94,6 +95,16 @@ const jsonLd = {
 
       <section class="pp-block" aria-labelledby="kst">
         <h2 id="kst"><Icon name="tag" /> Kosten over {JAREN} jaar</h2>
+        <div class="kostenbalk" aria-hidden="true">
+          <span class="k-aanschaf" style={`width:${(k.aanschaf / k.totaal) * 100}%`}></span>
+          {k.extraNodig > 0 && <span class="k-extra" style={`width:${(k.extraNodig / k.totaal) * 100}%`}></span>}
+          {k.abonnement > 0 && <span class="k-abo" style={`width:${(k.abonnement / k.totaal) * 100}%`}></span>}
+        </div>
+        <p class="kostenlegenda">
+          <span class="k-aanschaf">Aanschaf</span>
+          {k.extraNodig > 0 && <span class="k-extra">Accessoires</span>}
+          {k.abonnement > 0 && <span class="k-abo">Abonnement</span>}
+        </p>
         <table class="pp-kosten"><tbody>
           <tr><th scope="row">Aanschaf (vanaf)</th><td>{formatPrijs(k.aanschaf)}</td></tr>
           {d.kosten.extra.filter((e) => e.nodig).map((e) => <tr><th scope="row">{e.naam}</th><td>{typeof e.prijs === 'number' ? formatPrijs(e.prijs) : 'los te koop'}</td></tr>)}

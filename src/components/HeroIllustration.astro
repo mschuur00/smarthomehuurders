@@ -16,7 +16,7 @@ const violet = s.cameras.kleur;
   <circle cx="486" cy="352" r="4" fill={green} opacity=".5" />
 
   <!-- wifi -->
-  <g class="illu-primary" fill="none" stroke-width="7" stroke-linecap="round">
+  <g class="illu-primary illu-wifi" fill="none" stroke-width="7" stroke-linecap="round">
     <path d="M234 30 Q270 0 306 30" />
     <path d="M250 44 Q270 28 290 44" />
   </g>
@@ -32,7 +32,7 @@ const violet = s.cameras.kleur;
   <path class="illu-line" stroke-width="3" d="M280 160 V224 M242 192 H318" />
 
   <!-- lamp (verlichting) -->
-  <circle cx="178" cy="238" r="48" fill={amber} opacity=".16" />
+  <circle class="illu-glow" cx="178" cy="238" r="48" fill={amber} opacity=".16" />
   <path class="illu-line" stroke-width="3" d="M178 150 V206" />
   <path d="M154 234 Q178 196 202 234 Z" fill={amber} />
   <circle cx="178" cy="238" r="7" fill="#fde68a" />
@@ -62,11 +62,11 @@ const violet = s.cameras.kleur;
   </g>
 
   <!-- zwevende badges -->
-  <g transform="translate(62 116)">
+  <g class="illu-badge" transform="translate(62 116)">
     <circle class="illu-surface illu-line" stroke-width="2" cx="24" cy="24" r="26" />
     <path class="illu-primary" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M14 25 l7 7 l14 -15" />
   </g>
-  <g transform="translate(440 236)">
+  <g class="illu-badge illu-badge--2" transform="translate(440 236)">
     <circle class="illu-surface illu-line" stroke-width="2" cx="24" cy="24" r="26" />
     <g transform="translate(10 10) scale(1.17)" fill="none" style="stroke: var(--c-accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M4 7h10v6H4z" /><path d="M14 9h3" /><path d="M17 10h4" /><path d="M7 13l-1 7h4l1-7" /><path d="M2.5 2.5l19 19" />

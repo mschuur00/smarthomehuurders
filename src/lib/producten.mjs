@@ -149,7 +149,8 @@ const huisIcoon = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="
 
 export function scoreHtml(d, { groot = false } = {}) {
   const s = huurderScore(d);
-  return `<span class="hp-score${groot ? ' hp-score--lg' : ''}" style="--score:${s.score}" title="Huurder-score: ${formatScore(s.score)} van 5 — ${esc(s.oordeel)}">${huisIcoon}<b>${formatScore(s.score)}</b><small>/5</small><span class="sr-only"> huurder-score, ${esc(s.oordeel)}</span></span>`;
+  const pil = `<span class="hp-score${groot ? ' hp-score--lg' : ''}" style="--score:${s.score}" title="Huurder-score: ${formatScore(s.score)} van 5 — ${esc(s.oordeel)}">${huisIcoon}<b>${formatScore(s.score)}</b><small>/5</small><span class="sr-only"> huurder-score, ${esc(s.oordeel)}</span></span>`;
+  return groot ? `<span class="hp-score-wrap" style="--score:${s.score}">${pil}<span class="hp-bar" aria-hidden="true"><i style="width:${(s.score / 5) * 100}%"></i></span></span>` : pil;
 }
 
 function badgesHtml(d, max = 99) {

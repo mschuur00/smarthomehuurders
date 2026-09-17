@@ -181,6 +181,18 @@ const jaar = new Date().getFullYear();
   </footer>
 
   <script is:inline>
+    // Scroll-reveal: één keer per element, alleen met JS en zonder "verminder beweging"
+    (function () {
+      if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var els = [].slice.call(document.querySelectorAll('.card, .product-card, .step, .letop-item, .faq-item, .pp-block, .kh-q, .criterion, .usp'));
+      if (!els.length) return;
+      document.documentElement.classList.add('js-reveal');
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+      }, { rootMargin: '0px 0px -6% 0px' });
+      els.forEach(function (e) { io.observe(e); });
+    })();
+
     (function () {
       var header = document.getElementById('site-header');
       var btn = header && header.querySelector('.nav-toggle');

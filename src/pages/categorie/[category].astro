@@ -27,6 +27,7 @@ const info = categorieInfo[categorie.slug];
 ---
 <Base title={categorie.label} description={categorie.omschrijving}>
   <div class="page-head page-head--band page-head--cat has-cat" style={catStyle(categorie.slug)}>
+    <Icon name={categorie.slug} class="page-head-art" />
     <div class="container">
       <nav class="breadcrumbs" aria-label="Kruimelpad">
         <ol>

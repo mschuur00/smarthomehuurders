@@ -29,7 +29,9 @@ for (const g of groepen) dataAttrs[`data-f-${g.key.toLowerCase()}`] = lijst(d.ke
 const badges = huurderBadges(d).slice(0, 4);
 const ws = winkels(d);
 ---
-<article class="product-card has-cat" style={catStyle(d.categorie)} id={`product-${product.id}`} {...dataAttrs}>
+<article class="product-card product-card--beeld has-cat" style={catStyle(d.categorie)} id={`product-${product.id}`} {...dataAttrs}>
+  <div class="pc-visual" aria-hidden="true"><Icon name={d.categorie} /><b>{d.merk}</b></div>
+
   <div class="pc-top">
     {d.label ? <span class="pc-label"><Icon name="star" />{d.label}</span> : <span class="pc-brand">{d.merk}</span>}
     <Fragment set:html={scoreHtml(d)} />
